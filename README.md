@@ -1,5 +1,5 @@
 # PagerTree::Integrations
-Short description and motivation.
+PagerTree Open Source Integration Adapters. Contribute to a growing library of PagerTree integrations!
 
 ## Usage
 How to use my plugin.
@@ -21,8 +21,31 @@ Or install it yourself as:
 $ gem install pager_tree-integrations
 ```
 
-## Contributing
-Contribution directions go here.
+### Migrations
+Copy the migrations to your app:
 
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+```bash
+bin/rails pager_tree-integrations:install:migrations
+```
+
+Then, run the migrations:
+
+```bash
+bin/rails db:migrate
+```
+
+## 🙏 Contributing
+
+If you have an issue you'd like to submit, please do so using the issue tracker in GitHub. In order for us to help you in the best way possible, please be as detailed as you can.
+
+If you'd like to open a PR please make sure the following things pass:
+
+```ruby
+bin/rails db:test:prepare
+bin/rails test
+bundle exec standardrb
+```
+
+
+## 📝 License
+The gem is available as open source under the terms of the [Apache License v2.0](https://opensource.org/licenses/Apache-2.0).
