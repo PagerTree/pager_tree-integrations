@@ -1,15 +1,15 @@
 require_relative "lib/pager_tree/integrations/version"
 
 Gem::Specification.new do |spec|
-  spec.name        = "pager_tree-integrations"
-  spec.version     = PagerTree::Integrations::VERSION
-  spec.authors     = ["Austin Miller"]
-  spec.email       = ["amiller@pagertree.com"]
-  spec.homepage    = "https://pagertree.com"
-  spec.summary     = "PagerTree Integration Adapters"
+  spec.name = "pager_tree-integrations"
+  spec.version = PagerTree::Integrations::VERSION
+  spec.authors = ["Austin Miller"]
+  spec.email = ["amiller@pagertree.com"]
+  spec.homepage = "https://pagertree.com"
+  spec.summary = "PagerTree Integration Adapters"
   spec.description = "PagerTree Open Source Integration Adapters. Contribute to a growing library of PagerTree integrations!"
-  spec.license     = "Apache License v2.0"
-  
+  spec.license = "Apache License v2.0"
+
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
