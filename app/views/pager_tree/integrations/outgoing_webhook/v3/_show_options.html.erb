@@ -1,0 +1,61 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_webhook_url") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_webhook_url %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_username") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_username %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_password") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_password %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<% 
+  opts = [
+    :alert_created,
+    :alert_open,
+    :alert_acknowledged,
+    :alert_rejected,
+    :alert_timeout,
+    :alert_resolved,
+    :alert_dropped,
+    :alert_handoff,
+  ]
+%>
+<% opts.each do |opt| %>
+  <div class="sm:col-span-1">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_#{opt.to_s}") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>
+    </dd>
+  </div>
+<% end %>

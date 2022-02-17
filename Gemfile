@@ -6,9 +6,15 @@ gemspec
 
 gem "sprockets-rails"
 
-gem "appraisal"
+gem "appraisal", "~> 2.4"
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
 # gem "debug", ">= 1.0.0"
 
-gem "pg"
+gem "pg", "~> 1.3"
+
+# integration dependencies
+gem "httparty", "~> 0.20.0"
+gem "sanitize", "~> 6.0"
+gem "ulid", "~> 1.3"
+gem "validate_url", "~> 1.0"
