@@ -2,6 +2,8 @@ require "test_helper"
 
 module PagerTree::Integrations
   class ApexPing::V3Test < ActiveSupport::TestCase
+    include Integrateable
+
     setup do
       @integration = pager_tree_integrations_integrations(:apex_ping_v3)
 
