@@ -14,6 +14,7 @@ module PagerTree::Integrations
     attr_accessor :thirdparty_id
     attr_accessor :dedup_keys
     attr_accessor :additional_data
+    attr_accessor :attachments
 
     validates :title, presence: true
     validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}
@@ -40,6 +41,7 @@ module PagerTree::Integrations
       self.thirdparty_id ||= nil
       self.dedup_keys ||= []
       self.additional_data ||= []
+      self.attachments ||= []
     end
 
     def incident?

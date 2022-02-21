@@ -1,0 +1,181 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_account_sid") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_account_sid %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_api_key") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_api_key %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_api_secret") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_api_secret %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_welcome_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_welcome_media.present? %>
+          <%= link_to integration.option_welcome_media.blob.filename, integration.option_welcome_media, target: "_blank" %>
+        <% else %>
+          (<%= t("pager_tree.integrations.common.none") %>)
+        <% end %>
+      </p>
+      <%= link_to t("delete"), main_app.integration_attachment_path(integration, integration.option_welcome_media.id), method: :delete, class: "btn btn-small btn-danger outline", data: { confirm: t("are_you_sure") } if integration.option_welcome_media.present? %>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_please_wait_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_please_wait_media.present? %>
+          <%= link_to integration.option_please_wait_media.blob.filename, integration.option_please_wait_media, target: "_blank" %>
+        <% else %>
+          (<%= link_to t("pager_tree.integrations.common.default"), integration.option_please_wait_media_url, target: "_blank" %>)
+        <% end %>
+      </p>
+      <%= link_to t("delete"), main_app.integration_attachment_path(integration, integration.option_please_wait_media.id), method: :delete, class: "btn btn-small btn-danger outline", data: { confirm: t("are_you_sure") } if integration.option_please_wait_media.present? %>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_music_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_music_media.present? %>
+          <%= link_to integration.option_music_media.blob.filename, integration.option_music_media, target: "_blank" %>
+        <% else %>
+          (<%= link_to t("pager_tree.integrations.common.default"), integration.option_music_media_url, target: "_blank" %>)
+        <% end %>
+      </p>
+      <%= link_to t("delete"), main_app.integration_attachment_path(integration, integration.option_music_media.id), method: :delete, class: "btn btn-small btn-danger outline", data: { confirm: t("are_you_sure") } if integration.option_music_media.present? %>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_connect_now_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_connect_now_media.present? %>
+          <%= link_to integration.option_connect_now_media.blob.filename, integration.option_connect_now_media, target: "_blank" %>
+        <% else %>
+          (<%= link_to t("pager_tree.integrations.common.default"), integration.option_connect_now_media_url, target: "_blank" %>)
+        <% end %>
+      </p>
+      <%= link_to t("delete"), main_app.integration_attachment_path(integration, integration.option_connect_now_media.id), method: :delete, class: "btn btn-small btn-danger outline", data: { confirm: t("are_you_sure") } if integration.option_connect_now_media.present? %>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_record") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_record } %>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_no_answer_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_no_answer_media.present? %>
+          <%= link_to integration.option_no_answer_media.blob.filename, integration.option_no_answer_media, target: "_blank" %>
+        <% else %>
+          (<%= t("pager_tree.integrations.common.default") %>)
+        <% end %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_no_answer_thank_you_media") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_no_answer_thank_you_media.present? %>
+          <%= link_to integration.option_no_answer_thank_you_media.blob.filename, integration.option_no_answer_thank_you_media, target: "_blank" %>
+        <% else %>
+          (<%= t("pager_tree.integrations.common.default") %>)
+        <% end %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_record_emails_list") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <% integration.option_record_emails.each do |email| %>
+        <p class="text-sm truncate">
+          <%= link_to email, "mailto:#{email}" %>
+        </p>
+      <% end %>
+      <p class="hidden only:flex text-sm truncate">
+        (<%= t("pager_tree.integrations.common.none") %>)
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_force_input") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_force_input } %>
+  </dd>
+</div>
+

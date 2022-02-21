@@ -86,11 +86,11 @@ module PagerTree::Integrations
     end
 
     def request
-      delivery.dig("request")
+      delivery&.dig("request")
     end
 
     def responses
-      delivery.dig("responses") || []
+      delivery&.dig("responses") || []
     end
   end
 end

@@ -8,13 +8,17 @@ gem "sprockets-rails"
 
 gem "appraisal", "~> 2.4"
 
-# Start debugger with binding.b [https://github.com/ruby/debug]
-# gem "debug", ">= 1.0.0"
+group :development, :test do
+  gem "dotenv-rails", "~> 2.7" # .env files
+  # Start debugger with binding.b [https://github.com/ruby/debug]
+  gem "debug", ">= 1.0.0"
+end
 
 gem "pg", "~> 1.3"
 
 # integration dependencies
 gem "httparty", "~> 0.20.0"
 gem "sanitize", "~> 6.0"
+gem "twilio-ruby", "~> 5.64"
 gem "ulid", "~> 1.3"
 gem "validate_url", "~> 1.0"

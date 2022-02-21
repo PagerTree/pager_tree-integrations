@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2022_02_15_200426) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "pager_tree_integrations_integrations", force: :cascade do |t|
+    t.string "type", null: false
+    t.text "options"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pager_tree_integrations_outgoing_webhook_deliveries", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "thirdparty_id"
+    t.integer "status", default: 0, null: false
+    t.text "data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end

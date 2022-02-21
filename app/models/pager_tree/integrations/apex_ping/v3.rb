@@ -26,8 +26,6 @@ module PagerTree::Integrations
     def adapter_process_create
       Alert.new(
         title: _title,
-        urgency: _urgency,
-
         thirdparty_id: _thirdparty_id,
         dedup_keys: [_thirdparty_id],
         additional_data: _additional_datums
@@ -58,10 +56,6 @@ module PagerTree::Integrations
 
     def _title
       "#{_check_name} #{_state}"
-    end
-
-    def _urgency
-      urgency
     end
 
     def _additional_datums

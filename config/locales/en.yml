@@ -1,0 +1,87 @@
+en:
+  pager_tree:
+    integrations:
+      common:
+        default: "default"
+        none: "none"
+      apex_ping:
+        v3:
+          form_options:
+      email:
+        v3:
+          form_options:
+            option_allow_spam_hint_html: "Allow emails marked as SPAM to create alerts"
+            option_dedup_threads_hint_html: "Ignore emails from same thread (ex: Prevents new alerts for replys on emails (aka: RE:RE:RE...))"
+      live_call_routing:
+        twilio:
+          v3:
+            form_options:
+              option_account_sid_hint_html: "Twilio Account SID"
+              option_api_key_hint_html: "Twilio API Key"
+              option_api_secret_hint_html: "Twilio API Secret"
+              option_welcome_media_hint_html: "A recording that will be played first to caller (ex: \"Hello, you have reached the Devop's on-call support line.\")"
+              option_please_wait_media_hint_html: "A recording to be played before wait music music (default: <a href='https://app.pagertree.com/assets/sounds/please-wait.mp3' target='_blank'>Please wait while you are being connected.</a>)"
+              option_music_media_hint_html: "A recording or wait music to be played while the caller waits for someone to acknowledge the alert (default: <a href='http://com.twilio.sounds.music.s3.amazonaws.com/oldDog_-_endless_goodbye_%28instr.%29.mp3' target='_blank'>Endless Goodbye</a>)"
+              option_connect_now_media_hint_html: "A recording played before connecting the caller to the acknowledger (default: <a href='https://app.pagertree.com/assets/sounds/you-are-now-being-connected.mp3' target='_blank'>You are now being connected.</a>)"
+              option_no_answer_media_hint_html: "A recording to be played when no one answers"
+              option_no_answer_thank_you_media_hint_html: "A recording played after the caller leaves a voicemail"
+              option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
+              option_record_hint_html: "Record a voicemail when no one acknowledges the call"
+              option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+      outgoing_webhook:
+        v3:
+          form_options:
+            option_webhook_url_hint_html: "URL to POST to"
+            option_username_hint_html: "Basic auth username (optional)"
+            option_password_hint_html: "Basic auth password (optional)"
+            option_alert_created_hint_html: "Send when the alert is created (before its routed)"
+            option_alert_open_hint_html: "Send when the alert is marked open (it has been routed)"
+            option_alert_acknowledged_hint_html: "Send when a user has acknowledged the alert"
+            option_alert_rejected_hint_html: "Send when a user has rejected the alert"
+            option_alert_timeout_hint_html: "Send when the alert has timed out a layer"
+            option_alert_resolved_hint_html: "Send when the alert is marked resolved"
+            option_alert_dropped_hint_html: "Send when the alert is dropped"
+            option_alert_handoff_hint_html: "Send when the alert has been handed off"
+            option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
+            option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
+      # SCAFFOLD_INTEGRATION
+        
+
+  activerecord:
+    attributes:
+      "pager_tree/integrations/integration":
+          option_title_template_enabled: "Title Template"
+          option_description_template_enabled: "Description Template"
+      "pager_tree/integrations/apex_ping/v3":
+          option_api_key: "API Key"
+      "pager_tree/integrations/email/v3":
+          option_allow_spam: "Allow Spam"
+          option_dedup_threads: "Dedup Threads"
+      "pager_tree/integrations/outgoing_webhook/v3":
+        option_webhook_url: "URL"
+        option_username: "Username"
+        option_password: "Password"
+        option_alert_created: "alert.created"
+        option_alert_open: "alert.open"
+        option_alert_acknowledged: "alert.acknowledged"
+        option_alert_rejected: "alert.rejected"
+        option_alert_timeout: "alert.timeout"
+        option_alert_resolved: "alert.resolved"
+        option_alert_dropped: "alert.dropped"
+        option_alert_handoff: "alert.handoff"
+        option_template: "JSON Template"
+        option_send_linked: "Send Linked"
+      "pager_tree/integrations/live_call_routing/twilio/v3":
+        option_account_sid: "Twilio Account SID"
+        option_api_key: "Twilio API Key"
+        option_api_secret: "Twilio API Secret"
+        option_welcome_media: "Welcome Recording"
+        option_please_wait_media: "Before Wait Music Recording"
+        option_music_media: "Wait Music Recording"
+        option_connect_now_media: "Before Connect Recording"
+        option_no_answer_media: "Voicemail Greeting Recording"
+        option_no_answer_thank_you_media: "After Voicemail Recording"
+        option_force_input: "Force Caller Input"
+        option_record: "Voicemail"
+        option_record_emails_list: "Voicemail Emails"
+      # SCAFFOLD_ACTIVE_RECORD

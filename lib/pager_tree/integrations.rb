@@ -3,6 +3,9 @@ require "pager_tree/integrations/engine"
 
 module PagerTree
   module Integrations
+    mattr_accessor :deferred_request_class
+    @@deferred_request_class = "DeferredRequest::DeferredRequest"
+
     mattr_accessor :integration_parent_class
     @@integration_parent_class = "ApplicationRecord"
 
@@ -14,5 +17,11 @@ module PagerTree
 
     mattr_accessor :outgoing_webhook_delivery_table_name
     @@outgoing_webhook_delivery_table_name = "pager_tree_integrations_outgoing_webhook_deliveries"
+
+    mattr_accessor :integration_email_v3_domain
+    @@integration_email_v3_domain = "alerts.pagertree.com"
+
+    mattr_accessor :integration_email_v3_inbox
+    @@integration_email_v3_inbox = "a"
   end
 end

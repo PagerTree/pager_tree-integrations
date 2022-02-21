@@ -45,6 +45,10 @@ module PagerTree::Integrations
       true
     end
 
+    def adapter_show_outgoing_webhook_delivery?
+      true
+    end
+
     def adapter_outgoing_interest?(event_name)
       try("option_#{event_name}") || false
     end

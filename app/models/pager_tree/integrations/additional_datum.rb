@@ -29,5 +29,13 @@ module PagerTree::Integrations
       self.label ||= nil
       self.value ||= nil
     end
+
+    def to_h
+      {
+        format: self.format,
+        label: self.label,
+        value: self.value
+      }
+    end
   end
 end

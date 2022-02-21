@@ -34,6 +34,7 @@ module PagerTree::Integrations
       false
     end
 
+    # A unique identifier for this integration/alert
     def adapter_thirdparty_id
       ULID.generate
     end
@@ -42,6 +43,7 @@ module PagerTree::Integrations
       true
     end
 
+    # Returns :create, :acknowledge, :resolve, or :other
     def adapter_action
       :other
     end
@@ -55,13 +57,27 @@ module PagerTree::Integrations
       false
     end
 
-    def adapter_outgoing_interest?
+    def adapter_outgoing_interest?(event_name)
       false
     end
 
     def adapter_process_outgoing
     end
     # END basic outgoing functions
+
+    # START basic show functions
+    def adapter_show_alerts?
+      adapter_supports_incoming?
+    end
+
+    def adapter_show_logs?
+      true
+    end
+
+    def adapter_show_outgoing_webhook_delivery?
+      false
+    end
+    # END basic show functions
 
     def adapter_response_rate_limit
       adapter_controller&.head(:not_found)

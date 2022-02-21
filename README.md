@@ -1,6 +1,16 @@
 # PagerTree::Integrations
 PagerTree Open Source Integration Adapters. Contribute to a growing library of PagerTree integrations!
 
+## Add An Integration
+1. Fork the project
+1. Create a new branch (ex: "integration-pingdom")
+1. Add your changes
+1. Test your changes
+1. Run standardrb
+1. If all tests are passing, create a pull request
+
+Please see [CREATING_AN_INTEGRATION](CREATING_AN_INTEGRATION.md) for details instructions on how to create a new integration.
+
 ## Usage
 How to use my plugin.
 
@@ -25,7 +35,7 @@ $ gem install pager_tree-integrations
 Copy the migrations to your app:
 
 ```bash
-bin/rails pager_tree-integrations:install:migrations
+bin/rails pager_tree_integrations:install:migrations
 ```
 
 Then, run the migrations:
