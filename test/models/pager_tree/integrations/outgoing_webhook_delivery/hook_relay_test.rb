@@ -10,6 +10,7 @@ module PagerTree::Integrations
         @outgoing_webhook_delivery = pager_tree_integrations_outgoing_webhook_deliveries(:hook_relay_queued)
         @outgoing_webhook_delivery.deliver
         assert_equal :sent.to_s, @outgoing_webhook_delivery.status
+        assert @outgoing_webhook_delivery.thirdparty_id.present?
       end
     end
 
