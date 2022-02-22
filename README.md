@@ -12,7 +12,7 @@ PagerTree Open Source Integration Adapters. Contribute to a growing library of P
 Please see [CREATING_AN_INTEGRATION](CREATING_AN_INTEGRATION.md) for details instructions on how to create a new integration.
 
 ## Usage
-How to use my plugin.
+Please see [CONFIGURATION](CONFIGURATION.md) for details on configuration options for the main app.
 
 ## Installation
 Add this line to your application's Gemfile:
