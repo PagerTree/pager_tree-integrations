@@ -10,12 +10,13 @@ outgoing_webhook_v3:
     webhook_url: "https://httpstat.us/200"
     alert_created: true
 
-# live_call_routing_twilio_v3:
-#   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
-#   # options:
-#     # option_account_sid:
-#     # option_api_key:
-#     # option_api_secret:
+live_call_routing_twilio_v3:
+  type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
+  options:
+    option_account_sid: a
+    option_api_key: b
+    option_api_secret: c
+    
 
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
