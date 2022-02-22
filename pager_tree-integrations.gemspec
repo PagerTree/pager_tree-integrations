@@ -23,12 +23,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7.0.1"
-  spec.add_dependency "httparty", "~> 0.20.0"
-  spec.add_dependency "sanitize", "~> 6.0"
-  spec.add_dependency "validate_url", "~> 1.0"
-  spec.add_dependency "ulid", "~> 1.3"
-  spec.add_dependency "twilio-ruby", "~> 5.64"
 
   spec.add_development_dependency "standardrb"
-  spec.add_development_dependency "dotenv-rails", "~> 2.7" # .env files
 end
