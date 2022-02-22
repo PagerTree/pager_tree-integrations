@@ -1,0 +1,18 @@
+hook_relay_queued:
+  type: "PagerTree::Integrations::OutgoingWebhookDelivery::HookRelay"
+  data:
+    url: "https://httpstat.us/200"
+    body:
+      foo: bar
+  resource: outgoing_webhook_v3 (PagerTree::Integrations::Integration)
+  status: 0
+
+hook_relay_sent:
+  type: "PagerTree::Integrations::OutgoingWebhookDelivery::HookRelay"
+  data:
+    url: "https://httpstat.us/200"
+    body:
+      foo: bar
+  resource: outgoing_webhook_v3 (PagerTree::Integrations::Integration)
+  status: 1
+  thirdparty_id: "01FWH51NY9H5PG6QA5EZV8Z9XN"

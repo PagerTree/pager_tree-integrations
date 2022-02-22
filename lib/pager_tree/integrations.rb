@@ -3,6 +3,8 @@ require "pager_tree/integrations/engine"
 
 module PagerTree
   module Integrations
+    autoload :Env, "pager_tree/integrations/env"
+
     mattr_accessor :deferred_request_class
     @@deferred_request_class = "DeferredRequest::DeferredRequest"
 

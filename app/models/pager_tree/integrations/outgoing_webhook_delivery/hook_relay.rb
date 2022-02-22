@@ -1,25 +1,27 @@
 module PagerTree::Integrations
   class OutgoingWebhookDelivery::HookRelay < OutgoingWebhookDelivery
+    extend ::PagerTree::Integrations::Env
+
     define_model_callbacks :deliver
 
-    def hookrelay_account_id
-      Rails.application.credentials.dig(:app, :hook_relay, :account_id)
+    def self.hook_relay_account_id
+      find_value_by_name(:hook_relay, :account_id)
     end
 
-    def hookrelay_hook_id
-      Rails.application.credentials.dig(:app, :hook_relay, :hook_id)
+    def self.hook_relay_hook_id
+      find_value_by_name(:hook_relay, :hook_id)
     end
 
-    def hookrelay_api_key
-      Rails.application.credentials.dig(:app, :hook_relay, :api_key)
+    def self.hook_relay_api_key
+      find_value_by_name(:hook_relay, :api_key)
     end
 
-    def hookrelay_hook_url
-      "https://api.hookrelay.dev/hooks/#{hookrelay_account_id}/#{hookrelay_hook_id}"
+    def hook_relay_hook_url
+      "https://api.hookrelay.dev/hooks/#{OutgoingWebhookDelivery::HookRelay.hook_relay_account_id}/#{OutgoingWebhookDelivery::HookRelay.hook_relay_hook_id}"
     end
 
-    def hookrelay_delivery_url
-      "https://app.hookrelay.dev/api/v1/accounts/#{hookrelay_account_id}/hooks/#{hookrelay_hook_id}/deliveries/#{thirdparty_id}"
+    def hook_relay_delivery_url
+      "https://app.hookrelay.dev/api/v1/accounts/#{OutgoingWebhookDelivery::HookRelay.hook_relay_account_id}/hooks/#{OutgoingWebhookDelivery::HookRelay.hook_relay_hook_id}/deliveries/#{thirdparty_id}"
     end
 
     def deliver_later
@@ -29,7 +31,7 @@ module PagerTree::Integrations
     def deliver
       run_callbacks :deliver do
         begin
-          hookrelay_options = {
+          hook_relay_options = {
             headers: {
               HR_TARGET_URL: url
             }
@@ -53,11 +55,11 @@ module PagerTree::Integrations
           end
 
           options = OutgoingWebhookDelivery::HTTP_OPTIONS
-            .deep_merge(hookrelay_options)
+            .deep_merge(hook_relay_options)
             .deep_merge(pagertree_options)
             .deep_merge(auth_options)
 
-          response = HTTParty.post(hookrelay_hook_url, body: body.to_json, **options)
+          response = HTTParty.post(hook_relay_hook_url, body: body.to_json, **options)
 
           self.thirdparty_id = response["id"]
           self.status = :sent
@@ -76,12 +78,12 @@ module PagerTree::Integrations
       options = {
         headers: {
           'Content-Type': "application/json",
-          Authorization: "Bearer #{hookrelay_api_key}"
+          Authorization: "Bearer #{OutgoingWebhookDelivery::HookRelay.hook_relay_api_key}"
         },
         timeout: 15
       }
 
-      @delivery = ::HTTParty.get(hookrelay_delivery_url, **options)
+      @delivery = ::HTTParty.get(hook_relay_delivery_url, **options)
       @delivery
     end
 

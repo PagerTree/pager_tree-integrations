@@ -12,6 +12,7 @@ group :development, :test do
   gem "dotenv-rails", "~> 2.7" # .env files
   # Start debugger with binding.b [https://github.com/ruby/debug]
   gem "debug", ">= 1.0.0"
+  gem "vcr", "~> 6.0"
 end
 
 gem "pg", "~> 1.3"

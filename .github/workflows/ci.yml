@@ -48,6 +48,9 @@ jobs:
           REDIS_URL: redis://localhost:6379/0
           RAILS_ENV: test
           PG_USER: postgres
+          HOOK_RELAY_API_KEY: "${{secrets.HOOK_RELAY_API_KEY}}"
+          HOOK_RELAY_ACCOUNT_ID: "${{secrets.HOOK_RELAY_ACCOUNT_ID}}"
+          HOOK_RELAY_HOOK_ID: "${{secrets.HOOK_RELAY_HOOK_ID}}"
         run: |
           bin/rails db:test:prepare
           bin/rails test
