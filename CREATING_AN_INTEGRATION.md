@@ -1,18 +1,32 @@
 # Creating a new integration
 
-You can run the following scaffold to generate a new integration
-`rails g scaffold integration #{vendor}/#{version}`
+You can run the following generator to create a new integration:
 
-## Files
+```bash
+rails g scaffold integration #{vendor}/#{version}
+```
 
-### Model
+This will create:
+```bash
+create  app/models/pager_tree/integrations/#{vendor}/#{version}.rb
+create  app/views/pager_tree/integrations/#{vendor}/#{version}/_form_options.html.erb
+create  app/views/pager_tree/integrations/#{vendor}/#{version}/_show_options.html.erb
+create  test/models/pager_tree/integrations/#{vendor}/#{version}_test.rb
+```
+
+# Files
+
+## Model
 Handles logic for transforming an incoming HTTP request into a PagerTree::Integrations::Alert
-`app/models/pager_tree/integrations/#{vendor}/#{version}.rb` - example `app/models/pager_tree/integrations/apex_ping/v3.rb`
+```
+app/models/pager_tree/integrations/#{vendor}/#{version}.rb
+```
+Example: `app/models/pager_tree/integrations/apex_ping/v3.rb`
 
 - All methods should be prefixed with `adapter_`
-- All options should be prefixed with `option_` - can be done using `store_accessor :options, *OPTIONS.map{ |x| x[:key] }.map(&:to_s), prefix: "option"`
+- All options should be prefixed with `option_`
 - Make sure to add validations for your options
-- You can optionally add attached objects - `has_one_attached :option_welcome_media`
+- You can optionally add attached objects
 
 You need to make sure to implement a couple of functions:
 - `adapter_supports_incoming?`
@@ -20,71 +34,15 @@ You need to make sure to implement a couple of functions:
 - `adapter_incoming_action`
 - `adapter_thirdparty_id`
 
-
-An example of how a model file might look:
-```rb
-class Vendor::V3 < Integration
-  OPTIONS = [
-    {key: :api_key, type: :string, default: nil},
-    {key: :api_secret, type: :string, default: nil},
-  ]
-  store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
-
-  validates :option_api_key, presence: true
-  validates :option_api_secret, presence: true
-
-  after_initialize do
-    # any extra setup
-  end
-
-  def adapter_supports_incoming?
-    true
-  end
-
-  def adapter_thirdparty_id(params:)
-    self._thirdparty_id
-  end
-
-  def adapter_incoming_action(params:, alert:)
-    if _is_create?
-      :create
-    elsif _is_resolve?
-      :resolve
-    else
-      :other
-    end
-  end
-
-  private
-
-  def _thirdparty_id
-    incoming_request_params.dig("alert", "id")
-  end
-
-  def _state
-    incoming_request_params.dig("state")
-  end
-
-  def _is_create?
-    _state == "triggered"
-  end
-
-  def _is_resolve?
-    _state == "resolved"
-  end
-
-end
-```
-
-### View
+## View
 For views we use Tailwind CSS for styling. For the positioning of elements you should likely use grid or flex.
 
-#### _form_options.html.erb
+### _form_options.html.erb
 Input options to the user during create and update (think API keys, options, ect.). *If there are none that need to be configured, please leave the file blank, but do make sure the file exists!*
 
 `app/views/pager_tree/integrations/#{vendor}/#{version}/_form_options.html.erb` - example `app/views/pager_tree/integrations/apex_ping/v3/_form_options.html.erb`
 
-An example of a `string` input option
+#### String input option
 ```html
 <div class="form-group">
   <%= form.label :option_account_sid %>
@@ -93,7 +51,7 @@ An example of a `string` input option
 </div>
 ```
 
-An example of a `file upload` input option
+#### File Upload input option
 ```html
 <div class="form-group">
   <%= form.label :option_welcome_media %>
@@ -102,7 +60,7 @@ An example of a `file upload` input option
 </div>
 ```
 
-An example of a `check box` input option
+#### Check Box input option
 ```html
 <div class="form-group">
   <%= form.label :option_record %>
@@ -111,7 +69,7 @@ An example of a `check box` input option
 </div>
 ```
 
-An example of a `password` input option
+#### Password input option
 ```html
 <div class="form-group" data-controller="password-visibility">
   <%= form.label :option_api_key %>
@@ -123,7 +81,7 @@ An example of a `password` input option
 </div>
 ```
 
-An example of a `tag` style input
+#### Tag input option
 ```html
 <div class="form-group" data-controller="tagify">
   <%= form.label :option_record_emails_list %>
@@ -132,12 +90,12 @@ An example of a `tag` style input
 </div>
 ```
 
-#### _show_options.html.erb
-Shows options on the integration page. You likely don't need to show everything that can be configured, rather only important ones. Make sure to `mask` anything that could be sensitive. If there are none, please leave the file blank, but do make sure the file exists!
+### _show_options.html.erb
+Shows options on the integration page. You likely don't need to show everything that can be configured, rather only important ones. Make sure to `mask` anything that could be sensitive. *If there are none, please leave the file blank, but do make sure the file exists!*
 
 `app/views/pager_tree/integrations/#{vendor}/#{version}/_show_options.html.erb` - example `app/views/pager_tree/integrations/apex_ping/v3/_show_options.html.erb`
 
-An example of a `string` configuration option that is displayed
+#### String show option
 ```html
 <div class="sm:col-span-1">
   <dt class="text-sm font-medium text-gray-500">
@@ -153,7 +111,7 @@ An example of a `string` configuration option that is displayed
 </div>
 ```
 
-An example of a `file upload` option that is displayed
+#### File Upload show option
 ```html
 <div class="sm:col-span-1">
   <dt class="text-sm font-medium text-gray-500">
@@ -173,7 +131,7 @@ An example of a `file upload` option that is displayed
 </div>
 ```
 
-An example of an `enabled flag` option that is displayed
+#### Enabled Flag show option
 ```html
 <div class="sm:col-span-1">
   <dt class="text-sm font-medium text-gray-500">
@@ -185,7 +143,7 @@ An example of an `enabled flag` option that is displayed
 </div>
 ```
 
-An example of a `masked string` option that is displayed
+#### Masked String show option
 ```html
 <div class="sm:col-span-1">
   <dt class="text-sm font-medium text-gray-500">
@@ -208,4 +166,4 @@ Don't forget to add `English (en)` translations for your integration. You need t
 1. The Active Record attributes under the key `en.activerecord.attributes.pager_tree/integrations/integration.option_#{option_name}`
 
 ### Tests
-Please make sure to add appropriate tests for your addition (model tests, and if applicable, controller tests).
+Please make sure to add appropriate tests for your addition (model tests, and if applicable, controller tests). **These should be quality tests.**
