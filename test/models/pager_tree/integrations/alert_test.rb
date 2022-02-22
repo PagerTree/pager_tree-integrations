@@ -11,7 +11,7 @@ module PagerTree::Integrations
         incident_severity: "critical",
         incident_message: "This is a test incident message",
         meta: {
-          "foo": "bar"
+          foo: "bar"
         },
         thirdparty_id: "12345",
         dedup_keys: ["foo", "bar"],

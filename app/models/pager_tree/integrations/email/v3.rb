@@ -2,10 +2,10 @@ module PagerTree::Integrations
   class Email::V3 < Integration
     OPTIONS = [
       {key: :allow_spam, type: :boolean, default: false},
-      {key: :dedup_threads, type: :boolean, default: true},
+      {key: :dedup_threads, type: :boolean, default: true}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
-    
+
     validates :option_allow_spam, inclusion: {in: [true, false]}
     validates :option_dedup_threads, inclusion: {in: [true, false]}
 
@@ -18,9 +18,10 @@ module PagerTree::Integrations
     def endpoint
       domain = ::PagerTree::Integrations.integration_email_v3_domain
       inbox = ::PagerTree::Integrations.integration_email_v3_inbox
-      postfix = Rails.env.production? ? "" :
-        Rails.env.staging? ? "_stg" :
-        Rails.env.test? ? "_tst" : "_dev"
+      postfix = ""
+      postfix = "_stg" if Rails.env.staging?
+      postfix = "_tst" if Rails.env.test?
+      postfix = "_dev" if Rails.env.development?
 
       "#{inbox}#{postfix}+#{id}@#{domain}"
     end
@@ -34,7 +35,7 @@ module PagerTree::Integrations
         return ses_spam_verdict != "PASS"
       end
 
-      return false
+      false
     end
 
     def adapter_supports_incoming?
@@ -53,7 +54,7 @@ module PagerTree::Integrations
       Alert.new(
         title: _title,
         description: _description,
-        urgency: self.urgency,
+        urgency: urgency,
         thirdparty_id: _thirdparty_id,
         dedup_keys: _dedup_keys,
         additional_data: _additional_datums,
@@ -94,16 +95,16 @@ module PagerTree::Integrations
 
       if _mail.multipart? && _mail.html_part
         document = Nokogiri::HTML(_mail.html_part.body.decoded)
-  
+
         _attachments_hash.map do |attachment_hash|
           attachment = attachment_hash[:original]
           blob = attachment_hash[:blob]
-  
+
           if attachment.content_id.present?
             # Remove the beginning and end < >
             content_id = attachment.content_id[1...-1]
             element = document.at_css "img[src='cid:#{content_id}']"
-  
+
             element&.replace "<action-text-attachment sgid=\"#{blob.attachable_sgid}\" content-type=\"#{attachment.content_type}\" filename=\"#{attachment.filename}\"></action-text-attachment>"
           end
         end
@@ -123,9 +124,9 @@ module PagerTree::Integrations
         blob = ActiveStorage::Blob.create_and_upload!(
           io: StringIO.new(attachment.body.to_s),
           filename: attachment.filename,
-          content_type: attachment.content_type,
+          content_type: attachment.content_type
         )
-        { original: attachment, blob: blob }
+        {original: attachment, blob: blob}
       end
     end
 
@@ -143,7 +144,7 @@ module PagerTree::Integrations
     end
 
     def _get_header(name)
-      _mail.header_fields.find{|x| x.name == name }
+      _mail.header_fields.find { |x| x.name == name }
     end
   end
 end

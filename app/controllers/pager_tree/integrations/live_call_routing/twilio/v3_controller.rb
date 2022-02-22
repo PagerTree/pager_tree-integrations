@@ -32,11 +32,10 @@ module PagerTree::Integrations
     end
 
     private
-    
+
     def set_integration
       id = params[:id]
-      @integration = LiveCallRouting::Twilio::V3.find_by!('id = ? OR prefix_id = ?', id, id)
+      @integration = LiveCallRouting::Twilio::V3.find_by!("id = ? OR prefix_id = ?", id, id)
     end
-
   end
 end

@@ -8,25 +8,25 @@ module PagerTree::Integrations
       @integration = pager_tree_integrations_integrations(:apex_ping_v3)
 
       @create_request = {
-        "triggered_at": "2016-05-24T20:10:57.657259407Z",
-        "state": "triggered",
-        "alert": {
-          "id": 9,
-          "type": "time_total",
-          "stat": "avg",
-          "window_duration": 5,
-          "value": 2500,
-          "op": "gt"
+        triggered_at: "2016-05-24T20:10:57.657259407Z",
+        state: "triggered",
+        alert: {
+          id: 9,
+          type: "time_total",
+          stat: "avg",
+          window_duration: 5,
+          value: 2500,
+          op: "gt"
         },
-        "check": {
-          "id": 80,
-          "name": "Axe Search",
-          "method": "GET",
-          "protocol": "http",
-          "url": "www.axemusic.com/catalogsearch/result/?cat=0&q=sm58",
-          "apdex_threshold": 700
+        check: {
+          id: 80,
+          name: "Axe Search",
+          method: "GET",
+          protocol: "http",
+          url: "www.axemusic.com/catalogsearch/result/?cat=0&q=sm58",
+          apdex_threshold: 700
         },
-        "value": 2724
+        value: 2724
       }.with_indifferent_access
 
       @resolve_request = @create_request.deep_dup

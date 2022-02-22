@@ -66,22 +66,21 @@ module PagerTree::Integrations
       # what comes in as json, via tagify
       uniq_array = []
       begin
-        uniq_array = JSON.parse(x).map{|y| y["value"] }.uniq
+        uniq_array = JSON.parse(x).map { |y| y["value"] }.uniq
       rescue JSON::ParserError => exception
         Rails.logger.debug(exception)
       end
-      
+
       self.option_record_emails = uniq_array
     end
 
     def option_record_emails_list
-      self.option_record_emails
+      option_record_emails
     end
 
     def validate_record_emails
-      errors.add(:record_emails, "must be a valid email") if self.option_record_emails.any? { |x| !x.match(URI::MailTo::EMAIL_REGEXP) }
+      errors.add(:record_emails, "must be a valid email") if option_record_emails.any? { |x| !x.match(URI::MailTo::EMAIL_REGEXP) }
     end
-    
 
     def adapter_supports_incoming?
       true
@@ -106,7 +105,7 @@ module PagerTree::Integrations
     def adapter_process_create
       Alert.new(
         title: _title,
-        urgency: self.urgency,
+        urgency: urgency,
 
         thirdparty_id: _thirdparty_id,
         dedup_keys: [_thirdparty_id],
@@ -121,22 +120,22 @@ module PagerTree::Integrations
         return adapter_controller&.render(xml: _twiml.to_xml)
       end
 
-      if !self.adapter_alert.meta["live_call_welcome"] && option_welcome_media.present?
-        self.adapter_alert.logs.create!(message: "Play welcome media to caller.")
+      if !adapter_alert.meta["live_call_welcome"] && option_welcome_media.present?
+        adapter_alert.logs.create!(message: "Play welcome media to caller.")
         _twiml.play(url: option_welcome_media.url)
-        self.adapter_alert.meta["live_call_welcome"] = true
-        self.adapter_alert.save!
+        adapter_alert.meta["live_call_welcome"] = true
+        adapter_alert.save!
       end
 
       if selected_team
-        self.adapter_alert.logs.create!(message: "Caller selected team '#{selected_team.name}'. Playing please wait media.")
+        adapter_alert.logs.create!(message: "Caller selected team '#{selected_team.name}'. Playing please wait media.")
         _twiml.play(url: option_please_wait_media&.url || TWILIO_LIVECALL_PLEASE_WAIT)
-        friendly_name = self.adapter_alert.id
+        friendly_name = adapter_alert.id
 
         # create the queue and save it off
         queue = _client.queues.create(friendly_name: friendly_name)
-        self.adapter_alert.meta["live_call_queue_sid"] = queue.sid
-        self.adapter_alert.save!
+        adapter_alert.meta["live_call_queue_sid"] = queue.sid
+        adapter_alert.save!
 
         _twiml.enqueue(
           name: friendly_name,
@@ -146,12 +145,12 @@ module PagerTree::Integrations
           wait_url_method: "GET"
         )
       else
-        self.adapter_alert.meta["live_call_repeat_count"] ||= 0
-        self.adapter_alert.meta["live_call_repeat_count"] += 1
-        self.adapter_alert.save!
+        adapter_alert.meta["live_call_repeat_count"] ||= 0
+        adapter_alert.meta["live_call_repeat_count"] += 1
+        adapter_alert.save!
 
-        if self.adapter_alert.meta["live_call_repeat_count"] <= 3
-          self.adapter_alert.logs.create!(message: "Caller has not selected a team. Playing team options.")
+        if adapter_alert.meta["live_call_repeat_count"] <= 3
+          adapter_alert.logs.create!(message: "Caller has not selected a team. Playing team options.")
           _twiml.gather numDigits: _teams_size.to_s.size, timeout: 30 do |g|
             3.times do
               g.say(message: _teams_message, **SPEAK_OPTIONS)
@@ -159,7 +158,7 @@ module PagerTree::Integrations
             end
           end
         else
-          self.adapter_alert.logs.create!(message: "Caller input bad input (too many times). Hangup.")
+          adapter_alert.logs.create!(message: "Caller input bad input (too many times). Hangup.")
           _twiml.say(message: "Too much invalid input. Goodbye.", **SPEAK_OPTIONS)
           _twiml.hangup
         end
@@ -205,12 +204,12 @@ module PagerTree::Integrations
         end
         _twiml.hangup
 
-        self.adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: recording_url).to_h)
-        self.adapter_alert.save!
+        adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: recording_url).to_h)
+        adapter_alert.save!
 
-        self.adapter_alert.logs.create!(message: "Caller left a <a href='#{recording_url}' target='_blank'>voicemail</a>.")
+        adapter_alert.logs.create!(message: "Caller left a <a href='#{recording_url}' target='_blank'>voicemail</a>.")
 
-        self.adapter_record_emails.each do |email|
+        adapter_record_emails.each do |email|
           TwilioLiveCallRouting::V3Mailer.with(email: email, alert: alert).call_recording.deliver_later
         end
       elsif record
@@ -225,15 +224,15 @@ module PagerTree::Integrations
     end
 
     def adapter_process_queue_status_deferred
-      queue_result = self.adapter_incoming_request_params.dig("QueueResult")
-      self.adapter_source_log&.sublog("Processing queus status #{queue_result}")
+      queue_result = adapter_incoming_request_params.dig("QueueResult")
+      adapter_source_log&.sublog("Processing queus status #{queue_result}")
 
       if queue_result == "hangup"
-        self.adapter_alert = self.alerts.find_by(thirdparty_id: _thirdparty_id)
-        self.queue_destroy
+        self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
+        queue_destroy
       end
 
-      self.adapter_source_log&.save!
+      adapter_source_log&.save!
     end
 
     def perform_outgoing(**params)
@@ -257,11 +256,11 @@ module PagerTree::Integrations
 
     def _additional_datums
       [
-        AdditionalDatum.new(format: "phone", label: "Caller Phone", value: adapter_incoming_request_params.dig("From")),  
+        AdditionalDatum.new(format: "phone", label: "Caller Phone", value: adapter_incoming_request_params.dig("From")),
         AdditionalDatum.new(format: "text", label: "Caller City", value: adapter_incoming_request_params.dig("CallerCity")),
         AdditionalDatum.new(format: "text", label: "Caller State", value: adapter_incoming_request_params.dig("CallerState")),
         AdditionalDatum.new(format: "text", label: "Caller Zipcode", value: adapter_incoming_request_params.dig("CallerZipcode")),
-        AdditionalDatum.new(format: "text", label: "Caller Country", value: adapter_incoming_request_params.dig("CallerCountry")),
+        AdditionalDatum.new(format: "text", label: "Caller Country", value: adapter_incoming_request_params.dig("CallerCountry"))
       ]
     end
 
@@ -302,7 +301,7 @@ module PagerTree::Integrations
 
     def on_acknowledge
       # log that we are going to transfer
-      self.adapter_alert.logs.create!(message: "Attempting to transfer the call...")
+      adapter_alert.logs.create!(message: "Attempting to transfer the call...")
 
       # try to transfer the caller
       number = "+19402733696"
@@ -312,7 +311,7 @@ module PagerTree::Integrations
       _call.update(twiml: _twiml.to_xml)
 
       # log if we successfully transfered or failed
-      self.adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+      adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
     end
 
     def on_drop
@@ -320,12 +319,12 @@ module PagerTree::Integrations
     end
 
     def queue_destroy
-      if (queue_sid = self.adapter_alert&.meta["live_call_queue_sid"])
+      if (queue_sid = adapter_alert&.meta&.fetch("live_call_queue_sid", nil))
         begin
           _client.queues(queue_sid).delete
-          self.adapter_source_log&.sublog("Successfully destroyed queue")
+          adapter_source_log&.sublog("Successfully destroyed queue")
         rescue => exception
-          self.adapter_source_log&.sublog("Failed to destroy queue - #{exception.message}")
+          adapter_source_log&.sublog("Failed to destroy queue - #{exception.message}")
         end
       end
     end

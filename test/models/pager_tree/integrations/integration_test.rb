@@ -23,7 +23,7 @@ module PagerTree::Integrations
       assert_nil @integration.adapter_process_create
       assert_not @integration.adapter_supports_outgoing?
       assert_not @integration.adapter_outgoing_interest?("foo")
-      
+
       assert_not @integration.adapter_show_alerts?
       assert @integration.adapter_show_logs?
       assert_not @integration.adapter_show_outgoing_webhook_delivery?
