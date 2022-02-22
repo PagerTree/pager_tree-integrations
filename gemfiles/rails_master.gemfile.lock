@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/rails.git
-  revision: e4140140af5832e045bf8196d1bcbe9e5276a8fb
+  revision: ce1517ea5290c1190d94c3168cfc4dc5fcdb36ed
   branch: main
   specs:
     actioncable (7.1.0.alpha)
@@ -93,7 +93,7 @@ GIT
 PATH
   remote: ..
   specs:
-    pager_tree-integrations (0.1.0)
+    pager_tree-integrations (1.0.0)
       rails (>= 7.0.1)
 
 GEM
