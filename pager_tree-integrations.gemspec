@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 7.0.1"
 
   spec.add_development_dependency "standardrb"
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "webmock"
 end

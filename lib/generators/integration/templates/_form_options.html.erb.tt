@@ -1,0 +1,8 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="form-group">
+    <%%= form.label :option_api_key %>
+    <%%= form.text_field :option_api_key, class: "form-control" %>
+    <p class="form-hint"><%%== t(".option_api_key_hint_html") %></p>
+  </div>
+  <!-- TODO ADD/EDIT YOUR INTEGRATION OPTIONS HERE. SEE CREATING_AN_INTEGRATION.md for different form fields -->
+</div>

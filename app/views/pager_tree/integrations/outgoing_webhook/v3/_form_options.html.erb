@@ -1,0 +1,50 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="form-group">
+    <%= form.label :option_webhook_url %>
+    <%= form.text_field :option_webhook_url, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_webhook_url_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_username %>
+    <%= form.text_field :option_username, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_username_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_password %>
+    <%= form.text_field :option_password, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_password_hint_html") %></p>
+  </div>
+
+  <% 
+    opts = [
+      :alert_created,
+      :alert_open,
+      :alert_acknowledged,
+      :alert_rejected,
+      :alert_timeout,
+      :alert_resolved,
+      :alert_dropped,
+      :alert_handoff,
+      :send_linked
+    ]
+  %>
+  <% opts.each do |opt| %>
+    <div class="form-group">
+      <%= form.label "option_#{opt.to_s}".to_sym %>
+      <%= form.check_box "option_#{opt.to_s}".to_sym, class: "form-checkbox" %>
+      <p class="form-hint"><%== t(".option_#{opt.to_s}_hint_html") %></p>
+    </div>
+  <% end %>
+  
+</div>
+
+<div class="grid grid-cols-1 gap-4">
+  <%= tag.div class: "form-group", data: {controller: "code-editor", code_editor_language_value: "handlebars", code_editor_read_only_value: false } do %>
+    <%= form.label :option_template %>
+    <%= form.hidden_field :option_template, class: "form-control", data: {code_editor_target: "form"} %>
+    <%= tag.div class: "h-96", data: {code_editor_target: "editor"} do %><%= form.object.option_template %><% end %>
+    <p class="form-hint"><%== t(".option_template_hint_html") %></p>
+  <% end %>
+</div>

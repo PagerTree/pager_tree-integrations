@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://app.hookrelay.dev/api/v1/accounts/<HOOK_RELAY_ACCOUNT_ID>/hooks/<HOOK_RELAY_HOOK_ID>/deliveries/01FWH51NY9H5PG6QA5EZV8Z9XN
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <HOOK_RELAY_API_KEY>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Feb 2022 16:49:58 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Ratelimit-Limit:
+      - '120'
+      X-Ratelimit-Remaining:
+      - '119'
+      X-Ratelimit-Reset:
+      - '1645552198'
+      Etag:
+      - W/"d7425a2bfdad35c65a8cc17e47046b66"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 4b3b5d10-4728-440a-b27a-82b46d007441
+      X-Runtime:
+      - '0.072604'
+    body:
+      encoding: UTF-8
+      string: '{"id":"01FWH51NY9H5PG6QA5EZV8Z9XN","status":"success","attempts":1,"completed_at":"2022-02-22T16:43:18.000Z","last_attempted_at":"2022-02-22T16:43:18.000Z","responses":[{"body":"200
+        OK","headers":{"Strict-Transport-Security":"max-age=2592000","Server":"Kestrel","Set-Cookie":"ARRAffinity=b4f4bdf7a0f4891ddf10f445d59660450c27445fa2cf77c0a1a8154f4ceae2b1;Path=/;HttpOnly;Secure;Domain=httpstat.us,
+        ARRAffinitySameSite=b4f4bdf7a0f4891ddf10f445d59660450c27445fa2cf77c0a1a8154f4ceae2b1;Path=/;HttpOnly;SameSite=None;Secure;Domain=httpstat.us","Content-Length":"6","Date":"Tue,
+        22 Feb 2022 16:43:18 GMT","Content-Type":"text/plain","Request-Context":"appId=cid-v1:1e93d241-20e4-4513-bbd7-f452a16a5d69"},"code":200,"created_at":"2022-02-22T16:43:18.000Z","error":null}],"request":{"body":"{\"foo\":\"bar\"}","headers":{"Accept":"*/*","User-Agent":"pagertree
+        outgoing webhook service; ref: 1013785687; report: support@pagertree.com","Content-Type":"application/json"},"target_url":"https://httpstat.us/200","jmespath_error":null}}'
+  recorded_at: Tue, 22 Feb 2022 16:49:58 GMT
+recorded_with: VCR 6.0.0

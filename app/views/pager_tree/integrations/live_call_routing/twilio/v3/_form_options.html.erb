@@ -1,0 +1,80 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="form-group">
+    <%= form.label :option_account_sid %>
+    <%= form.text_field :option_account_sid, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_account_sid_hint_html") %></p>
+  </div>
+
+  <div class="form-group" data-controller="password-visibility">
+    <%= form.label :option_api_key %>
+    <%= form.password_field :option_api_key, value: form.object.option_api_key, class: "form-control", data: { password_visibility_target: "input"} %>
+    <div class="flex justify-between">
+      <p class="form-hint"><%== t(".option_api_key_hint_html") %></p>
+      <%= render partial: "shared/password_visibility_button" %>
+    </div>
+  </div>
+
+  <div class="form-group" data-controller="password-visibility">
+    <%= form.label :option_api_secret %>
+    <%= form.password_field :option_api_secret, value: form.object.option_api_secret, class: "form-control", data: { password_visibility_target: "input"} %>
+    <div class="flex justify-between">
+      <p class="form-hint"><%== t(".option_api_secret_hint_html") %></p>
+      <%= render partial: "shared/password_visibility_button" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_welcome_media %>
+    <%= form.file_field :option_welcome_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_welcome_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_please_wait_media %>
+    <%= form.file_field :option_please_wait_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_please_wait_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_music_media %>
+    <%= form.file_field :option_music_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_music_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_connect_now_media %>
+    <%= form.file_field :option_connect_now_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_connect_now_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_no_answer_media %>
+    <%= form.file_field :option_no_answer_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_no_answer_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_no_answer_thank_you_media %>
+    <%= form.file_field :option_no_answer_thank_you_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_no_answer_thank_you_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_force_input %>
+    <%= form.check_box :option_force_input, class: "form-checkbox" %>
+    <p class="form-hint"><%== t(".option_force_input_hint_html") %></p>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :option_record %>
+    <%= form.check_box :option_record, class: "form-checkbox" %>
+    <p class="form-hint"><%== t(".option_record_hint_html") %></p>
+  </div>
+
+  <div class="form-group" data-controller="tagify">
+    <%= form.label :option_record_emails_list %>
+    <%= form.text_field :option_record_emails_list, class: "form-control", data: { tagify_target: "input" } %>
+    <p class="form-hint"><%== t(".option_record_emails_list_hint_html") %></p>
+  </div>
+
+</div>

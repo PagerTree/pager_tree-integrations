@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.hookrelay.dev/hooks/<HOOK_RELAY_ACCOUNT_ID>/<HOOK_RELAY_HOOK_ID>
+    body:
+      encoding: UTF-8
+      string: '{"foo":"bar"}'
+    headers:
+      Content-Type:
+      - application/json
+      Hr-Target-Url:
+      - https://httpstat.us/200
+      Accept:
+      - "*/*"
+      User-Agent:
+      - 'pagertree outgoing webhook service; ref: 1013785687; report: support@pagertree.com'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '35'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 22 Feb 2022 16:43:18 GMT
+      X-Amzn-Requestid:
+      - 27ad9b31-daf7-4364-834b-1063c3b35484
+      Access-Control-Allow-Origin:
+      - "*"
+      Ratelimit-Remaining:
+      - '9994'
+      Ratelimit-Limit:
+      - '10000'
+      Access-Control-Allow-Headers:
+      - "*"
+      X-Amzn-Remapped-Content-Length:
+      - '35'
+      X-Amz-Apigw-Id:
+      - N8_Z7GZFIAMFydQ=
+      X-Content-Type-Options:
+      - nosniff
+      Location:
+      - https://app.hookrelay.dev/deliveries/<HOOK_RELAY_ACCOUNT_ID>/<HOOK_RELAY_HOOK_ID>/01FWH51NY9H5PG6QA5EZV8Z9XN
+      X-Amzn-Trace-Id:
+      - Root=1-621512a5-22071f4d15adfd7753e20603
+      Ratelimit-Reset:
+      - '1645574400'
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 ed76ff4369fc06327aa8a7520f693ae2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - DFW55-C3
+      X-Amz-Cf-Id:
+      - _Sqwai0kDjhi4hrhMFBCAvr63zYaoZsuqhwVhAr_KwwiZUynd5nu3A==
+    body:
+      encoding: UTF-8
+      string: '{"id":"01FWH51NY9H5PG6QA5EZV8Z9XN"}'
+  recorded_at: Tue, 22 Feb 2022 16:43:18 GMT
+recorded_with: VCR 6.0.0
