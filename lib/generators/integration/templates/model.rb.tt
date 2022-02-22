@@ -1,0 +1,64 @@
+module PagerTree::Integrations
+  class <%= class_name %> < Integration
+    # TODO: Add options that are relevant to your integration
+    OPTIONS = [
+      {key: :api_key, type: :string, default: nil},
+    ]
+    store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
+    
+    # TODO - add some validations for your options
+    validates :option_api_key, presence: true
+
+    # TODO - add defaults for your options
+    after_initialize do
+      self.option_api_key ||= nil
+    end
+
+    # TODO: Does this integration support incoming requests?
+    def adapter_supports_incoming?
+      true
+    end
+
+    # TODO: Does this integration support outgoing events?
+    def adapter_supports_outgoing?
+      true
+    end
+
+    # TODO: can requests from this integration be deferred? most integrations should be 'true'
+    # unless a realtime response is needed by the posting service
+    def adapter_incoming_can_defer?
+      true
+    end
+
+    # TODO: A unique identifier for this integration/alert
+    def adapter_thirdparty_id
+      adapter_incoming_request_params.dig("id")
+    end
+
+    # TODO: Returns :create, :acknowledge, :resolve, or :other
+    def adapter_action
+      :other
+    end
+
+    # TODO: Implement your transform
+    def adapter_process_create
+      Alert.new(
+        title: adapter_incoming_request_params.dig("title"),
+        urgency: adapter_incoming_request_params.dig("urgency"),
+        thirdparty_id: adapter_thirdparty_id,
+        dedup_keys: [adapter_thirdparty_id],
+        additional_data: _additional_datums
+      )
+    end
+
+    private
+
+    # TODO: Implement any additional data that should be shown in the alert with high priority (be picky as to 'very important' information)
+    def _additional_datums
+      [
+        # AdditionalDatum.new(format: "text", label: "Method", value: adapter_incoming_request_params.dig("check", "method")),
+        # AdditionalDatum.new(format: "datetime", label: "Triggered At", value: adapter_incoming_request_params.dig("triggered_at"))
+      ]
+    end
+  end
+end

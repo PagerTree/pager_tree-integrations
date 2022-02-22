@@ -17,7 +17,7 @@ module PagerTree::Integrations
     attr_accessor :attachments
 
     validates :title, presence: true
-    validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}
+    validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}, if: ->(x){x.urgency.present?}
     validates :incident, inclusion: {in: [true, false]}
     validates :incident_severity, presence: true, if: :incident?
     validates :thirdparty_id, presence: true

@@ -1,0 +1,11 @@
+Description:
+    Generate a PagerTree integration
+
+Example:
+    bin/rails generate integration #{vendor}/#{version}
+
+    This will create:
+        create  app/models/pager_tree/integrations/#{vendor}/#{version}.rb
+        create  app/views/pager_tree/integrations/#{vendor}/#{version}/_form_options.html.erb
+        create  app/views/pager_tree/integrations/#{vendor}/#{version}/_show_options.html.erb
+        create  test/models/pager_tree/integrations/#{vendor}/#{version}_test.rb

@@ -1,6 +1,5 @@
 module PagerTree::Integrations
   class OutgoingWebhookDelivery < PagerTree::Integrations.outgoing_webhook_delivery_parent_class.constantize
-    self.abstract_class = true
     self.table_name = PagerTree::Integrations.outgoing_webhook_delivery_table_name
 
     serialize :data, JSON

@@ -54,7 +54,6 @@ module PagerTree::Integrations
     end
 
     def adapter_process_outgoing
-      # TODO: Add the custom format option
       body = {
         data: adapter_outgoing_event.item,
         type: adapter_outgoing_event.event_name
@@ -69,6 +68,8 @@ module PagerTree::Integrations
       )
       outgoing_webhook_delivery.save!
       outgoing_webhook_delivery.deliver_later
+
+      outgoing_webhook_delivery
     end
   end
 end

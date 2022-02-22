@@ -1,0 +1,18 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+apex_ping_v3:
+  type: "PagerTree::Integrations::ApexPing::V3"
+  # options: no_options
+
+# live_call_routing_twilio_v3:
+#   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
+#   # options:
+#     # option_account_sid:
+#     # option_api_key:
+#     # option_api_secret:
+
+outgoing_webhook_v3:
+  type: "PagerTree::Integrations::OutgoingWebhook::V3"
+  options:
+    webhook_url: "https://httpstat.us/200"
+    alert_created: true

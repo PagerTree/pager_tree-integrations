@@ -23,12 +23,15 @@ ActiveRecord::Schema.define(version: 2022_02_15_200426) do
   end
 
   create_table "pager_tree_integrations_outgoing_webhook_deliveries", force: :cascade do |t|
+    t.string "resource_type"
+    t.bigint "resource_id"
     t.string "type", null: false
     t.string "thirdparty_id"
     t.integer "status", default: 0, null: false
     t.text "data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["resource_type", "resource_id"], name: "idx_outgoing_webhook_deliveries_resource"
   end
 
 end
