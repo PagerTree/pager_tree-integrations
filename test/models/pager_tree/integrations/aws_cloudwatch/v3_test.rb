@@ -60,9 +60,11 @@ module PagerTree::Integrations
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
 
+      @integration.reload!
       @integration.adapter_incoming_request_params = @resolve_request
       assert_equal :resolve, @integration.adapter_action
 
+      @integration.reload!
       @integration.adapter_incoming_request_params = @other_request
       assert_equal :other, @integration.adapter_action
     end

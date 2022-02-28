@@ -100,10 +100,10 @@ module PagerTree::Integrations
 
     def _additional_datums
       [
-        AdditionalDatum.new(format: "text", label: "AWS Account ID", value: adapter_incoming_request_params.dig("AWSAccountId")),
-        AdditionalDatum.new(format: "text", label: "Region", value: adapter_incoming_request_params.dig("Region")),
-        AdditionalDatum.new(format: "text", label: "Alarm ARN", value: adapter_incoming_request_params.dig("AlarmArn")),
-        AdditionalDatum.new(format: "datetime", label: "State Change Time", value: adapter_incoming_request_params.dig("StateChangeTime"))
+        AdditionalDatum.new(format: "text", label: "AWS Account ID", value: _json.dig("AWSAccountId")),
+        AdditionalDatum.new(format: "text", label: "Region", value: _json.dig("Region")),
+        AdditionalDatum.new(format: "text", label: "Alarm ARN", value: _json.dig("AlarmArn")),
+        AdditionalDatum.new(format: "datetime", label: "State Change Time", value: _json.dig("StateChangeTime"))
       ]
     end
   end
