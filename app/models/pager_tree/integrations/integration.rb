@@ -34,6 +34,11 @@ module PagerTree::Integrations
       false
     end
 
+    # a function to determine if we should block the incoming request (e.g. if the payload doesn't match a signature)
+    def adapter_should_block_incoming?
+      false
+    end
+
     # A unique identifier for this integration/alert
     def adapter_thirdparty_id
       ULID.generate
