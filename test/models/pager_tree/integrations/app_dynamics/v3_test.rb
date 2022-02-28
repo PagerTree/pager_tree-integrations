@@ -82,6 +82,7 @@ module PagerTree::Integrations
 
       true_alert = Alert.new(
         title: "${latestEvent.node.name} - ${latestEvent.application.name}",
+        description: "${latestEvent.displayName} on ${latestEvent.node.name}\n\n${latestEvent.summaryMessage}",
         urgency: nil,
         thirdparty_id: "${latestEvent.id}",
         dedup_keys: ["${latestEvent.id}"],
