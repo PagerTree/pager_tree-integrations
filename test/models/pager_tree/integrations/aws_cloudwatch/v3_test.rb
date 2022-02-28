@@ -7,7 +7,6 @@ module PagerTree::Integrations
     setup do
       @integration = pager_tree_integrations_integrations(:aws_cloudwatch_v3)
 
-      # TODO: Write some requests to test the integration
       @create_request = {
         Type: "Notification",
         MessageId: "836fe1ec-79e0-56b8-827f-b66569e37e11",
@@ -46,7 +45,6 @@ module PagerTree::Integrations
     end
 
     test "sanity" do
-      # TODO: Check some sane defaults your integration should have
       assert @integration.adapter_supports_incoming?
       assert @integration.adapter_incoming_can_defer?
       assert_not @integration.adapter_supports_outgoing?
@@ -55,28 +53,27 @@ module PagerTree::Integrations
       assert_not @integration.adapter_show_outgoing_webhook_delivery?
     end
 
-    test "adapter_actions" do
-      # TODO: Check that the adapter_actions returns expected results based on the inputs
+    test "adapter_actions create" do
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
+    end
 
-      @integration = pager_tree_integrations_integrations(:aws_cloudwatch_v3)
+    test "adapter_actions resolve" do
       @integration.adapter_incoming_request_params = @resolve_request
       assert_equal :resolve, @integration.adapter_action
+    end
 
-      @integration = pager_tree_integrations_integrations(:aws_cloudwatch_v3)
+    test "adapter_actions other" do
       @integration.adapter_incoming_request_params = @other_request
       assert_equal :other, @integration.adapter_action
     end
 
     test "adapter_thirdparty_id" do
-      # TODO: Check that the third party id comes back as expected
       @integration.adapter_incoming_request_params = @create_request
       assert_equal "arn:aws:sns:us-east-1:498849832712:update-cherwell-cmdb:Saffron-Octopus-RDS", @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
-      # TODO: Check tthe entire transform
       @integration.adapter_incoming_request_params = @create_request
 
       true_alert = Alert.new(
