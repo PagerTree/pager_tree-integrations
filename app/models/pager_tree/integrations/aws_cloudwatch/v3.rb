@@ -34,7 +34,7 @@ module PagerTree::Integrations
     def adapter_process_create
       Alert.new(
         title: _title,
-        urgency: _description,
+        description: _description,
         thirdparty_id: _thirdparty_id,
         dedup_keys: [_thirdparty_id],
         additional_data: _additional_datums
@@ -79,7 +79,7 @@ module PagerTree::Integrations
     end
 
     def _is_resolve?
-      _new_state == "OK" && (_old_state == "ALARM" || _old_state == "INSUFFICIENT_DATA")
+      _new_state == "OK" && (_old_state == "INSUFFICIENT_DATA" || _old_state == "ALARM")
     end
 
     def _new_state
