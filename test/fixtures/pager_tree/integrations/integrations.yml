@@ -4,6 +4,10 @@ apex_ping_v3:
   type: "PagerTree::Integrations::ApexPing::V3"
   # options: no_options
 
+app_dynamics_v3:
+  type: "PagerTree::Integrations::AppDynamics::V3"
+  # options: no_options
+
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
   options:

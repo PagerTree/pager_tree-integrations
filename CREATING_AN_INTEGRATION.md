@@ -3,7 +3,7 @@
 You can run the following generator to create a new integration:
 
 ```bash
-rails g scaffold integration #{vendor}/#{version}
+rails g integration #{vendor}/#{version}
 ```
 
 This will create:
