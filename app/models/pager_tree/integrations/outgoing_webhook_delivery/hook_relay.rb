@@ -83,12 +83,14 @@ module PagerTree::Integrations
         timeout: 15
       }
 
-      @delivery = ::HTTParty.get(hook_relay_delivery_url, **options)
-      @delivery
+      response = ::HTTParty.get(hook_relay_delivery_url, **options)
+      @delivery = response.parsed_response if response.success?
+      
+      @delivery || {}
     end
 
     def request
-      delivery&.dig("request")
+      delivery&.dig("request") || {}
     end
 
     def responses
