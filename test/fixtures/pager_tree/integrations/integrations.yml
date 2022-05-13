@@ -16,6 +16,10 @@ aws_cloudwatch_v3:
   type: "PagerTree::Integrations::AwsCloudwatch::V3"
   # options: no_options
 
+azure_monitor_v3:
+  type: "PagerTree::Integrations::AzureMonitor::V3"
+  # options: no_options
+
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
   options:
