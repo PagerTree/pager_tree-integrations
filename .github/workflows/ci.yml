@@ -41,7 +41,9 @@ jobs:
           bundler: default
           bundler-cache: true
       - name: StandardRb check
-        run: bundle exec standardrb
+        run: |
+          bundle exec standardrb -v
+          bundle exec standardrb
       - name: Run tests
         env:
           DATABASE_URL: postgres://postgres:password@localhost:5432/test
