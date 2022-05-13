@@ -85,7 +85,7 @@ module PagerTree::Integrations
 
       response = ::HTTParty.get(hook_relay_delivery_url, **options)
       @delivery = response.parsed_response if response.success?
-      
+
       @delivery || {}
     end
 
