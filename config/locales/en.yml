@@ -10,6 +10,9 @@ en:
       auvik:
         v3:
           form_options:
+      azure_monitor:
+        v3:
+          form_options:
       email:
         v3:
           form_options:
