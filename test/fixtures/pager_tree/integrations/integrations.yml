@@ -8,6 +8,10 @@ app_dynamics_v3:
   type: "PagerTree::Integrations::AppDynamics::V3"
   # options: no_options
 
+auvik_v3:
+  type: "PagerTree::Integrations::Auvik::V3"
+  # options: no_options
+
 aws_cloudwatch_v3:
   type: "PagerTree::Integrations::AwsCloudwatch::V3"
   # options: no_options

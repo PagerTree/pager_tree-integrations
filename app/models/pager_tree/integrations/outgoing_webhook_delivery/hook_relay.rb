@@ -40,8 +40,8 @@ module PagerTree::Integrations
           pagertree_options = {
             headers: {
               Accept: "*/*",
-              'User-Agent': "pagertree outgoing webhook service; ref: #{resource&.id}; report: support@pagertree.com",
-              'Content-Type': "application/json"
+              "User-Agent": "pagertree outgoing webhook service; ref: #{resource&.id}; report: support@pagertree.com",
+              "Content-Type": "application/json"
             }
           }
 
@@ -77,7 +77,7 @@ module PagerTree::Integrations
 
       options = {
         headers: {
-          'Content-Type': "application/json",
+          "Content-Type": "application/json",
           Authorization: "Bearer #{OutgoingWebhookDelivery::HookRelay.hook_relay_api_key}"
         },
         timeout: 15
@@ -85,7 +85,7 @@ module PagerTree::Integrations
 
       response = ::HTTParty.get(hook_relay_delivery_url, **options)
       @delivery = response.parsed_response if response.success?
-      
+
       @delivery || {}
     end
 

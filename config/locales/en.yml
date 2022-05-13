@@ -7,6 +7,9 @@ en:
       apex_ping:
         v3:
           form_options:
+      auvik:
+        v3:
+          form_options:
       email:
         v3:
           form_options:

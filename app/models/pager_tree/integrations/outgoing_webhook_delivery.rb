@@ -8,7 +8,7 @@ module PagerTree::Integrations
     store_accessor :data, *[:url, :body, :auth].map(&:to_s)
 
     HTTP_OPTIONS = {
-      headers: {'Content-Type': "application/json"},
+      headers: {"Content-Type": "application/json"},
       timeout: 15
     }
 
