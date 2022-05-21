@@ -24,6 +24,10 @@ cronitor_v3:
   type: "PagerTree::Integrations::Cronitor::V3"
   # options: no_options
 
+datadog_v3:
+  type: "PagerTree::Integrations::Datadog::V3"
+  # options: no_options
+
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
   options:

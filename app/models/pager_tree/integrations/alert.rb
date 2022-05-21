@@ -15,6 +15,7 @@ module PagerTree::Integrations
     attr_accessor :dedup_keys
     attr_accessor :additional_data
     attr_accessor :attachments
+    attr_accessor :tags
 
     validates :title, presence: true
     validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}, if: ->(x) { x.urgency.present? }
@@ -42,6 +43,7 @@ module PagerTree::Integrations
       self.dedup_keys ||= []
       self.additional_data ||= []
       self.attachments ||= []
+      self.tags ||= []
     end
 
     def incident?
