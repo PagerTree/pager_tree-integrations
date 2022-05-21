@@ -7,7 +7,6 @@ module PagerTree::Integrations
     setup do
       @integration = pager_tree_integrations_integrations(:dead_mans_snitch_v3)
 
-      # TODO: Write some requests to test the integration
       @create_request = {
         type: "snitch.missing",
         timestamp: "2017-12-15T17:42:31.799Z",
@@ -33,7 +32,6 @@ module PagerTree::Integrations
     end
 
     test "sanity" do
-      # TODO: Check some sane defaults your integration should have
       assert @integration.adapter_supports_incoming?
       assert @integration.adapter_incoming_can_defer?
       assert_not @integration.adapter_supports_outgoing?
@@ -43,7 +41,6 @@ module PagerTree::Integrations
     end
 
     test "adapter_actions" do
-      # TODO: Check that the adapter_actions returns expected results based on the inputs
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
 
@@ -60,7 +57,6 @@ module PagerTree::Integrations
     end
 
     test "adapter_process_create" do
-      # TODO: Check tthe entire transform
       @integration.adapter_incoming_request_params = @create_request
 
       true_alert = Alert.new(
