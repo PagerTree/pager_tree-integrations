@@ -52,6 +52,7 @@ module PagerTree::Integrations
 
       true_alert = Alert.new(
         title: @create_request[:monitor],
+        description: @create_request[:description],
         urgency: nil,
         thirdparty_id: @create_request[:id],
         dedup_keys: [@create_request[:id]],
