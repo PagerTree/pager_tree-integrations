@@ -32,6 +32,10 @@ dead_mans_snitch_v3:
   type: "PagerTree::Integrations::DeadMansSnitch::V3"
   # options: no_options
 
+elast_alert_v3:
+  type: "PagerTree::Integrations::ElastAlert::V3"
+  # options: no_options
+
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
   options:

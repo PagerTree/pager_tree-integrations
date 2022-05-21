@@ -9,6 +9,7 @@ class IntegrationGenerator < Rails::Generators::NamedBase
   end
 
   def inject_locales
-    puts "IMPORTANT: Ensure you add your translations to config/locales/en.yml"
+    puts "IMPORTANT (1): Ensure you add your translations to config/locales/en.yml"
+    puts "IMPORTANT (2): Ensure you add your test fixtures to test/fixtures/pager_tree/integration/integrations.yml"
   end
 end

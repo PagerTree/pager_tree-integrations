@@ -2,16 +2,16 @@ module PagerTree::Integrations
   class <%= class_name %> < Integration
     # TODO: Add options that are relevant to your integration
     OPTIONS = [
-      {key: :api_key, type: :string, default: nil},
+      # {key: :api_key, type: :string, default: nil},
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
     
     # TODO - add some validations for your options
-    validates :option_api_key, presence: true
+    # validates :option_api_key, presence: true
 
     # TODO - add defaults for your options
     after_initialize do
-      self.option_api_key ||= nil
+      # self.option_api_key ||= nil
     end
 
     # TODO: Does this integration support incoming requests?
@@ -21,7 +21,7 @@ module PagerTree::Integrations
 
     # TODO: Does this integration support outgoing events?
     def adapter_supports_outgoing?
-      true
+      false
     end
 
     # TODO: can requests from this integration be deferred? most integrations should be 'true'
@@ -43,8 +43,8 @@ module PagerTree::Integrations
     # TODO: Implement your transform
     def adapter_process_create
       Alert.new(
-        title: adapter_incoming_request_params.dig("title"),
-        urgency: adapter_incoming_request_params.dig("urgency"),
+        title: _title,
+        description: _description,
         thirdparty_id: adapter_thirdparty_id,
         dedup_keys: [adapter_thirdparty_id],
         additional_data: _additional_datums
@@ -52,6 +52,16 @@ module PagerTree::Integrations
     end
 
     private
+
+    # TODO: Implement title
+    def _title
+      adapter_incoming_request_params.dig("title")
+    end
+
+    # TODO: Implement description
+    def _description
+      adapter_incoming_request_params.dig("description")
+    end
 
     # TODO: Implement any additional data that should be shown in the alert with high priority (be picky as to 'very important' information)
     def _additional_datums
