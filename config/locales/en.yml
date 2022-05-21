@@ -22,6 +22,9 @@ en:
       cronitor:
         v3:
           form_options:
+      datadog:
+        v3:
+          form_options:
       email:
         v3:
           form_options:
