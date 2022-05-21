@@ -19,7 +19,7 @@ module PagerTree::Integrations
       @resolve_request["type"] = "Recovery"
 
       @other_request = @create_request.deep_dup
-      @resolve_request["type"] = "baad"
+      @other_request["type"] = "baad"
     end
 
     test "sanity" do
