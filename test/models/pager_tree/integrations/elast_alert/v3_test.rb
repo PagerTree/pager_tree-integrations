@@ -15,10 +15,10 @@ module PagerTree::Integrations
       }.with_indifferent_access
 
       @resolve_request = @create_request.deep_dup
-      @resolve_request[:state] = "resolve"
+      @resolve_request[:event_type] = "resolve"
 
       @other_request = @create_request.deep_dup
-      @other_request[:state] = "baaad"
+      @other_request[:event_type] = "baaad"
     end
 
     test "sanity" do
