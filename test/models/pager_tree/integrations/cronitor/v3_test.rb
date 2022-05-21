@@ -44,19 +44,19 @@ module PagerTree::Integrations
 
     test "adapter_thirdparty_id" do
       @integration.adapter_incoming_request_params = @create_request
-      assert_equal @create_request.id, @integration.adapter_thirdparty_id
+      assert_equal @create_request[:id], @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
       @integration.adapter_incoming_request_params = @create_request
 
       true_alert = Alert.new(
-        title: @create_request.monitor,
+        title: @create_request[:monitor],
         urgency: nil,
-        thirdparty_id: @create_request.id,
-        dedup_keys: [@create_request.id],
+        thirdparty_id: @create_request[:id],
+        dedup_keys: [@create_request[:id]],
         additional_data: [
-          AdditionalDatum.new(format: "text", label: "Rule Violated", value: @create_request.rule)
+          AdditionalDatum.new(format: "text", label: "Rule Violated", value: @create_request[:rule])
         ]
       )
 
