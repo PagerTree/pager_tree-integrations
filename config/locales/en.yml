@@ -7,10 +7,19 @@ en:
       apex_ping:
         v3:
           form_options:
+      app_dynamics:
+        v3:
+          form_options:
       auvik:
         v3:
           form_options:
+      aws_cloudwatch:
+        v3:
+          form_options:
       azure_monitor:
+        v3:
+          form_options:
+      cronitor:
         v3:
           form_options:
       email:
