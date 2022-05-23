@@ -3,7 +3,6 @@ module PagerTree::Integrations
     OPTIONS = []
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
-    # TODO: Does this integration support incoming requests?
     def adapter_supports_incoming?
       true
     end
@@ -30,7 +29,6 @@ module PagerTree::Integrations
       end
     end
 
-    # TODO: Implement your transform
     def adapter_process_create
       Alert.new(
         title: _title,
