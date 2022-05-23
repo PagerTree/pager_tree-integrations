@@ -33,6 +33,9 @@ en:
           form_options:
             option_allow_spam_hint_html: "Allow emails marked as SPAM to create alerts"
             option_dedup_threads_hint_html: "Ignore emails from same thread (ex: Prevents new alerts for replys on emails (aka: RE:RE:RE...))"
+      freshdesk:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
