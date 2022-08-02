@@ -167,3 +167,8 @@ Don't forget to add `English (en)` translations for your integration. You need t
 
 ### Tests
 Please make sure to add appropriate tests for your addition (model tests, and if applicable, controller tests). **These should be quality tests.**
+
+You can test locally like so:
+`RAILS_ENV=test dotenv -f ".env.test.local" rails db:test:prepare test`
+
+In the `.env.test.local` file, you will want to set your `DATABASE_URL` variable

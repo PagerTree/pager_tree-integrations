@@ -36,6 +36,9 @@ en:
       freshdesk:
         v3:
           form_options:
+      freshservice:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
