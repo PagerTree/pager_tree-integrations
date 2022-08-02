@@ -39,6 +39,9 @@ en:
       freshservice:
         v3:
           form_options:
+      grafana:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
