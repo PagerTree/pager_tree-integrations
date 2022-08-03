@@ -81,6 +81,9 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+      new_relic:
+        v3:
+          form_options:
       outgoing_webhook:
         v3:
           form_options:
