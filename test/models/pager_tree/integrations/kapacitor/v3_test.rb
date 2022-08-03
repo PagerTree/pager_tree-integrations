@@ -46,7 +46,7 @@ module PagerTree::Integrations
       true_alert = Alert.new(
         title: @create_request.dig("message"),
         description: @create_request.dig("details"),
-        urgency: :medium,
+        urgency: "medium",
         thirdparty_id: @create_request.dig("id"),
         dedup_keys: [@create_request.dig("id")],
         additional_data: []

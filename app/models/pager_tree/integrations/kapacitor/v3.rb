@@ -50,11 +50,11 @@ module PagerTree::Integrations
     def _urgency
       case adapter_incoming_request_params.dig("level")
       when "INFO"
-        :low
+        "low"
       when "WARN"
-        :medium
+        "medium"
       when "CRITICAL"
-        :critical
+        "critical"
       end
     end
 
