@@ -59,6 +59,9 @@ en:
       jotform:
         v3:
           form_options:
+      kapacitor:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
