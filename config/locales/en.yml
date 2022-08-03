@@ -45,6 +45,10 @@ en:
       healthchecks:
         v3:
           form_options:
+      honeybadger:
+        v3:
+          form_options:
+            option_token_hint_html: "The Honeybadger-Token header can be used to authenticate requests from Honeybadger servers (optional)"
       live_call_routing:
         twilio:
           v3:
@@ -83,13 +87,15 @@ en:
   activerecord:
     attributes:
       "pager_tree/integrations/integration":
-          option_title_template_enabled: "Title Template"
-          option_description_template_enabled: "Description Template"
+        option_title_template_enabled: "Title Template"
+        option_description_template_enabled: "Description Template"
       "pager_tree/integrations/apex_ping/v3":
-          option_api_key: "API Key"
+        option_api_key: "API Key"
       "pager_tree/integrations/email/v3":
-          option_allow_spam: "Allow Spam"
-          option_dedup_threads: "Dedup Threads"
+        option_allow_spam: "Allow Spam"
+        option_dedup_threads: "Dedup Threads"
+      "pager_tree/integrations/honeybadger/v3":
+        option_token: "Honeybadger Token"
       "pager_tree/integrations/outgoing_webhook/v3":
         option_webhook_url: "URL"
         option_username: "Username"
