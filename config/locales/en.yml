@@ -62,6 +62,9 @@ en:
       kapacitor:
         v3:
           form_options:
+      logic_monitor:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
