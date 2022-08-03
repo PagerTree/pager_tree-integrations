@@ -85,6 +85,10 @@ live_call_routing_twilio_v3:
     option_api_key: b
     option_api_secret: c
 
+new_relic_v3:
+  type: "PagerTree::Integrations::NewRelic::V3"
+  # options: no_options
+
 outgoing_webhook_v3:
   type: "PagerTree::Integrations::OutgoingWebhook::V3"
   options:
