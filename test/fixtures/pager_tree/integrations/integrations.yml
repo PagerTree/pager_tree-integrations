@@ -70,6 +70,10 @@ jotform_v3:
   type: "PagerTree::Integrations::Jotform::V3"
   # options: no_options
 
+kapacitor_v3:
+  type: "PagerTree::Integrations::Kapacitor::V3"
+  # options: no_options
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:
