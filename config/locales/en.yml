@@ -42,6 +42,9 @@ en:
       grafana:
         v3:
           form_options:
+      healthchecks:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
