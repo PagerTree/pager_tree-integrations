@@ -57,6 +57,10 @@ honeybadger_v3:
   options:
     token: "abc123"
 
+hyperping_v3:
+  type: "PagerTree::Integrations::Hyperping::V3"
+  # options: no_options
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:

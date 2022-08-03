@@ -49,6 +49,9 @@ en:
         v3:
           form_options:
             option_token_hint_html: "The Honeybadger-Token header can be used to authenticate requests from Honeybadger servers (optional)"
+      hyperping:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
