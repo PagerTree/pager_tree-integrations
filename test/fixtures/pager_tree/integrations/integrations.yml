@@ -94,3 +94,7 @@ outgoing_webhook_v3:
   options:
     webhook_url: "https://httpstat.us/200"
     alert_created: true
+
+pingdom_v3:
+  type: "PagerTree::Integrations::Pingdom::V3"
+  # options: no_options
