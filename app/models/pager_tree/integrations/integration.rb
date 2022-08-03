@@ -1,5 +1,7 @@
 module PagerTree::Integrations
   class Integration < PagerTree::Integrations.integration_parent_class.constantize
+    extend PagerTree::Integrations::BooleanStoreAccessor
+
     serialize :options, JSON
     encrypts :options
 
@@ -13,10 +15,8 @@ module PagerTree::Integrations
 
     before_validation :cast_types
 
-    attribute :option_title_template_enabled, :boolean, default: false
-    attribute :option_description_template_enabled, :boolean, default: false
-    attribute :option_title_template, :string, default: nil
-    attribute :option_description_template, :string, default: nil
+    boolean_store_accessor :option_title_template_enabled
+    boolean_store_accessor :option_description_template_enabled
 
     # careful controller is not always guaranteed
     attribute :adapter_controller
@@ -35,7 +35,7 @@ module PagerTree::Integrations
     end
 
     # a function to determine if we should block the incoming request (e.g. if the payload doesn't match a signature)
-    def adapter_should_block_incoming?
+    def adapter_should_block_incoming?(request)
       false
     end
 
@@ -73,6 +73,16 @@ module PagerTree::Integrations
     end
     # END basic outgoing functions
 
+    # START template functions
+    def adapter_supports_title_template?
+      true
+    end
+
+    def adapter_supports_description_template?
+      true
+    end
+    # END template functions
+
     # START basic show functions
     def adapter_show_alerts?
       adapter_supports_incoming?
@@ -108,7 +118,7 @@ module PagerTree::Integrations
     end
 
     def adapter_response_blocked
-      adapter_controller&.head(:bad_request)
+      adapter_controller&.head(:forbidden)
     end
 
     def adapter_response_deferred

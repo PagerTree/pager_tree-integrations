@@ -52,6 +52,11 @@ healthchecks_v3:
   type: "PagerTree::Integrations::Healthchecks::V3"
   # options: no_options
 
+honeybadger_v3:
+  type: "PagerTree::Integrations::Honeybadger::V3"
+  options:
+    token: "abc123"
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:

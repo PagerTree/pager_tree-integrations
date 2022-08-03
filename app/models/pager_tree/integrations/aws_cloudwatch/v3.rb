@@ -11,8 +11,8 @@ module PagerTree::Integrations
       true
     end
 
-    def adapter_should_block_incoming?
-      !Aws::SNS::MessageVerifier.new.authentic?(adapter_incoming_request_params)
+    def adapter_should_block_incoming?(request)
+      !Aws::SNS::MessageVerifier.new.authentic?(request.params)
     end
 
     def adapter_thirdparty_id
