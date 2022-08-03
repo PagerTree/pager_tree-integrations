@@ -48,6 +48,10 @@ grafana_v3:
   type: "PagerTree::Integrations::Grafana::V3"
   # options: no_options
 
+healthchecks_v3:
+  type: "PagerTree::Integrations::Healthchecks::V3"
+  # options: no_options
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:
