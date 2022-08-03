@@ -1,6 +1,5 @@
 module PagerTree::Integrations
   class Healthchecks::V3 < Integration
-    # TODO: Add options that are relevant to your integration
     OPTIONS = []
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
