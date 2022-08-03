@@ -66,6 +66,10 @@ jira_server_v3:
   options:
     issue_updated: false
 
+jotform_v3:
+  type: "PagerTree::Integrations::Jotform::V3"
+  # options: no_options
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:

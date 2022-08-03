@@ -56,6 +56,9 @@ en:
         v3:
           form_options:
             option_issue_updated_hint_html: "Create alert on the jira:issue_updated event? (only one alert per unique issue)"
+      jotform:
+        v3:
+          form_options:
       live_call_routing:
         twilio:
           v3:
