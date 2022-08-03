@@ -26,7 +26,6 @@ module PagerTree::Integrations
       :create
     end
 
-    # TODO: Implement your transform
     def adapter_process_create
       Alert.new(
         title: _title,
