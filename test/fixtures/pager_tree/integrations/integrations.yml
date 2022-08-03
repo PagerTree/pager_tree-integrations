@@ -61,6 +61,11 @@ hyperping_v3:
   type: "PagerTree::Integrations::Hyperping::V3"
   # options: no_options
 
+jira_server_v3:
+  type: "PagerTree::Integrations::JiraServer::V3"
+  options:
+    issue_updated: false
+
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:

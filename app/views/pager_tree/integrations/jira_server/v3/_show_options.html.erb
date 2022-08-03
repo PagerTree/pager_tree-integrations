@@ -1,0 +1,12 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/jira_server/v3.option_issue_updated") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_issue_updated } %>
+      </p>
+    </div>
+  </dd>
+</div>
