@@ -52,6 +52,10 @@ en:
       hyperping:
         v3:
           form_options:
+      jira_server:
+        v3:
+          form_options:
+            option_issue_updated_hint_html: "Create alert on the jira:issue_updated event? (only one alert per unique issue)"
       live_call_routing:
         twilio:
           v3:
@@ -99,6 +103,8 @@ en:
         option_dedup_threads: "Dedup Threads"
       "pager_tree/integrations/honeybadger/v3":
         option_token: "Honeybadger Token"
+      "pager_tree/integrations/jira_server/v3":
+        option_issue_updated: "Trigger on issue.updated event"
       "pager_tree/integrations/outgoing_webhook/v3":
         option_webhook_url: "URL"
         option_username: "Username"
