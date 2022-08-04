@@ -46,7 +46,7 @@ module PagerTree::Integrations
           },
           account: {
             id: 123,
-            name: "R3",
+            name: "Acme Inc.",
             brand: "uptime",
             timezone: "America/New_York",
             site_url: "https://uptime.com"
