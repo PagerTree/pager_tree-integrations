@@ -58,7 +58,7 @@ module PagerTree::Integrations
     end
 
     def _urgency
-      level = adapter_incoming_request_params.dig("level")
+      level = adapter_incoming_request_params.dig("level").to_s.downcase
       case level
       when "warn", "warning"
         "medium"

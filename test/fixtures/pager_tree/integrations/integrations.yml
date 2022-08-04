@@ -118,3 +118,8 @@ site24x7_v3:
 solar_winds_v3:
   type: "PagerTree::Integrations::SolarWinds::V3"
   # options: no_options
+
+stackdriver_v3:
+  type: "PagerTree::Integrations::Stackdriver::V3"
+  # options: no_options
+  
