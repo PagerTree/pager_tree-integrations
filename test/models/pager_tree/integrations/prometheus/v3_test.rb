@@ -22,15 +22,15 @@ module PagerTree::Integrations
             job: "kube-state-metrics",
             k8s_app: "kube-state-metrics",
             namespace: "testapp-test",
-            pod: "testapp-test-api-worker-deployment-686b8f9b75-hbplv",
+            pod: "testapp-test-api-worker-deployment-1234567890-abcef",
             severity: "critical"
           },
           annotations: {
-            summary: "Container testapp-api-worker of pod testapp-test-api-worker-deployment-686b8f9b75-hbplv has been restarted"
+            summary: "Container testapp-api-worker of pod testapp-test-api-worker-deployment-1234567890-abcef has been restarted"
           },
           startsAt: "2022-08-04T09:01:58.1Z",
           endsAt: "0001-01-01T00:00:00Z",
-          generatorURL: "http://b8b09e08847e:9090/graph?g0.expr=increase%28kube_pod_container_status_restarts_total%5B5m%5D%29+%3E+1&g0.tab=1",
+          generatorURL: "http://127.0.0.1:9090/graph?g0.expr=increase%28kube_pod_container_status_restarts_total%5B5m%5D%29+%3E+1&g0.tab=1",
           fingerprint: "fb1ae09cb86a3c47"
         }],
         groupLabels: {
@@ -46,11 +46,11 @@ module PagerTree::Integrations
           job: "kube-state-metrics",
           k8s_app: "kube-state-metrics",
           namespace: "testapp-test",
-          pod: "testapp-test-api-worker-deployment-686b8f9b75-hbplv",
+          pod: "testapp-test-api-worker-deployment-1234567890-abcef",
           severity: "critical"
         },
         commonAnnotations: {
-          summary: "Container testapp-api-worker of pod testapp-test-api-worker-deployment-686b8f9b75-hbplv has been restarted"
+          summary: "Container testapp-api-worker of pod testapp-test-api-worker-deployment-1234567890-abcef has been restarted"
         },
         externalURL: "http://127.0.01:9093",
         version: "4",
