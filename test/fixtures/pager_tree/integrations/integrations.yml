@@ -106,3 +106,7 @@ prometheus_v3:
 prtg_v3:
   type: "PagerTree::Integrations::Prtg::V3"
   # options: no_options
+
+server_guard24_v3:
+  type: "PagerTree::Integrations::ServerGuard24::V3"
+  # options: no_options
