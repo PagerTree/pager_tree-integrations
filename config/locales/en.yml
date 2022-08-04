@@ -49,6 +49,10 @@ en:
             option_alert_handoff_hint_html: "Send when the alert has been handed off"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
             option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
+      server_guard24:
+        v3:
+          form_options:
+            option_resolve_warn_hint_html: "Resolve the alert when <code>'check_result' === 'WARNING'</code>"
       # SCAFFOLD_INTEGRATION
         
 
@@ -93,4 +97,6 @@ en:
         option_force_input: "Force Caller Input"
         option_record: "Voicemail"
         option_record_emails_list: "Voicemail Emails"
+      "pager_tree/integrations/server_guard24/v3":
+        option_resolve_warn: "Resolve on Warning"
       # SCAFFOLD_ACTIVE_RECORD
