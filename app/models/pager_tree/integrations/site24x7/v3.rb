@@ -53,7 +53,6 @@ module PagerTree::Integrations
       "#{adapter_incoming_request_params.dig("MONITORNAME")} is DOWN because #{adapter_incoming_request_params.dig("INCIDENT_REASON")}"
     end
 
-    # TODO: Implement any additional data that should be shown in the alert with high priority (be picky as to 'very important' information)
     def _additional_datums
       [
         AdditionalDatum.new(format: "link", label: "Site 24x7 Dashboard URL", value: adapter_incoming_request_params.dig("MONITOR_DASHBOARD_LINK")),
