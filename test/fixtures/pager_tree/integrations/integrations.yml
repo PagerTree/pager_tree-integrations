@@ -102,3 +102,7 @@ pingdom_v3:
 prometheus_v3:
   type: "PagerTree::Integrations::Prometheus::V3"
   # options: no_options
+
+prtg_v3:
+  type: "PagerTree::Integrations::Prtg::V3"
+  # options: no_options
