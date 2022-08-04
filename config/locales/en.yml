@@ -4,67 +4,19 @@ en:
       common:
         default: "default"
         none: "none"
-      apex_ping:
-        v3:
-          form_options:
-      app_dynamics:
-        v3:
-          form_options:
-      auvik:
-        v3:
-          form_options:
-      aws_cloudwatch:
-        v3:
-          form_options:
-      azure_monitor:
-        v3:
-          form_options:
-      cronitor:
-        v3:
-          form_options:
-      datadog:
-        v3:
-          form_options:
-      elast_alert:
-        v3:
-          form_options:
       email:
         v3:
           form_options:
             option_allow_spam_hint_html: "Allow emails marked as SPAM to create alerts"
             option_dedup_threads_hint_html: "Ignore emails from same thread (ex: Prevents new alerts for replys on emails (aka: RE:RE:RE...))"
-      freshdesk:
-        v3:
-          form_options:
-      freshservice:
-        v3:
-          form_options:
-      grafana:
-        v3:
-          form_options:
-      healthchecks:
-        v3:
-          form_options:
       honeybadger:
         v3:
           form_options:
             option_token_hint_html: "The Honeybadger-Token header can be used to authenticate requests from Honeybadger servers (optional)"
-      hyperping:
-        v3:
-          form_options:
       jira_server:
         v3:
           form_options:
             option_issue_updated_hint_html: "Create alert on the jira:issue_updated event? (only one alert per unique issue)"
-      jotform:
-        v3:
-          form_options:
-      kapacitor:
-        v3:
-          form_options:
-      logic_monitor:
-        v3:
-          form_options:
       live_call_routing:
         twilio:
           v3:
@@ -81,9 +33,6 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
-      new_relic:
-        v3:
-          form_options:
       outgoing_webhook:
         v3:
           form_options:
@@ -100,9 +49,6 @@ en:
             option_alert_handoff_hint_html: "Send when the alert has been handed off"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
             option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
-      pingdom:
-        v3:
-          form_options:
       # SCAFFOLD_INTEGRATION
         
 

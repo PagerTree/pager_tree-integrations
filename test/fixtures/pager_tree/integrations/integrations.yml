@@ -98,3 +98,7 @@ outgoing_webhook_v3:
 pingdom_v3:
   type: "PagerTree::Integrations::Pingdom::V3"
   # options: no_options
+
+prometheus_v3:
+  type: "PagerTree::Integrations::Prometheus::V3"
+  # options: no_options
