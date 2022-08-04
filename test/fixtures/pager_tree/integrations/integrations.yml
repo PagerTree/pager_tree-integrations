@@ -130,3 +130,8 @@ status_cake_v3:
 typeform_v3:
   type: "PagerTree::Integrations::Typeform::V3"
   # options: no_options
+
+uptime_v3:
+  type: "PagerTree::Integrations::Uptime::V3"
+  # options: no_options
+  
