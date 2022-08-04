@@ -5,6 +5,8 @@ module PagerTree::Integrations
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
+    validates :option_resolve_warn, inclusion: {in: [true, false]}
+
     after_initialize do
       self.option_resolve_warn ||= false
     end

@@ -110,3 +110,7 @@ prtg_v3:
 server_guard24_v3:
   type: "PagerTree::Integrations::ServerGuard24::V3"
   # options: no_options
+
+site24x7_v3:
+  type: "PagerTree::Integrations::Site24x7::V3"
+  # options: no_options
