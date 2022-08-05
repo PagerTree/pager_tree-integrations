@@ -8,7 +8,7 @@ module PagerTree::Integrations
         description: "This is a simple alert",
         urgency: "low",
         incident: true,
-        incident_severity: "critical",
+        incident_severity: "SEV-1",
         incident_message: "This is a test incident message",
         meta: {
           foo: "bar"
@@ -25,7 +25,7 @@ module PagerTree::Integrations
       assert_equal "This is a simple alert", @valid_alert.description
       assert_equal "low", @valid_alert.urgency
       assert_equal true, @valid_alert.incident?
-      assert_equal "critical", @valid_alert.incident_severity
+      assert_equal "SEV-1", @valid_alert.incident_severity
       assert_equal "This is a test incident message", @valid_alert.incident_message
       assert_equal "12345", @valid_alert.thirdparty_id
       assert_equal ["foo", "bar"], @valid_alert.dedup_keys
@@ -69,6 +69,14 @@ module PagerTree::Integrations
 
       clone = @valid_alert.dup
       clone.thirdparty_id = nil
+      assert_not clone.valid?
+
+      clone = @valid_alert.dup
+      clone.urgency = "not_an_urgency"
+      assert_not clone.valid?
+
+      clone = @valid_alert.dup
+      clone.incident_severity = "not_a_severity"
       assert_not clone.valid?
     end
   end

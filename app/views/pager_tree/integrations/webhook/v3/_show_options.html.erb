@@ -1,0 +1,26 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_token") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_token %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_capture_additional_data") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_capture_additional_data } %>
+      </p>
+    </div>
+  </dd>
+</div>

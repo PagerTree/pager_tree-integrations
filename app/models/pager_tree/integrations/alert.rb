@@ -20,7 +20,7 @@ module PagerTree::Integrations
     validates :title, presence: true
     validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}, if: ->(x) { x.urgency.present? }
     validates :incident, inclusion: {in: [true, false]}
-    validates :incident_severity, presence: true, if: :incident?
+    validates :incident_severity, presence: true, inclusion: {in: ["SEV-1", "SEV-2", "SEV-3", "SEV-4", "SEV-5", "SEV-UNKNOWN"]}, if: :incident?
     validates :thirdparty_id, presence: true
 
     define_model_callbacks :initialize

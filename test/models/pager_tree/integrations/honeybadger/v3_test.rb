@@ -401,5 +401,12 @@ module PagerTree::Integrations
 
       assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
     end
+
+    test "blocking_incoming" do
+      @blocked_request = @create_request.deep_dup
+      @integration.option_token = "abc123"
+      assert @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"honeybadger-token" => ""}}))
+      assert_not @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"honeybadger-token" => "abc123"}}))
+    end
   end
 end

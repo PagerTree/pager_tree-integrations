@@ -53,6 +53,11 @@ en:
         v3:
           form_options:
             option_resolve_warn_hint_html: "Resolve the alert when <code>'check_result' === 'WARNING'</code>"
+      webhook:
+        v3:
+          form_options:
+            option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
+            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"
       # SCAFFOLD_INTEGRATION
         
 
@@ -99,4 +104,7 @@ en:
         option_record_emails_list: "Voicemail Emails"
       "pager_tree/integrations/server_guard24/v3":
         option_resolve_warn: "Resolve on Warning"
+      "pager_tree/integrations/webhook/v3":
+        option_token: "PagerTree Token"
+        option_capture_additional_data: "Capture Additional Data"
       # SCAFFOLD_ACTIVE_RECORD
