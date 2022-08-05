@@ -142,4 +142,8 @@ uptime_robot_v3:
 webhook_v3:
   type: "PagerTree::Integrations::Webhook::V3"
   # options: no_options
+
+zendesk_v3:
+  type: "PagerTree::Integrations::Zendesk::V3"
+  # options: no_options
   
