@@ -1,0 +1,15 @@
+<div class="grid grid-cols-1 gap-4">
+  <div class="form-group">
+    <%= form.label :option_token %>
+    <%= form.text_field :option_token, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_token_hint_html") %></p>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="form-group">
+    <%= form.check_box :option_capture_additional_data, class: "form-checkbox mr-1" %>
+    <%= form.label :option_capture_additional_data, class: "inline-block" %>
+    <p class="form-hint"><%== t(".option_capture_additional_data_hint_html") %></p>
+  </div>
+</div>
