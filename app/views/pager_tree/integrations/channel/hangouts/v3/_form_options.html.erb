@@ -1,0 +1,34 @@
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="form-group md:col-span-3">
+    <%= form.label :option_incoming_webhook_url %>
+    <%= form.text_field :option_incoming_webhook_url, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_incoming_webhook_url_hint_html") %></p>
+  </div>
+
+  <% 
+    opts = [
+      :alert_open,
+      :alert_acknowledged,
+      :alert_resolved,
+      :alert_dropped,
+    ]
+  %>
+  <% opts.each do |opt| %>
+    <div class="form-group">
+      <%= form.check_box "option_#{opt.to_s}".to_sym, class: "form-checkbox mr-1" %>
+      <%= form.label "option_#{opt.to_s}".to_sym, class: "inline-block" %>
+      <p class="form-hint"><%== t(".option_#{opt.to_s}_hint_html") %></p>
+    </div>
+  <% end %>
+  
+</div>
+
+
+<div class="grid grid-cols-1 gap-4">
+  <%= tag.div class: "form-group", data: {controller: "code-editor", code_editor_language_value: "yaml", code_editor_read_only_value: false } do %>
+    <%= form.label :option_outgoing_rules, t("pager_tree.integrations.common.option_outgoing_rules") %>
+    <%= form.hidden_field :option_outgoing_rules, class: "form-control", data: {code_editor_target: "form"} %>
+    <%= tag.div class: "h-96", data: {code_editor_target: "editor"} do %><%= form.object.option_outgoing_rules %><% end %>
+    <p class="form-hint"><%== t("pager_tree.integrations.common.option_outgoing_rules_hint_html") %></p>
+  <% end %>
+</div>

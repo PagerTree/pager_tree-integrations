@@ -114,7 +114,7 @@ module PagerTree::Integrations
       return @_title if @_title.present?
 
       @_title = if _alert.incident?
-        "Incident ##{_alert.tiny_id} [#{_alert.incident_severity}] #{_alert.incident_message} - #{_alert.title}"
+        "Incident ##{_alert.tiny_id} [#{_alert.incident_severity.upcase.dasherize}] #{_alert.incident_message} - #{_alert.title}"
       else
         "Alert ##{_alert.tiny_id} #{_alert.title}"
       end
