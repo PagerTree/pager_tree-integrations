@@ -4,6 +4,19 @@ en:
       common:
         default: "default"
         none: "none"
+        option_outgoing_rules: "Outgoing Rules"
+        option_outgoing_rules_hint_html: Outgoing Rules <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#rules' target='_blank'>(see docs)</a> for details.
+        option_incoming_webhook_url_hint_html: "URL to POST to"
+        option_alert_created_hint_html: "Send when the alert is created (before its routed)"
+        option_alert_open_hint_html: "Send when the alert is marked open (it has been routed)"
+        option_alert_acknowledged_hint_html: "Send when a user has acknowledged the alert"
+        option_alert_rejected_hint_html: "Send when a user has rejected the alert"
+        option_alert_timeout_hint_html: "Send when the alert has timed out a layer"
+        option_alert_resolved_hint_html: "Send when the alert is marked resolved"
+        option_alert_dropped_hint_html: "Send when the alert is dropped"
+        option_alert_handoff_hint_html: "Send when the alert has been handed off"
+        option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
+        option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
       email:
         v3:
           form_options:
@@ -39,16 +52,7 @@ en:
             option_webhook_url_hint_html: "URL to POST to"
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
-            option_alert_created_hint_html: "Send when the alert is created (before its routed)"
-            option_alert_open_hint_html: "Send when the alert is marked open (it has been routed)"
-            option_alert_acknowledged_hint_html: "Send when a user has acknowledged the alert"
-            option_alert_rejected_hint_html: "Send when a user has rejected the alert"
-            option_alert_timeout_hint_html: "Send when the alert has timed out a layer"
-            option_alert_resolved_hint_html: "Send when the alert is marked resolved"
-            option_alert_dropped_hint_html: "Send when the alert is dropped"
-            option_alert_handoff_hint_html: "Send when the alert has been handed off"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
-            option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
       server_guard24:
         v3:
           form_options:
@@ -57,7 +61,7 @@ en:
         v3:
           form_options:
             option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
-            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"
+            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"              
       # SCAFFOLD_INTEGRATION
         
 
@@ -66,6 +70,16 @@ en:
       "pager_tree/integrations/integration":
         option_title_template_enabled: "Title Template"
         option_description_template_enabled: "Description Template"
+        option_incoming_webhook_url: "URL"
+        option_alert_created: "alert.created"
+        option_alert_open: "alert.open"
+        option_alert_acknowledged: "alert.acknowledged"
+        option_alert_rejected: "alert.rejected"
+        option_alert_timeout: "alert.timeout"
+        option_alert_resolved: "alert.resolved"
+        option_alert_dropped: "alert.dropped"
+        option_alert_handoff: "alert.handoff"
+        option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"
       "pager_tree/integrations/email/v3":
@@ -79,14 +93,6 @@ en:
         option_webhook_url: "URL"
         option_username: "Username"
         option_password: "Password"
-        option_alert_created: "alert.created"
-        option_alert_open: "alert.open"
-        option_alert_acknowledged: "alert.acknowledged"
-        option_alert_rejected: "alert.rejected"
-        option_alert_timeout: "alert.timeout"
-        option_alert_resolved: "alert.resolved"
-        option_alert_dropped: "alert.dropped"
-        option_alert_handoff: "alert.handoff"
         option_template: "JSON Template"
         option_send_linked: "Send Linked"
       "pager_tree/integrations/live_call_routing/twilio/v3":

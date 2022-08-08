@@ -146,4 +146,46 @@ webhook_v3:
 zendesk_v3:
   type: "PagerTree::Integrations::Zendesk::V3"
   # options: no_options
+
+channel_hangouts_v3:
+  type: "PagerTree::Integrations::Channel::Hangouts::V3"
+  options:
+    incoming_webhook_url: "https://chat.googleapis.com/v1/spaces/AAAAAAA/messages?key=abc123"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
+channel_mattermost_v3:
+  type: "PagerTree::Integrations::Channel::Mattermost::V3"
+  options:
+    incoming_webhook_url: "https://hooks.mattermost.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
+channel_microsoft_teams_v3:
+  type: "PagerTree::Integrations::Channel::MicrosoftTeams::V3"
+  options:
+    incoming_webhook_url: "https://pagertree.webhook.office.com/webhookb2/abcd/incoming_webhook/00000000-0000-0000-0000-000000000000"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
+
+channel_slack_v3:
+  type: "PagerTree::Integrations::Channel::Slack::V3"
+  options:
+    incoming_webhook_url: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
   

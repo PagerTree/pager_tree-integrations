@@ -1,0 +1,40 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/integration.option_incoming_webhook_url") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_incoming_webhook_url %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<% 
+  opts = [
+    :alert_open,
+    :alert_acknowledged,
+    :alert_resolved,
+    :alert_dropped,
+  ]
+%>
+<% opts.each do |opt| %>
+  <div class="sm:col-span-1">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt.to_s}") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>
+    </dd>
+  </div>
+<% end %>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("pager_tree.integrations.common.option_outgoing_rules") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
+  </dd>
+</div>

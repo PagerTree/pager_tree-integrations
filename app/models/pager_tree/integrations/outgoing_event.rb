@@ -7,6 +7,7 @@ module PagerTree::Integrations
     attr_accessor :event_name
     attr_accessor :item
     attr_accessor :changes
+    attr_accessor :outgoing_rules_data
 
     define_model_callbacks :initialize
 
@@ -20,6 +21,7 @@ module PagerTree::Integrations
       self.event_name ||= nil
       self.item ||= nil
       self.changes ||= nil
+      self.outgoing_rules_data ||= {}
     end
   end
 end
