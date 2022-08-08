@@ -17,8 +17,6 @@ module PagerTree::Integrations
     attr_accessor :attachments
     attr_accessor :tags
 
-    boolean_store_accessor :incident
-
     validates :title, presence: true
     validates :urgency, inclusion: {in: ["silent", "low", "medium", "high", "critical"]}, if: ->(x) { x.urgency.present? }
     validates :incident, inclusion: {in: [true, false]}
@@ -46,6 +44,10 @@ module PagerTree::Integrations
       self.additional_data ||= []
       self.attachments ||= []
       self.tags ||= []
+    end
+
+    def incident?
+      ActiveModel::Type::Boolean.new.cast(self.incident)
     end
 
     def push_additional_data(additional_datum)

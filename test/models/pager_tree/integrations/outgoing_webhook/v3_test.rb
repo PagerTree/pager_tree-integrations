@@ -42,7 +42,7 @@ module PagerTree::Integrations
       }
       expected_payload = {
         data: data[:item],
-        type: data[:event_name]
+        type: "alert.created"
       }
 
       @integration.adapter_outgoing_event = OutgoingEvent.new(**data)
