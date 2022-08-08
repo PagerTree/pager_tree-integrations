@@ -131,7 +131,7 @@ module PagerTree::Integrations
                           text: "VIEW IN PAGERTREE",
                           onClick: {
                             openLink: {
-                              url: Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}")
+                              url: nil
                             }
                           }
                         }

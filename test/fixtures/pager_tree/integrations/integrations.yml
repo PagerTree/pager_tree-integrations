@@ -167,6 +167,17 @@ channel_mattermost_v3:
     alert_dropped: false
     outgoing_rules: ""
 
+channel_microsoft_teams_v3:
+  type: "PagerTree::Integrations::Channel::MicrosoftTeams::V3"
+  options:
+    incoming_webhook_url: "https://pagertree.webhook.office.com/webhookb2/abcd/incoming_webhook/00000000-0000-0000-0000-000000000000"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
+
 channel_slack_v3:
   type: "PagerTree::Integrations::Channel::Slack::V3"
   options:

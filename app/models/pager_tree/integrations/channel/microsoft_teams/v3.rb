@@ -74,7 +74,7 @@ module PagerTree::Integrations
         summary: _title,
         sections: [{
           activityTitle: _title,
-          activitySubtitle: _alert.description.to_plain_text,
+          activitySubtitle: _alert.description&.try(:to_plain_text),
           facts: [
             {
               name: "Status",
@@ -94,11 +94,11 @@ module PagerTree::Integrations
             },
             {
               name: "Destinations",
-              value: _alert.alert_destinations.map { |d| d.destination.name }.join(", ")
+              value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
             },
             {
               name: "User",
-              value: _alert.alert_responders.where(role: :incident_commander).includes(account_user: :user).first&.account_user&.name
+              value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
             }
           ],
           markdown: true
@@ -109,7 +109,7 @@ module PagerTree::Integrations
             "@type": "ViewAction",
             name: "View in PagerTree",
             target: [
-              Rails.application.routes.url_helpers.alert_url(_alert, script_name: "/#{_alert.account_id}")
+              Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}")
             ]
           }
         ]
