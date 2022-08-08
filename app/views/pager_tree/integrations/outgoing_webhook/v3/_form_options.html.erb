@@ -34,7 +34,7 @@
     <div class="form-group">
       <%= form.check_box "option_#{opt.to_s}".to_sym, class: "form-checkbox mr-1" %>
       <%= form.label "option_#{opt.to_s}".to_sym, class: "inline-block" %>
-      <p class="form-hint"><%== t(".option_#{opt.to_s}_hint_html") %></p>
+      <p class="form-hint"><%== t("pager_tree.integrations.common.option_#{opt.to_s}_hint_html") %></p>
     </div>
   <% end %>
   

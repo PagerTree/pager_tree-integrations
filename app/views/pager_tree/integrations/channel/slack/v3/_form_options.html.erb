@@ -2,7 +2,7 @@
   <div class="form-group md:col-span-3">
     <%= form.label :option_incoming_webhook_url %>
     <%= form.text_field :option_incoming_webhook_url, class: "form-control" %>
-    <p class="form-hint"><%== t(".option_incoming_webhook_url_hint_html") %></p>
+    <p class="form-hint"><%== t("pager_tree.integrations.common.option_incoming_webhook_url_hint_html") %></p>
   </div>
 
   <% 
@@ -17,7 +17,7 @@
     <div class="form-group">
       <%= form.check_box "option_#{opt.to_s}".to_sym, class: "form-checkbox mr-1" %>
       <%= form.label "option_#{opt.to_s}".to_sym, class: "inline-block" %>
-      <p class="form-hint"><%== t(".option_#{opt.to_s}_hint_html") %></p>
+      <p class="form-hint"><%== t("pager_tree.integrations.common.option_#{opt.to_s}_hint_html") %></p>
     </div>
   <% end %>
   
