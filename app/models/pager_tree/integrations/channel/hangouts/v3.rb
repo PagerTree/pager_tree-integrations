@@ -72,7 +72,7 @@ module PagerTree::Integrations
           {
             header: {
               title: _title,
-              subtitle: _alert.description.to_plain_text,
+              subtitle: _alert.description&.try(:to_plain_text),
               imageUrl: _color,
               imageStyle: "AVATAR"
             },
@@ -81,7 +81,7 @@ module PagerTree::Integrations
                 widgets: [
                   {
                     textParagraph: {
-                      text: _alert.description.to_plain_text
+                      text: _alert.description&.try(:to_plain_text)
                     }
                   },
                   {
@@ -111,13 +111,13 @@ module PagerTree::Integrations
                   {
                     keyValue: {
                       topLabel: "Destinations",
-                      content: _alert.alert_destinations.map { |d| d.destination.name }.join(", ")
+                      content: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
                     }
                   },
                   {
                     keyValue: {
                       topLabel: "User",
-                      content: _alert.alert_responders.where(role: :incident_commander).includes(account_user: :user).first&.account_user&.name
+                      content: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
                     }
                   }
                 ]
@@ -131,7 +131,7 @@ module PagerTree::Integrations
                           text: "VIEW IN PAGERTREE",
                           onClick: {
                             openLink: {
-                              url: Rails.application.routes.url_helpers.alert_url(_alert, script_name: "/#{_alert.account_id}")
+                              url: Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}")
                             }
                           }
                         }

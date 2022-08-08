@@ -1,12 +1,12 @@
 require "test_helper"
 
 module PagerTree::Integrations
-  class Channel::Mattermost::V3Test < ActiveSupport::TestCase
+  class Channel::Hangouts::V3Test < ActiveSupport::TestCase
     include Integrateable
     include ActiveJob::TestHelper
 
     setup do
-      @integration = pager_tree_integrations_integrations(:channel_mattermost_v3)
+      @integration = pager_tree_integrations_integrations(:channel_hangouts_v3)
 
       @alert = JSON.parse({
         id: "01G9ZET2HZSTA9B0YDAB9G7XPZ",
@@ -53,41 +53,66 @@ module PagerTree::Integrations
       }
 
       @expected_payload = {
-        username: "PagerTree",
-        icon_url: "https://pagertree.com/assets/img/logo/pagertree-icon-256-256.png",
-        text: "",
-        attachments: [
+        cards: [
           {
-            fallback: "Alert ##{@alert.tiny_id} #{@alert.title}",
-            color: "#fb8c00",
-            title: "Alert ##{@alert.tiny_id} #{@alert.title}",
-            title_link: nil,
-            text: nil,
-            fields: [
+            header: {
+              title: "Alert ##{@alert.tiny_id} #{@alert.title}",
+              subtitle: @alert.description&.try(:to_plain_text),
+              imageUrl: "https://pagertree.com/assets/img/icon/yellow-square.png",
+              imageStyle: "AVATAR"
+            },
+            sections: [
               {
-                title: "Status",
-                value: @alert.status,
-                short: "true"
-              },
-              {
-                title: "Urgency",
-                value: @alert.urgency,
-                short: "true"
-              },
-              {
-                title: "Created",
-                value: "<!date^#{@alert.created_at.utc.to_i}^{date_num} {time_secs}|#{@alert.created_at.utc.to_i}>",
-                short: "true"
-              },
-              {
-                title: "Source",
-                value: @alert.source&.name,
-                short: "true"
-              },
-              {
-                title: "Destinations",
-                value: @alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
-                short: "false"
+                widgets: [
+                  {
+                    keyValue: {
+                      topLabel: "Status",
+                      content: @alert.status.to_s.upcase
+                    }
+                  },
+                  {
+                    keyValue: {
+                      topLabel: "Urgency",
+                      content: @alert.urgency.to_s.upcase
+                    }
+                  },
+                  {
+                    keyValue: {
+                      topLabel: "Created",
+                      content: @alert.created_at.utc
+                    }
+                  },
+                  {
+                    keyValue: {
+                      topLabel: "Source",
+                      content: @alert.source&.name
+                    }
+                  },
+                  {
+                    keyValue: {
+                      topLabel: "Destinations",
+                      content: @alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
+                    }
+                  }
+                ]
+
+              }, {
+                widgets: [
+                  {
+                    buttons: [
+                      {
+                        textButton: {
+                          text: "VIEW IN PAGERTREE",
+                          onClick: {
+                            openLink: {
+                              url: nil
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

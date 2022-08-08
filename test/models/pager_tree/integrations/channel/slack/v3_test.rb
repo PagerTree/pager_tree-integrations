@@ -144,6 +144,5 @@ module PagerTree::Integrations
 
       assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
     end
-
   end
 end
