@@ -13,7 +13,8 @@ module PagerTree::Integrations
       {key: :alert_dropped, type: :boolean, default: false},
       {key: :alert_handoff, type: :boolean, default: false},
       {key: :template, type: :string, default: nil},
-      {key: :send_linked, type: :boolean, default: false}
+      {key: :send_linked, type: :boolean, default: false},
+      {key: :outgoing_rules, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -39,6 +40,7 @@ module PagerTree::Integrations
       self.option_alert_handoff ||= false
       self.option_send_linked ||= false
       self.option_template ||= ""
+      self.option_outgoing_rules ||= ""
     end
 
     def adapter_supports_outgoing?
@@ -49,20 +51,49 @@ module PagerTree::Integrations
       true
     end
 
+    def adapter_supports_title_template?
+      false
+    end
+
+    def adapter_supports_description_template?
+      false
+    end
+
     def adapter_outgoing_interest?(event_name)
       try("option_#{event_name}") || false
     end
 
     def adapter_process_outgoing
-      body = {
-        data: adapter_outgoing_event.item,
-        type: adapter_outgoing_event.event_name
+      body = nil
+      event_type = adapter_outgoing_event.event_name.to_s.tr("_", ".")
+
+      # Do the custom templating portion for outgoing hooks
+      if self.option_template.present?
+        begin
+          body = JSON.parse(handlebars(self.option_template, {
+            alert: adapter_outgoing_event.item.try(:v3_format) || adapter_outgoing_event.item,
+            event: {
+              type: event_type
+            }
+          }))
+        rescue JSON::ParserError => e
+          logs.create(message: "Error parsing JSON, abort custom format for option template. Error: #{e.message}")
+        rescue => e
+          Rails.logger.error "Error while processing option_template for #{id}: #{e.message}"
+        end
+      end
+
+      body ||= {
+        data: adapter_outgoing_event.item.try(:v3_format) || adapter_outgoing_event.item,
+        type: event_type
       }
 
-      # create the delivery, save it, and send it later
+      url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || option_webhook_url
+      body.merge!(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
+
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
         resource: self,
-        url: option_webhook_url,
+        url: url,
         auth: {username: option_username, password: option_password},
         body: body
       )

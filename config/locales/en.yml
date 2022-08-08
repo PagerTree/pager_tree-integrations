@@ -4,6 +4,8 @@ en:
       common:
         default: "default"
         none: "none"
+        option_outgoing_rules: "Outgoing Rules"
+        option_outgoing_rules_hint_html: Outgoing Rules <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#rules' target='_blank'>(see docs)</a> for details.
       email:
         v3:
           form_options:
@@ -58,6 +60,15 @@ en:
           form_options:
             option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
             option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"
+      channel:
+        slack:
+          v3:
+            form_options:
+              option_incoming_webhook_url_hint_html: "Slack URL to POST to"
+              option_alert_open_hint_html: "Send when the alert is marked open (it has been routed)"
+              option_alert_acknowledged_hint_html: "Send when a user has acknowledged the alert"
+              option_alert_resolved_hint_html: "Send when the alert is marked resolved"
+              option_alert_dropped_hint_html: "Send when the alert is dropped"
       # SCAFFOLD_INTEGRATION
         
 
@@ -89,6 +100,7 @@ en:
         option_alert_handoff: "alert.handoff"
         option_template: "JSON Template"
         option_send_linked: "Send Linked"
+        option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/live_call_routing/twilio/v3":
         option_account_sid: "Twilio Account SID"
         option_api_key: "Twilio API Key"
@@ -107,4 +119,11 @@ en:
       "pager_tree/integrations/webhook/v3":
         option_token: "PagerTree Token"
         option_capture_additional_data: "Capture Additional Data"
+      "pager_tree/integrations/channel/slack/v3":
+        option_incoming_webhook_url: "Slack URL"
+        option_alert_open: "alert.open"
+        option_alert_acknowledged: "alert.acknowledged"
+        option_alert_resolved: "alert.resolved"
+        option_alert_dropped: "alert.dropped"
+        option_outgoing_rules: "Outgoing Rules"
       # SCAFFOLD_ACTIVE_RECORD
