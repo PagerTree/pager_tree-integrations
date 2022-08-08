@@ -146,4 +146,15 @@ webhook_v3:
 zendesk_v3:
   type: "PagerTree::Integrations::Zendesk::V3"
   # options: no_options
+
+channel_slack_v3:
+  type: "PagerTree::Integrations::Channel::Slack::V3"
+  options:
+    incoming_webhook_url: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+
   

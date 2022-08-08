@@ -52,6 +52,7 @@ en:
             option_webhook_url_hint_html: "URL to POST to"
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
+            option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
       server_guard24:
         v3:
           form_options:
@@ -70,10 +71,14 @@ en:
         option_title_template_enabled: "Title Template"
         option_description_template_enabled: "Description Template"
         option_incoming_webhook_url: "URL"
+        option_alert_created: "alert.created"
         option_alert_open: "alert.open"
         option_alert_acknowledged: "alert.acknowledged"
+        option_alert_rejected: "alert.rejected"
+        option_alert_timeout: "alert.timeout"
         option_alert_resolved: "alert.resolved"
         option_alert_dropped: "alert.dropped"
+        option_alert_handoff: "alert.handoff"
         option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"

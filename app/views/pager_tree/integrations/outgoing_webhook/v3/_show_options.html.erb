@@ -52,7 +52,7 @@
 <% opts.each do |opt| %>
   <div class="sm:col-span-1">
     <dt class="text-sm font-medium text-gray-500">
-      <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_#{opt.to_s}") %>
+      <%= t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt.to_s}") %>
     </dt>
     <dd class="mt-1 text-sm text-gray-900">
       <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>

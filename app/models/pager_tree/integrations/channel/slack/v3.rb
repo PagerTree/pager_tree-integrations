@@ -76,8 +76,8 @@ module PagerTree::Integrations
             fallback: _title,
             color: _color,
             title: _title,
-            title_link: Rails.application.routes.url_helpers.alert_url(_alert, script_name: "/#{_alert.account_id}"),
-            text: _alert.description.to_plain_text,
+            title_link: Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}"),
+            text: _alert.description&.try(:to_plain_text),
             fields: [
               {
                 title: "Status",
@@ -96,12 +96,12 @@ module PagerTree::Integrations
               },
               {
                 title: "Source",
-                value: _alert.source.name,
+                value: _alert.source&.name,
                 short: "true"
               },
               {
                 title: "Destinations",
-                value: _alert.alert_destinations.map { |d| d.destination.name }.join(", "),
+                value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
                 short: "false"
               }
             ]
