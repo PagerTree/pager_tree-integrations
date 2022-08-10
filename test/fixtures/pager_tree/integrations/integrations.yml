@@ -145,6 +145,10 @@ status_cake_v3:
   type: "PagerTree::Integrations::StatusCake::V3"
   # options: no_options
 
+twilio_incoming_sms_v3:
+  type: "PagerTree::Integrations::Twilio::IncomingSms::V3"
+  # options: no_options
+
 typeform_v3:
   type: "PagerTree::Integrations::Typeform::V3"
   # options: no_options
