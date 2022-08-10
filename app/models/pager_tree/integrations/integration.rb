@@ -9,7 +9,7 @@ module PagerTree::Integrations
       {key: :title_template, type: :string, default: nil},
       {key: :title_template_enabled, type: :boolean, default: false},
       {key: :description_template, type: :string, default: nil},
-      {key: :description_template_enabled, type: :string, default: false}
+      {key: :description_template_enabled, type: :boolean, default: false}
     ]
     store_accessor :options, *GENERIC_OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
