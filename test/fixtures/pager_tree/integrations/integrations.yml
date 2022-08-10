@@ -36,6 +36,19 @@ elast_alert_v3:
   type: "PagerTree::Integrations::ElastAlert::V3"
   # options: no_options
 
+form_v3:
+  type: "PagerTree::Integrations::Form::V3"
+  options:
+    form_title: "After Hours Support | Acme Corp"
+    form_header: "Acme Corp After Hours Support Form"
+    form_instructions: "Please fill out the form"
+    form_footer_text: "Acme Corp"
+    form_footer_link: "https://example.com"
+    form_email_required: true
+    form_phone_required: true
+    form_description_required: false
+    form_urgency_required: false
+
 freshdesk_v3:
   type: "PagerTree::Integrations::Freshdesk::V3"
   # options: no_options
@@ -81,9 +94,9 @@ logic_monitor_v3:
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"
   options:
-    option_account_sid: a
-    option_api_key: b
-    option_api_secret: c
+    account_sid: a
+    api_key: b
+    api_secret: c
 
 new_relic_v3:
   type: "PagerTree::Integrations::NewRelic::V3"

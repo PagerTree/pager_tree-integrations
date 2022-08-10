@@ -62,7 +62,7 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      SecureRandom.uuid
+      @adapter_thirdparty_id ||= SecureRandom.uuid
     end
 
     def adapter_action
