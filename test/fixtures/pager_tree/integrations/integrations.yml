@@ -98,6 +98,11 @@ live_call_routing_twilio_v3:
     api_key: b
     api_secret: c
 
+mattermost_outgoing_webhook_v3:
+  type: "PagerTree::Integrations::Mattermost::OutgoingWebhook::V3"
+  options:
+    token: abc123
+
 new_relic_v3:
   type: "PagerTree::Integrations::NewRelic::V3"
   # options: no_options

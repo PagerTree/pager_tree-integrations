@@ -59,6 +59,11 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+      mattermost:
+        outgoing_webhook:
+          v3:
+            form_options:
+              option_token_hint_html: "The token can be used to authenticate requests from Mattermost servers (optional)"
       outgoing_webhook:
         v3:
           form_options:
@@ -113,6 +118,8 @@ en:
         option_token: "Honeybadger Token"
       "pager_tree/integrations/jira_server/v3":
         option_issue_updated: "Trigger on issue.updated event"
+      "pager_tree/integrations/mattermost/outgoing_webhook/v3":
+        option_token: "Mattermost Token"
       "pager_tree/integrations/outgoing_webhook/v3":
         option_webhook_url: "URL"
         option_username: "Username"
