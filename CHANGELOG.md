@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.0](https://github.com/PagerTree/pager_tree-integrations/compare/v1.0.1...v1.1.0) (2022-08-10)
+
+
+### Features
+
+* Adds AppDynamics Integration ([#7](https://github.com/PagerTree/pager_tree-integrations/issues/7)) ([5ccff05](https://github.com/PagerTree/pager_tree-integrations/commit/5ccff052b8fa0be259e644c8f6dbd85206c390a7))
+* AWS Cloudwatch integration ([#9](https://github.com/PagerTree/pager_tree-integrations/issues/9)) ([252b4e1](https://github.com/PagerTree/pager_tree-integrations/commit/252b4e1fbd83ee4a93dfecd2d202b06eaa9bdc91))
+* Completed V3 integrations ([7d86e0a](https://github.com/PagerTree/pager_tree-integrations/commit/7d86e0a3fd11916e29679baefebbcde0db3deadf))
+
 ### [1.0.1](https://github.com/armiiller/pager_tree-integrations/compare/v1.0.0...v1.0.1) (2022-02-22)
 
 
