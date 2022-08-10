@@ -1,0 +1,122 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_title") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_form_title %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_header") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_form_header %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_instructions") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_form_instructions %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_footer_text") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_form_footer_text %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_footer_link") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_form_footer_link %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_logo") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <% if integration.option_form_logo.present? %>
+          <%= link_to integration.option_form_logo.blob.filename, integration.option_form_logo, target: "_blank" %>
+        <% else %>
+          -
+        <% end %>
+      </p>
+      <%= link_to t("delete"), main_app.integration_attachment_path(integration, integration.option_form_logo.id), method: :delete, class: "btn btn-small btn-danger outline", data: { confirm: t("are_you_sure") } if integration.option_form_logo.present? %>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_email_required") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_form_email_required } %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_phone_required") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_form_phone_required } %>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_description_required") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_form_description_required } %>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/form/v3.option_form_urgency_required") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_form_urgency_required } %>
+  </dd>
+</div>

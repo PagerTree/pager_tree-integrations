@@ -22,6 +22,19 @@ en:
           form_options:
             option_allow_spam_hint_html: "Allow emails marked as SPAM to create alerts"
             option_dedup_threads_hint_html: "Ignore emails from same thread (ex: Prevents new alerts for replys on emails (aka: RE:RE:RE...))"
+      form:
+        v3:
+          form_options:
+            option_form_title_hint_html: "The form title (top of web browser bar)"
+            option_form_header_hint_html: "The form header (top of the page, in bold)"
+            option_form_instructions_hint_html: "Instructions for the user. Be clear and concise"
+            option_form_footer_text_hint_html: "The text in the footer (ex: Company Name)"
+            option_form_footer_link_hint_html: "URL the footer text should link to (ex: https://company.com)"
+            option_form_logo_hint_html: "A logo image to be used at the top of the form (ex: Company Logo)"
+            option_form_email_required_hint_html: "Should the email field be required to submit?"
+            option_form_phone_required_hint_html: "Should the phone field be required to submit?"
+            option_form_description_required_hint_html: "Should the description field be required to submit?"
+            option_form_urgency_required_hint_html: "Should the urgency field be required to submit?"
       honeybadger:
         v3:
           form_options:
@@ -46,6 +59,11 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+      mattermost:
+        outgoing_webhook:
+          v3:
+            form_options:
+              option_token_hint_html: "The token can be used to authenticate requests from Mattermost servers (optional)"
       outgoing_webhook:
         v3:
           form_options:
@@ -85,10 +103,23 @@ en:
       "pager_tree/integrations/email/v3":
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"
+      "pager_tree/integrations/form/v3":
+        option_form_title: "Form Title"
+        option_form_header: "Form Header"
+        option_form_instructions: "Instructions"
+        option_form_footer_text: "Footer Text"
+        option_form_footer_link: "Footer URL"
+        option_form_logo: "Logo"
+        option_form_email_required: "Email Required?"
+        option_form_phone_required: "Phone Required?"
+        option_form_description_required: "Description Required?"
+        option_form_urgency_required: "Urgency Required?"
       "pager_tree/integrations/honeybadger/v3":
         option_token: "Honeybadger Token"
       "pager_tree/integrations/jira_server/v3":
         option_issue_updated: "Trigger on issue.updated event"
+      "pager_tree/integrations/mattermost/outgoing_webhook/v3":
+        option_token: "Mattermost Token"
       "pager_tree/integrations/outgoing_webhook/v3":
         option_webhook_url: "URL"
         option_username: "Username"

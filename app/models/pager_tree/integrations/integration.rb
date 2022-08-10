@@ -83,6 +83,10 @@ module PagerTree::Integrations
     end
     # END template functions
 
+    def adapter_supports_cnames?
+      false
+    end
+
     # START basic show functions
     def adapter_show_alerts?
       adapter_supports_incoming?
