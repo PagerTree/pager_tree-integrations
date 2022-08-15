@@ -35,7 +35,7 @@ module PagerTree::Integrations
       adapter_incoming_request_params.dig("id")
     end
 
-    # TODO: Returns :create, :acknowledge, :resolve, or :other
+    # TODO: Returns :create, :resolve, or :other
     def adapter_action
       :other
     end
