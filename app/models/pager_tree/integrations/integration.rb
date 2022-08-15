@@ -48,7 +48,7 @@ module PagerTree::Integrations
       true
     end
 
-    # Returns :create, :acknowledge, :resolve, or :other
+    # Returns :create, :resolve, or :other
     def adapter_action
       :other
     end
