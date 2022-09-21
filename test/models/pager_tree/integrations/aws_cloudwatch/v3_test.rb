@@ -81,7 +81,7 @@ module PagerTree::Integrations
         description: "Threshold Crossed: 1 datapoint [2.1533759377604764 (20/07/20 21:07:00)] was greater than or equal to the threshold (0.0175).",
         urgency: nil,
         thirdparty_id: "arn:aws:sns:us-east-1:498849832712:update-cherwell-cmdb:Saffron-Octopus-RDS",
-        dedup_keys: ["arn:aws:sns:us-east-1:498849832712:update-cherwell-cmdb:Saffron-Octopus-RDS"],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "AWS Account ID", value: "498849832712"),
           AdditionalDatum.new(format: "text", label: "Region", value: "US East (N. Virginia)"),

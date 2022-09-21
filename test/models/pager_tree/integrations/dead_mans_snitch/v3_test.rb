@@ -64,7 +64,7 @@ module PagerTree::Integrations
         description: @create_request.dig("data", "snitch", "notes"),
         urgency: nil,
         thirdparty_id: @create_request.dig("data", "snitch", "token"),
-        dedup_keys: [@create_request.dig("data", "snitch", "token")],
+        dedup_keys: [],
         additional_data: [],
         tags: @create_request.dig("data", "snitch", "tags")
       )

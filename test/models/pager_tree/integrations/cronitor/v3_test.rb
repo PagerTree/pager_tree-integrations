@@ -55,7 +55,7 @@ module PagerTree::Integrations
         description: @create_request[:description],
         urgency: nil,
         thirdparty_id: @create_request[:id],
-        dedup_keys: [@create_request[:id]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Rule Violated", value: @create_request[:rule])
         ]

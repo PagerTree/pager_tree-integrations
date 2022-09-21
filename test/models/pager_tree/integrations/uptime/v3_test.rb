@@ -136,7 +136,7 @@ module PagerTree::Integrations
         description: @create_request.dig("data", "alert", "output"),
         urgency: nil,
         thirdparty_id: @create_request.dig("data", "service", "id"),
-        dedup_keys: [@create_request.dig("data", "service", "id")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Service Name", value: @create_request.dig("data", "service", "name")),
           AdditionalDatum.new(format: "text", label: "Service Address", value: @create_request.dig("data", "service", "msp_address"))

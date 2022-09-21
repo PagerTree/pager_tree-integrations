@@ -85,7 +85,7 @@ module PagerTree::Integrations
         description: @create_request.dig("description"),
         urgency: nil,
         thirdparty_id: @create_request.dig("check_id"),
-        dedup_keys: [@create_request.dig("check_id")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Full URL", value: @create_request.dig("check_params", "full_url")),
           AdditionalDatum.new(format: "text", label: "Importance Level", value: @create_request.dig("importance_level")),

@@ -287,7 +287,7 @@ module PagerTree::Integrations
         title: [@create_request.dig("form_response", "definition", "title"), @create_request.dig("form_response", "submitted_at")].compact_blank.join(": "),
         urgency: nil,
         thirdparty_id: @create_request.dig("form_response", "token"),
-        dedup_keys: [@create_request.dig("form_response", "token")],
+        dedup_keys: [],
         additional_data: []
       )
 

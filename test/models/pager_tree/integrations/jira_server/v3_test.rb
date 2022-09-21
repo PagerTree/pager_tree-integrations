@@ -131,7 +131,7 @@ module PagerTree::Integrations
         description: @create_request.dig("issue", "fields", "description"),
         urgency: nil,
         thirdparty_id: @create_request.dig("issue", "id"),
-        dedup_keys: [@create_request.dig("issue", "id")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Issue URL", value: @create_request.dig("issue", "self"))
         ]

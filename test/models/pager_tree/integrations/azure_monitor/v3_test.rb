@@ -96,9 +96,9 @@ module PagerTree::Integrations
       true_alert = Alert.new(
         title: @create_request[:data][:essentials][:alertRule],
         description: @create_request[:data][:essentials][:description],
-        urgency: "high",
+        urgency: "medium",
         thirdparty_id: @create_request[:data][:essentials][:alertId],
-        dedup_keys: [@create_request[:data][:essentials][:alertId]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Monitoring Service", value: essentials.dig("monitoringService")),
           AdditionalDatum.new(format: "text", label: "Alert Rule", value: essentials.dig("alertRule")),

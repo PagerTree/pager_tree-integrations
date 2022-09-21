@@ -37,7 +37,7 @@ module PagerTree::Integrations
         description: _description,
         urgency: _urgency,
         thirdparty_id: adapter_thirdparty_id,
-        dedup_keys: [adapter_thirdparty_id],
+        dedup_keys: [],
         additional_data: _additional_datums
       )
     end
@@ -58,11 +58,10 @@ module PagerTree::Integrations
 
     def _urgency
       case adapter_incoming_request_params.dig("data", "essentials", "severity")
-      when "Sev0" then "low"
-      when "Sev1" then "low"
-      when "Sev2" then "medium"
-      when "Sev3" then "high"
-      when "Sev4" then "critical"
+      when "Sev0", "Sev1" then "critical"
+      when "Sev2" then "high"
+      when "Sev3" then "medium"
+      when "Sev4" then "low"
       end
     end
 

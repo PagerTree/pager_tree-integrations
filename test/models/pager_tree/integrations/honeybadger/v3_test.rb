@@ -351,7 +351,7 @@ module PagerTree::Integrations
         title: @create_fault_request.dig("message"),
         urgency: nil,
         thirdparty_id: @create_fault_request.dig("fault", "url"),
-        dedup_keys: [@create_fault_request.dig("fault", "url")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Fault URL", value: @create_fault_request.dig("fault", "url")),
           AdditionalDatum.new(format: "text", label: "Environment", value: @create_fault_request.dig("fault", "environment")),
@@ -370,7 +370,7 @@ module PagerTree::Integrations
         title: @create_site_request.dig("message"),
         urgency: nil,
         thirdparty_id: @create_site_request.dig("outage", "details_url"),
-        dedup_keys: [@create_site_request.dig("outage", "details_url")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Fault URL", value: nil),
           AdditionalDatum.new(format: "text", label: "Environment", value: nil),
@@ -389,7 +389,7 @@ module PagerTree::Integrations
         title: @create_check_in_request.dig("message"),
         urgency: nil,
         thirdparty_id: @create_check_in_request.dig("check_in", "details_url"),
-        dedup_keys: [@create_check_in_request.dig("check_in", "details_url")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Fault URL", value: nil),
           AdditionalDatum.new(format: "text", label: "Environment", value: nil),

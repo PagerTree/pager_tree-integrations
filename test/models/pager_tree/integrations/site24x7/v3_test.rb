@@ -66,7 +66,7 @@ module PagerTree::Integrations
         description: "#{@create_request.dig("MONITORNAME")} is DOWN because #{@create_request.dig("INCIDENT_REASON")}",
         urgency: nil,
         thirdparty_id: @create_request.dig("MONITOR_ID"),
-        dedup_keys: [@create_request.dig("MONITOR_ID")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Site 24x7 Dashboard URL", value: @create_request.dig("MONITOR_DASHBOARD_LINK")),
           AdditionalDatum.new(format: "text", label: "Monitor Name", value: @create_request.dig("MONITORNAME")),

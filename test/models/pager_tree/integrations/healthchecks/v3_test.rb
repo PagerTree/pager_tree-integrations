@@ -58,7 +58,7 @@ module PagerTree::Integrations
         description: @create_request[:description],
         urgency: nil,
         thirdparty_id: @create_request[:incident_key],
-        dedup_keys: [@create_request[:incident_key]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Client URL", value: @create_request.dig("client_url")),
           AdditionalDatum.new(format: "text", label: "Client", value: @create_request.dig("client"))

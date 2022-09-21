@@ -83,7 +83,7 @@ module PagerTree::Integrations
         description: "#{@create_request.dig("server_name")} is DOWN because #{@create_request.dig("check_output")}",
         urgency: nil,
         thirdparty_id: thirdparty_id,
-        dedup_keys: [thirdparty_id],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Server Name", value: @create_request.dig("server_name")),
           AdditionalDatum.new(format: "text", label: "Server Address", value: @create_request.dig("server_address")),

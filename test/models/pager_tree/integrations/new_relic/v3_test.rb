@@ -77,7 +77,7 @@ module PagerTree::Integrations
         description: @create_request.dig("details"),
         urgency: nil,
         thirdparty_id: @create_request.dig("incident_id"),
-        dedup_keys: [@create_request.dig("incident_id")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Account Name", value: @create_request.dig("account_name")),
           AdditionalDatum.new(format: "text", label: "Incident URL", value: @create_request.dig("incident_url"))

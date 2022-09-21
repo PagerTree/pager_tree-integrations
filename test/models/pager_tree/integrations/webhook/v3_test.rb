@@ -24,7 +24,8 @@ module PagerTree::Integrations
           incident_severity: "sev-1",
           incident_message: "Please join conference bridge 1-800-123-4567",
           kube_pod_name: "example-pod-name"
-        }
+        },
+        dedup_keys: ["group_my_whole_account"]
       }.with_indifferent_access
 
       @resolve_request = @create_request.deep_dup
@@ -67,7 +68,7 @@ module PagerTree::Integrations
         description: @create_request.dig(:Description),
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
-        dedup_keys: [@create_request.dig(:Id)],
+        dedup_keys: @create_request.dig(:dedup_keys),
         incident: !!@create_request.dig(:Meta).dig(:incident),
         incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
         incident_message: @create_request.dig(:Meta).dig(:incident_message),
@@ -88,7 +89,7 @@ module PagerTree::Integrations
         description: @create_request.dig(:Description),
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
-        dedup_keys: [@create_request.dig(:Id)],
+        dedup_keys: @create_request.dig(:dedup_keys),
         incident: !!@create_request.dig(:Meta).dig(:incident),
         incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
         incident_message: @create_request.dig(:Meta).dig(:incident_message),

@@ -57,7 +57,7 @@ module PagerTree::Integrations
         description: "<pre>#{@create_request.dig("description")}</pre>",
         urgency: "medium",
         thirdparty_id: @create_request.dig("id"),
-        dedup_keys: [@create_request.dig("id")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Zendesk Link", value: @create_request.dig("link")),
           AdditionalDatum.new(format: "text", label: "Priority", value: @create_request.dig("priority")),

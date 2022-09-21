@@ -77,7 +77,7 @@ module PagerTree::Integrations
         title: @create_request.dig("check", "url") + " is DOWN",
         urgency: nil,
         thirdparty_id: @create_request.dig("check", "url"),
-        dedup_keys: [@create_request.dig("check", "url")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: @create_request.dig("check", "url")),
           AdditionalDatum.new(format: "text", label: "Status Code", value: @create_request.dig("check", "status")),

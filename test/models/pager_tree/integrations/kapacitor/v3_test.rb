@@ -48,7 +48,7 @@ module PagerTree::Integrations
         description: @create_request.dig("details"),
         urgency: "medium",
         thirdparty_id: @create_request.dig("id"),
-        dedup_keys: [@create_request.dig("id")],
+        dedup_keys: [],
         additional_data: []
       )
 

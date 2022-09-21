@@ -59,7 +59,7 @@ module PagerTree::Integrations
         description: "#{@create_request.dig("monitorFriendlyName")} is DOWN because #{@create_request.dig("alertDetails")}",
         urgency: nil,
         thirdparty_id: @create_request.dig("monitorID"),
-        dedup_keys: [@create_request.dig("monitorID")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Monitor URL", value: @create_request.dig("monitorURL")),
           AdditionalDatum.new(format: "datetime", label: "Triggered At", value: Time.at(@create_request.dig("alertDateTime").to_i).utc.to_datetime)

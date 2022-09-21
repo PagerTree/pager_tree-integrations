@@ -85,7 +85,7 @@ module PagerTree::Integrations
         description: @create_request.dig("eventlogmsg"),
         urgency: "medium",
         thirdparty_id: @create_request.dig("alertid"),
-        dedup_keys: [@create_request.dig("alertid")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Host", value: @create_request.dig("host")),
           AdditionalDatum.new(format: "text", label: "Service", value: @create_request.dig("service"))

@@ -65,7 +65,7 @@ module PagerTree::Integrations
         description: @create_request.dig("message"),
         urgency: nil,
         thirdparty_id: @create_request.dig("ruleId"),
-        dedup_keys: [@create_request.dig("ruleId")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: @create_request.dig("ruleURL")),
           AdditionalDatum.new(format: "img", label: "Image", value: @create_request.dig("imageUrl"))

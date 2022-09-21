@@ -68,7 +68,7 @@ module PagerTree::Integrations
         title: "Axe Search triggered",
         urgency: nil,
         thirdparty_id: 9,
-        dedup_keys: [9],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: "http://www.axemusic.com/catalogsearch/result/?cat=0&q=sm58"),
           AdditionalDatum.new(format: "text", label: "Method", value: "GET"),

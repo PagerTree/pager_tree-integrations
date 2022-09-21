@@ -58,7 +58,7 @@ module PagerTree::Integrations
         title: "#{@create_request.dig("Name")} is down",
         urgency: nil,
         thirdparty_id: @create_request.dig("URL"),
-        dedup_keys: [@create_request.dig("URL")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: @create_request.dig("URL")),
           AdditionalDatum.new(format: "text", label: "Status Code", value: @create_request.dig("StatusCode")),
