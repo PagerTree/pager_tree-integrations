@@ -34,7 +34,7 @@ module PagerTree::Integrations
         title: _title,
         description: _description,
         thirdparty_id: _thirdparty_id,
-        dedup_keys: [_thirdparty_id],
+        dedup_keys: [],
         additional_data: _additional_datums
       )
     end

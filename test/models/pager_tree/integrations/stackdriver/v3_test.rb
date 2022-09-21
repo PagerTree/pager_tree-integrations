@@ -108,7 +108,7 @@ module PagerTree::Integrations
         title: @create_request[:incident][:summary],
         urgency: nil,
         thirdparty_id: @create_request[:incident][:incident_id],
-        dedup_keys: [@create_request[:incident][:incident_id]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Incident URL", value: @create_request.dig("incident", "url")),
           AdditionalDatum.new(format: "text", label: "Policy Name", value: @create_request.dig("incident", "policy_name")),

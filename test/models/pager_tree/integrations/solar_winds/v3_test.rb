@@ -60,7 +60,7 @@ module PagerTree::Integrations
         description: @create_request.dig("AlertDescription"),
         urgency: nil,
         thirdparty_id: @create_request.dig("AlertID"),
-        dedup_keys: [@create_request.dig("AlertID")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Alert Details URL", value: @create_request.dig("AlertDetailsURL")),
           AdditionalDatum.new(format: "text", label: "Node", value: @create_request.dig("NodeName"))

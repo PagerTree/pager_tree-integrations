@@ -68,7 +68,7 @@ module PagerTree::Integrations
         description: @create_request[:alertDescription],
         urgency: "critical",
         thirdparty_id: @create_request[:correlationId],
-        dedup_keys: [@create_request[:correlationId]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: @create_request[:link]),
           AdditionalDatum.new(format: "text", label: "Alert Severity", value: @create_request[:alertSeverityString]),

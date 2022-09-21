@@ -69,7 +69,7 @@ module PagerTree::Integrations
         description: @create_request[:ALERT_STATUS],
         urgency: nil,
         thirdparty_id: @create_request[:ALERT_ID],
-        dedup_keys: [@create_request[:ALERT_ID], @create_request[:AGGREG_KEY]].compact,
+        dedup_keys: [@create_request[:AGGREG_KEY]].compact,
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Link", value: @create_request.dig("LINK")),
           AdditionalDatum.new(format: "text", label: "Priority", value: @create_request.dig("PRIORITY")),

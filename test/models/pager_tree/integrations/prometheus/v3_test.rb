@@ -98,7 +98,7 @@ module PagerTree::Integrations
         description: @create_request.dig("commonAnnotations", "summary"),
         urgency: "critical",
         thirdparty_id: @create_request.dig(:groupKey),
-        dedup_keys: [@create_request.dig(:groupKey)],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Alert Manager URL", value: @create_request.dig("externalURL")),
           AdditionalDatum.new(format: "text", label: "Receiver", value: @create_request.dig("receiver"))

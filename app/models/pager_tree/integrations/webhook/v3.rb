@@ -28,11 +28,11 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      adapter_incoming_request_params.dig("Id") || adapter_incoming_request_params.dig("id")
+      _adapter_incoming_request_params.dig("id")
     end
 
     def adapter_action
-      case adapter_incoming_request_params.dig("event_type").to_s.downcase.strip
+      case _adapter_incoming_request_params.dig("event_type").to_s.downcase.strip
       when "create"
         :create
       when "resolve"
@@ -48,7 +48,7 @@ module PagerTree::Integrations
         description: _description,
         urgency: _urgency,
         thirdparty_id: adapter_thirdparty_id,
-        dedup_keys: [adapter_thirdparty_id],
+        dedup_keys: _dedup_keys,
         incident: _incident,
         incident_severity: _incident_severity,
         incident_message: _incident_message,
@@ -61,50 +61,58 @@ module PagerTree::Integrations
     private
 
     def _title
-      adapter_incoming_request_params.dig("Title") || adapter_incoming_request_params.dig("title")
+      _adapter_incoming_request_params.dig("title")
     end
 
     def _description
-      adapter_incoming_request_params.dig("Description") || adapter_incoming_request_params.dig("description")
+      _adapter_incoming_request_params.dig("description")
     end
 
     def _tags
-      tags = adapter_incoming_request_params.dig("Tags") || adapter_incoming_request_params.dig("tags")
+      tags = _adapter_incoming_request_params.dig("tags")
       Array(tags).compact_blank.map(&:to_s).uniq
     end
 
     def _urgency
-      urgency = adapter_incoming_request_params.dig("Urgency") || adapter_incoming_request_params.dig("urgency")
+      urgency = _adapter_incoming_request_params.dig("urgency")
       urgency&.to_s&.downcase&.strip
     end
 
     def _incident
-      !!adapter_incoming_request_params.dig("Meta", "incident")
+      !!_adapter_incoming_request_params.dig("meta", "incident")
     end
 
     def _incident_message
-      adapter_incoming_request_params.dig("Meta", "incident_message")
+      _adapter_incoming_request_params.dig("meta", "incident_message")
     end
 
     def _incident_severity
-      adapter_incoming_request_params.dig("Meta", "incident_severity")&.to_s&.upcase&.strip
+      _adapter_incoming_request_params.dig("meta", "incident_severity")&.to_s&.upcase&.strip
     end
 
     def _meta
-      meta = adapter_incoming_request_params.dig("Meta")
+      meta = _adapter_incoming_request_params.dig("meta")
       meta.is_a?(Hash) ? meta.except("incident", "incident_message", "incident_severity") : {}
     end
 
     def _additional_datums
       if self.option_capture_additional_data == true
-        adapter_incoming_request_params.except(
-          "Id", "Title", "Description", "Urgency", "Tags", "Meta", "id", "title", "description", "urgency", "tags", "meta", "event_type", "pagertree_integration_id"
+        _adapter_incoming_request_params.except(
+          "id", "title", "description", "urgency", "tags", "meta", "event_type", "pagertree_integration_id", "dedup_keys"
         ).map do |key, value|
           AdditionalDatum.new(format: "text", label: key, value: value.to_s)
         end
       else
         []
       end
+    end
+
+    def _dedup_keys
+      Array(_adapter_incoming_request_params.dig("dedup_keys")).map(&:to_s).compact_blank.uniq
+    end
+
+    def _adapter_incoming_request_params
+      adapter_incoming_request_params.transform_keys(&:downcase)
     end
   end
 end

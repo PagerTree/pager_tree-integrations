@@ -36,7 +36,7 @@ module PagerTree::Integrations
         title: _title,
         description: _description,
         thirdparty_id: adapter_thirdparty_id,
-        dedup_keys: [adapter_thirdparty_id, adapter_incoming_request_params.dig("AGGREG_KEY")].compact,
+        dedup_keys: [adapter_incoming_request_params.dig("AGGREG_KEY")].compact,
         additional_data: _additional_datums,
         tags: _tags
       )

@@ -53,7 +53,7 @@ module PagerTree::Integrations
         title: @create_request.dig("Title"),
         description: @create_request.dig("Description"),
         thirdparty_id: @create_request.dig("Id"),
-        dedup_keys: [@create_request.dig("Id")],
+        dedup_keys: [],
         additional_data: []
       )
 

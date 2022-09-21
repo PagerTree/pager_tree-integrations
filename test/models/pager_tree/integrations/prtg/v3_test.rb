@@ -54,7 +54,7 @@ module PagerTree::Integrations
         title: "Sensor #{@create_request.dig("sensorid")} #{@create_request.dig("sensor")} is DOWN",
         urgency: nil,
         thirdparty_id: @create_request.dig("sensorid"),
-        dedup_keys: [@create_request.dig("sensorid")],
+        dedup_keys: [],
         additional_data: @create_request.map do |key, value|
           AdditionalDatum.new(format: "text", label: key, value: value.to_s)
         end

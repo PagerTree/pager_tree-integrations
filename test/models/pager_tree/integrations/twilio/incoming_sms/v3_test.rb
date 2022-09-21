@@ -60,7 +60,7 @@ module PagerTree::Integrations
         description: @create_request.dig("Body"),
         urgency: nil,
         thirdparty_id: @create_request.dig("MessageSid"),
-        dedup_keys: [@create_request.dig("MessageSid")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Twilio URL", value: "https://www.twilio.com/console/sms/logs/#{@create_request.dig("MessageSid")}"),
           AdditionalDatum.new(format: "text", label: "Account SID", value: @create_request.dig("AccountSid")),

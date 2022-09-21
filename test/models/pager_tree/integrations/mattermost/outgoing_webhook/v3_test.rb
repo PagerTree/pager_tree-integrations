@@ -51,7 +51,7 @@ module PagerTree::Integrations
         title: @create_request.dig("text"),
         urgency: "critical",
         thirdparty_id: thirdparty_id,
-        dedup_keys: [thirdparty_id],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Trigger", value: @create_request.dig("trigger_word")),
           AdditionalDatum.new(format: "text", label: "Channel", value: @create_request.dig("channel_name")),

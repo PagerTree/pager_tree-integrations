@@ -85,7 +85,7 @@ module PagerTree::Integrations
         description: "${latestEvent.displayName} on ${latestEvent.node.name}\n\n${latestEvent.summaryMessage}",
         urgency: nil,
         thirdparty_id: "${latestEvent.id}",
-        dedup_keys: ["${latestEvent.id}"],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Event Name", value: "${latestEvent.displayName}"),
           AdditionalDatum.new(format: "datetime", label: "Event Time", value: "${latestEvent.eventTime}"),

@@ -66,7 +66,7 @@ module PagerTree::Integrations
         description: @create_request[:freshdesk_webhook][:ticket_description],
         urgency: :low,
         thirdparty_id: @create_request[:freshdesk_webhook][:ticket_public_url],
-        dedup_keys: [@create_request[:freshdesk_webhook][:ticket_public_url]],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Ticket ID", value: @create_request[:freshdesk_webhook].dig("ticket_id")),
           AdditionalDatum.new(format: "link", label: "Ticket URL", value: @create_request[:freshdesk_webhook].dig("ticket_url")),

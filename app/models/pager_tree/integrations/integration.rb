@@ -102,7 +102,7 @@ module PagerTree::Integrations
     # END basic show functions
 
     def adapter_response_rate_limit
-      adapter_controller&.head(:not_found)
+      adapter_controller&.head(:too_many_requests)
     end
 
     def adapter_response_disabled

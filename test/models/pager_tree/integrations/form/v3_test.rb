@@ -47,7 +47,7 @@ module PagerTree::Integrations
         description: @create_request.dig("description"),
         urgency: "low",
         thirdparty_id: thirdparty_id,
-        dedup_keys: [thirdparty_id],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Name", value: @create_request.dig("name")),
           AdditionalDatum.new(format: "email", label: "Email", value: @create_request.dig("email")),

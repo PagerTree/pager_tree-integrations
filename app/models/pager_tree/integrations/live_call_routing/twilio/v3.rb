@@ -108,7 +108,7 @@ module PagerTree::Integrations
         urgency: urgency,
 
         thirdparty_id: _thirdparty_id,
-        dedup_keys: [_thirdparty_id],
+        dedup_keys: [],
         additional_data: _additional_datums
       )
     end

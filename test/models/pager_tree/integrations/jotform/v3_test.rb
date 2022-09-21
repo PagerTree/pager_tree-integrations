@@ -40,7 +40,7 @@ module PagerTree::Integrations
         title: [@create_request.dig("formTitle"), @create_request.dig("submissionID")].join(" "),
         urgency: nil,
         thirdparty_id: @create_request.dig("submissionID"),
-        dedup_keys: [@create_request.dig("submissionID")],
+        dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "link", label: "Submission URL", value: "https://www.jotform.com/submission/#{@create_request.dig("submissionID")}")
         ]

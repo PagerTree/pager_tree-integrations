@@ -1,11 +1,11 @@
- <div class="form-group">
-  <%= form.label :option_allow_spam %>
+ <div class="form-group group">
   <%= form.check_box :option_allow_spam, class: "form-checkbox" %>
-  <p class="form-hint"><%== t(".option_allow_spam_hint_html") %></p>
+  <%= form.label :option_allow_spam %>
+  <p class="form-hint md:inline-block"><%== t(".option_allow_spam_hint_html") %></p>
 </div>
 
- <div class="form-group">
-  <%= form.label :option_dedup_threads %>
+ <div class="form-group group">
   <%= form.check_box :option_dedup_threads, class: "form-checkbox" %>
+  <%= form.label :option_dedup_threads %>
   <p class="form-hint"><%== t(".option_dedup_threads_hint_html") %></p>
 </div>
