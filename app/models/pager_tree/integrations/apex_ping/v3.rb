@@ -27,7 +27,7 @@ module PagerTree::Integrations
       Alert.new(
         title: _title,
         thirdparty_id: _thirdparty_id,
-        dedup_keys: [], 
+        dedup_keys: [],
         additional_data: _additional_datums
       )
     end
