@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.2...v1.1.3) (2022-09-22)
+
+
+### Bug Fixes
+
+* live call routing ([ef0a3ea](https://github.com/PagerTree/pager_tree-integrations/commit/ef0a3eacd07a727780cf89dbab02e62794f0c806))
+
 ## [1.1.2](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.1...v1.1.2) (2022-09-21)
 
 
