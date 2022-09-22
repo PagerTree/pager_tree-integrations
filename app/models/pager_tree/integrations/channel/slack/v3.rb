@@ -63,7 +63,7 @@ module PagerTree::Integrations
     private
 
     def _alert
-      @_alert ||= adapter_outgoing_event.item
+      @_alert ||= adapter_outgoing_event.alert
     end
 
     def _blocks

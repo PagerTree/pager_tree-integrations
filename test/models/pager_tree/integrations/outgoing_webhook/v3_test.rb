@@ -28,7 +28,7 @@ module PagerTree::Integrations
 
       data = {
         event_name: :alert_created,
-        item: {
+        alert: {
           foo: "bar"
         },
         changes: [{
@@ -41,7 +41,7 @@ module PagerTree::Integrations
         }]
       }
       expected_payload = {
-        data: data[:item],
+        data: data[:alert],
         type: "alert.created"
       }
 

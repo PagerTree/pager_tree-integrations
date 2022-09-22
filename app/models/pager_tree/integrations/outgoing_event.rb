@@ -8,6 +8,10 @@ module PagerTree::Integrations
     attr_accessor :item
     attr_accessor :changes
     attr_accessor :outgoing_rules_data
+    attr_accessor :alert
+    attr_accessor :handoff
+    attr_accessor :team
+    attr_accessor :account_user
 
     define_model_callbacks :initialize
 
@@ -22,6 +26,11 @@ module PagerTree::Integrations
       self.item ||= nil
       self.changes ||= nil
       self.outgoing_rules_data ||= {}
+
+      self.alert ||= nil
+      self.handoff ||= nil
+      self.team ||= nil
+      self.account_user ||= nil
     end
   end
 end

@@ -7,7 +7,18 @@ module PagerTree::Integrations
 
       @integration.adapter_source_log = @integration.logs.create!(level: :info, format: :json, message: params.to_unsafe_h) if @integration.try(:log_incoming_requests?)
       @integration.adapter_controller = self
+      @integration.adapter_incoming_request_params = params
       @integration.adapter_response_music
+    end
+
+    def dropped
+      set_integration
+
+      @integration.adapter_source_log = @integration.logs.create!(level: :info, format: :json, message: params.to_unsafe_h) if @integration.try(:log_incoming_requests?)
+      @integration.adapter_controller = self
+      @integration.adapter_alert = @integration.alerts.find_by(thirdparty_id: params[:CallSid])
+      @integration.adapter_incoming_request_params = params
+      @integration.adapter_response_dropped
     end
 
     def queue_status

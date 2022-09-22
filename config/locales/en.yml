@@ -59,6 +59,10 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+          v3_mailer:
+            call_recording:
+              subject: "🎧 Alert #%{tiny_id} - New voicemail from %{from}"
+              body: "Alert #%{tiny_id} - New voicemail from %{from}"
       mattermost:
         outgoing_webhook:
           v3:
@@ -79,10 +83,10 @@ en:
         v3:
           form_options:
             option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
-            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"              
+            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"       
       # SCAFFOLD_INTEGRATION
         
-
+  
   activerecord:
     attributes:
       "pager_tree/integrations/integration":
