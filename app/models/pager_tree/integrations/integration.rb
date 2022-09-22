@@ -58,6 +58,10 @@ module PagerTree::Integrations
 
     def adapter_process_other
     end
+
+    def adapter_will_route_alert?
+      false
+    end
     # END basic incoming functions
 
     # START basic outgoing functions

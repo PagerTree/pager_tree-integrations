@@ -71,7 +71,7 @@ module PagerTree::Integrations
       if self.option_template.present?
         begin
           body = JSON.parse(handlebars(self.option_template, {
-            alert: adapter_outgoing_event.item.try(:v3_format) || adapter_outgoing_event.item,
+            alert: adapter_outgoing_event.alert.try(:v3_format) || adapter_outgoing_event.alert,
             event: {
               type: event_type
             }
@@ -84,7 +84,7 @@ module PagerTree::Integrations
       end
 
       body ||= {
-        data: adapter_outgoing_event.item.try(:v3_format) || adapter_outgoing_event.item,
+        data: adapter_outgoing_event.alert.try(:v3_format) || adapter_outgoing_event.alert,
         type: event_type
       }
 

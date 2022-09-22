@@ -4,8 +4,15 @@ You can configure this gem with an initializer file:
 PagerTree::Integrations.deferred_request_class = "DeferredReq"
 PagerTree::Integrations.integration_parent_class = "Integration"
 PagerTree::Integrations.outgoing_webhook_delivery_factory_class = "OutgoingWebhookDeliv"
+
+PagerTree::Integrations::Engine.routes.default_url_options[:host] = "app.pagertree.com"
+PagerTree::Integrations::Engine.routes.default_url_options[:protocol] = "https"
+PagerTree::Integrations::Engine.routes.default_url_options[:port] = nil
 ...
 ```
+
+## Copying assets
+Make sure to copy the `public/**/*` folder to you `main_app/public/` folder
 
 ## Global Options
 These options are for the core PagerTree integrations model

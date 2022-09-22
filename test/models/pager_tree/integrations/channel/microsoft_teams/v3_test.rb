@@ -40,7 +40,7 @@ module PagerTree::Integrations
 
       @data = {
         event_name: :alert_acknowledged,
-        item: @alert,
+        alert: @alert,
         changes: [{
           before: {
             status: "open"

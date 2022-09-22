@@ -38,20 +38,24 @@ module PagerTree::Integrations
       voice: "man"
     }
 
-    TWILIO_LIVECALL_CONNECT_NOW = "https://app.pagertree.com/assets/sounds/you-are-now-being-connected.mp3"
-    TWILIO_LIVECALL_MUSIC = "http://com.twilio.sounds.music.s3.amazonaws.com/oldDog_-_endless_goodbye_%28instr.%29.mp3"
-    TWILIO_LIVECALL_PLEASE_WAIT = "https://app.pagertree.com/assets/sounds/please-wait.mp3"
-
     def option_connect_now_media_url
-      option_connect_now_media&.url || TWILIO_LIVECALL_CONNECT_NOW
+      option_connect_now_media.present? ? option_connect_now_media.url : URI.join(Rails.application.routes.url_helpers.root_url, "audios/you-are-now-being-connected.mp3").to_s
     end
 
     def option_music_media_url
-      option_music_media&.url || TWILIO_LIVECALL_MUSIC
+      option_music_media.present? ? option_music_media.url : "http://com.twilio.sounds.music.s3.amazonaws.com/oldDog_-_endless_goodbye_%28instr.%29.mp3"
     end
 
     def option_please_wait_media_url
-      option_please_wait_media&.url || TWILIO_LIVECALL_PLEASE_WAIT
+      option_please_wait_media.present? ? option_please_wait_media.url : URI.join(Rails.application.routes.url_helpers.root_url, "audios/please-wait.mp3").to_s
+    end
+
+    def option_no_answer_media_url
+      option_no_answer_media.present? ? option_no_answer_media.url : URI.join(Rails.application.routes.url_helpers.root_url, "audios/no-answer.mp3").to_s
+    end
+
+    def option_no_answer_thank_you_media_url
+      option_no_answer_thank_you_media.present? ? option_no_answer_thank_you_media.url : URI.join(Rails.application.routes.url_helpers.root_url, "audios/thanks-for-message.mp3").to_s
     end
 
     def option_record_emails=(x)
@@ -90,8 +94,16 @@ module PagerTree::Integrations
       true
     end
 
+    def adapter_outgoing_interest?(event_name)
+      ["alert_acknowledged", "alert_dropped"].include?(event_name) && adapter_alert.source_id == id
+    end
+
     def adapter_incoming_can_defer?
       false
+    end
+
+    def adapter_will_route_alert?
+      true
     end
 
     def adapter_action
@@ -128,13 +140,19 @@ module PagerTree::Integrations
       end
 
       if selected_team
-        adapter_alert.logs.create!(message: "Caller selected team '#{selected_team.name}'. Playing please wait media.")
-        _twiml.play(url: option_please_wait_media&.url || TWILIO_LIVECALL_PLEASE_WAIT)
+        adapter_alert.logs.create!(message: "Caller selected team '#{selected_team.name}'.") if _teams_size > 1 || option_force_input
+
+        adapter_alert.logs.create!(message: "Play please wait media to caller.")
+        _twiml.play(url: option_please_wait_media_url)
         friendly_name = adapter_alert.id
 
         # create the queue and save it off
         queue = _client.queues.create(friendly_name: friendly_name)
         adapter_alert.meta["live_call_queue_sid"] = queue.sid
+
+        adapter_alert.destination_teams = [selected_team]
+
+        # save the alert
         adapter_alert.save!
 
         _twiml.enqueue(
@@ -144,6 +162,11 @@ module PagerTree::Integrations
           wait_url: PagerTree::Integrations::Engine.routes.url_helpers.music_live_call_routing_twilio_v3_path(id, thirdparty_id: _thirdparty_id),
           wait_url_method: "GET"
         )
+        adapter_alert.logs.create!(message: "Enqueue caller in Twilio queue '#{friendly_name}'.")
+
+        # kick off the alert workflow
+        adapter_alert.route_later
+        adapter_alert.logs.create!(message: "Successfully enqueued alert team workflow.")
       else
         adapter_alert.meta["live_call_repeat_count"] ||= 0
         adapter_alert.meta["live_call_repeat_count"] += 1
@@ -159,6 +182,7 @@ module PagerTree::Integrations
           end
         else
           adapter_alert.logs.create!(message: "Caller input bad input (too many times). Hangup.")
+          adapter_alert.resolve!(self)
           _twiml.say(message: "Too much invalid input. Goodbye.", **SPEAK_OPTIONS)
           _twiml.hangup
         end
@@ -193,15 +217,11 @@ module PagerTree::Integrations
       adapter_controller&.render(xml: _twiml.to_xml)
     end
 
-    def response_dropped
+    def adapter_response_dropped
       recording_url = adapter_incoming_request_params.dig("RecordingUrl")
 
       if recording_url
-        if option_no_answer_thank_you_media.present?
-          _twiml.play(url: option_no_answer_thank_you_media.url)
-        else
-          _twiml.say(message: "Thank you for your message. Goodbye.")
-        end
+        _twiml.play(url: option_no_answer_thank_you_media_url)
         _twiml.hangup
 
         adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: recording_url).to_h)
@@ -209,18 +229,18 @@ module PagerTree::Integrations
 
         adapter_alert.logs.create!(message: "Caller left a <a href='#{recording_url}' target='_blank'>voicemail</a>.")
 
-        adapter_record_emails.each do |email|
-          TwilioLiveCallRouting::V3Mailer.with(email: email, alert: alert).call_recording.deliver_later
+        option_record_emails.each do |email|
+          LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
         end
-      elsif record
+      elsif option_record
         _twiml.play(url: option_no_answer_media_url)
         _twiml.record(max_length: 60)
       else
-        _twiml.say(message: "No one is available to answer this call. Goodbye.")
+        _twiml.say(message: "No one is available to answer this call. Goodbye.", **SPEAK_OPTIONS)
         _twiml.hangup
       end
 
-      controller.render(xml: _twiml.to_xml)
+      adapter_controller.render(xml: _twiml.to_xml)
     end
 
     def adapter_process_queue_status_deferred
@@ -229,18 +249,20 @@ module PagerTree::Integrations
 
       if queue_result == "hangup"
         self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
+        adapter_alert.logs.create!(message: "Caller hungup while waiting in queue.")
+        adapter_alert.resolve!(self)
         queue_destroy
       end
 
       adapter_source_log&.save!
     end
 
-    def perform_outgoing(**params)
-      event = params[:event]
-      if event == "alert.acknowledged"
-        on_acknowledge
-      elsif event == "alert.dropped"
-        on_drop
+    def adapter_process_outgoing
+      event = adapter_outgoing_event.event_name.to_s
+      if event == "alert_acknowledged"
+        _on_acknowledge
+      elsif event == "alert_dropped"
+        _on_drop
       end
     end
 
@@ -269,7 +291,7 @@ module PagerTree::Integrations
     end
 
     def _call
-      @_call ||= _client.calls(call_sid).fetch
+      @_call ||= _client.calls(adapter_alert.thirdparty_id).fetch
     end
 
     def _twiml
@@ -299,23 +321,44 @@ module PagerTree::Integrations
       nil
     end
 
-    def on_acknowledge
+    def _on_acknowledge
       # log that we are going to transfer
-      adapter_alert.logs.create!(message: "Attempting to transfer the call...")
+      adapter_alert.logs.create!(message: "The alert was acknowledged. Attempting to transfer the call...")
 
       # try to transfer the caller
-      number = "+19402733696"
-      _twiml.play(url: option_connect_now_media_url)
-      _twiml.pause(length: 1)
-      _twiml.dial(number: number, caller_id: _call.to, answer_on_bridge: true)
-      _call.update(twiml: _twiml.to_xml)
+      account_user = adapter_outgoing_event.account_user
+      number = account_user.user.phone&.phone
 
-      # log if we successfully transfered or failed
-      adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+      adapter_alert.logs.create!(message: "Attempting to transfer the call to #{account_user.user.name} at #{number}...")
+
+      if number.present?
+        _twiml.play(url: option_connect_now_media_url)
+        _twiml.pause(length: 1)
+        _twiml.dial(number: number, caller_id: _call.to, answer_on_bridge: true)
+        _call.update(twiml: _twiml.to_xml)
+        # log if we successfully transfered or failed
+        adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+      else
+        _twiml.say(message: "Someone has acknowledged this call, but they do not have a phone number on file. Goodbye.")
+        _twiml.hangup
+        _call.update(twiml: _twiml.to_xml)
+        adapter_alert.logs.create!(message: "Tranferring the call failed. #{account_user.user.name} has no phone number on file.")
+      end
+    rescue ::Twilio::REST::RestError => e
+      # 21220 - Unable to update record. Call is not in-progress. Cannot redirect.
+      if e.code != 21220
+        adapter_alert.logs.create!(message: "Tranferring the call failed. #{e.message}")
+      end
     end
 
-    def on_drop
-      _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_twilio_live_call_routing_v3_url(id, thirdparty_id: thirdparty_id))
+    def _on_drop
+      # log that we are going to transer
+      adapter_alert.logs.create!(message: "The alert was dropped. Attempting to transfer the call...")
+      _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: adapter_alert.thirdparty_id))
+      music_live_call_routing_twilio_v3_path
+      adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+    rescue ::Twilio::REST::RestError => e
+      adapter_alert.logs.create!(message: "Tranferring the call failed. #{e.message}")
     end
 
     def queue_destroy
