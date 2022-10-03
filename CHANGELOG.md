@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.3...v1.1.4) (2022-10-03)
+
+
+### Bug Fixes
+
+* Add forgotten Slack keyword trigger integration ([#83](https://github.com/PagerTree/pager_tree-integrations/issues/83)) ([60c129f](https://github.com/PagerTree/pager_tree-integrations/commit/60c129f71ef5d8538fb6f67c042137c08a2249c4))
+
 ## [1.1.3](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.2...v1.1.3) (2022-09-22)
 
 
