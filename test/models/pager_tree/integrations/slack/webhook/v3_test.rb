@@ -8,17 +8,17 @@ module PagerTree::Integrations
       @integration = pager_tree_integrations_integrations(:slack_webhook_v3)
 
       @create_request = {
-        "token": "bclb6tJAuYwTk59ywGQ3rwFx",
-        "team_id": "T3R0C6ABC",
-        "team_domain": "pagertree",
-        "service_id": "398047594123",
-        "channel_id": "C014E5UMZ1S",
-        "channel_name": "production",
-        "timestamp": "1664813178.766549",
-        "user_id": "U3QTH7ABC",
-        "user_name": "austinrmiller1991",
-        "text": "outage check servers high",
-        "trigger_word": "outage"
+        token: "bclb6tJAuYwTk59ywGQ3rwFx",
+        team_id: "T3R0C6ABC",
+        team_domain: "pagertree",
+        service_id: "398047594123",
+        channel_id: "C014E5UMZ1S",
+        channel_name: "production",
+        timestamp: "1664813178.766549",
+        user_id: "U3QTH7ABC",
+        user_name: "austinrmiller1991",
+        text: "outage check servers high",
+        trigger_word: "outage"
       }.with_indifferent_access
     end
 
@@ -52,7 +52,7 @@ module PagerTree::Integrations
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Trigger", value: @create_request.dig("trigger_word")),
           AdditionalDatum.new(format: "text", label: "Channel", value: @create_request.dig("channel")),
-          AdditionalDatum.new(format: "text", label: "User", value: @create_request.dig("user_name")),
+          AdditionalDatum.new(format: "text", label: "User", value: @create_request.dig("user_name"))
         ]
       )
 

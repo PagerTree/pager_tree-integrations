@@ -1,15 +1,15 @@
 module PagerTree::Integrations
   class Slack::Webhook::V3 < Integration
     OPTIONS = [
-      {key: :token, type: :string, default: nil},
+      {key: :token, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
-    
+
     after_initialize do
     end
 
     def adapter_should_block_incoming?(request)
-      self.option_token.present? && (request.params["token"] != self.option_token)
+      option_token.present? && (request.params["token"] != option_token)
     end
 
     def adapter_supports_incoming?
@@ -51,14 +51,14 @@ module PagerTree::Integrations
     def _urgency
       text = adapter_incoming_request_params.dig("text")&.downcase
       matches = /(?<urgency>low|medium|high|critical)/.match(text)
-      matches ? matches[:urgency].to_sym : self.urgency
+      matches ? matches[:urgency].to_sym : urgency
     end
 
     def _additional_datums
       [
         AdditionalDatum.new(format: "text", label: "Trigger", value: adapter_incoming_request_params.dig("trigger_word")),
         AdditionalDatum.new(format: "text", label: "Channel", value: adapter_incoming_request_params.dig("channel")),
-        AdditionalDatum.new(format: "text", label: "User", value: adapter_incoming_request_params.dig("user_name")),
+        AdditionalDatum.new(format: "text", label: "User", value: adapter_incoming_request_params.dig("user_name"))
       ]
     end
   end
