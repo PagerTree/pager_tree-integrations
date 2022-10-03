@@ -10,8 +10,8 @@ module PagerTree::Integrations
     validates :option_dedup_threads, inclusion: {in: [true, false]}
 
     after_initialize do
-      self.option_allow_spam ||= true
-      self.option_dedup_threads ||= false
+      self.option_allow_spam = false if option_allow_spam.nil?
+      self.option_dedup_threads = true if option_dedup_threads.nil?
     end
 
     # SPECIAL: override integration endpoint
