@@ -133,6 +133,10 @@ site24x7_v3:
   type: "PagerTree::Integrations::Site24x7::V3"
   # options: no_options
 
+slack_webhook_v3:
+  type: "PagerTree::Integrations::Slack::Webhook::V3"
+  # options: no_options
+
 solar_winds_v3:
   type: "PagerTree::Integrations::SolarWinds::V3"
   # options: no_options

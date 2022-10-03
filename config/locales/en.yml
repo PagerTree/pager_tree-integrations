@@ -79,6 +79,11 @@ en:
         v3:
           form_options:
             option_resolve_warn_hint_html: "Resolve the alert when <code>'check_result' === 'WARNING'</code>"
+      slack:
+        webhook:
+          v3:
+            form_options:
+              option_token_hint_html: "The token can be used to authenticate requests from Slack servers (optional)"
       webhook:
         v3:
           form_options:
@@ -143,6 +148,8 @@ en:
         option_force_input: "Force Caller Input"
         option_record: "Voicemail"
         option_record_emails_list: "Voicemail Emails"
+      "pager_tree/integrations/slack/webhook/v3":
+        option_token: "Slack Token"
       "pager_tree/integrations/server_guard24/v3":
         option_resolve_warn: "Resolve on Warning"
       "pager_tree/integrations/webhook/v3":
