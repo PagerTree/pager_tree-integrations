@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.4...v1.1.5) (2022-10-03)
+
+
+### Bug Fixes
+
+* defaults for email integration ([#85](https://github.com/PagerTree/pager_tree-integrations/issues/85)) ([275ec56](https://github.com/PagerTree/pager_tree-integrations/commit/275ec56cef462073ec3960eb4030f88ab230f392))
+
 ## [1.1.4](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.3...v1.1.4) (2022-10-03)
 
 
