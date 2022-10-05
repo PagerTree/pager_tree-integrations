@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.5...v1.1.6) (2022-10-05)
+
+
+### Bug Fixes
+
+* Add special values to Twilio live call routing recording email ([#87](https://github.com/PagerTree/pager_tree-integrations/issues/87)) ([b00276a](https://github.com/PagerTree/pager_tree-integrations/commit/b00276a53d4d09864a926ac8a11f7b77272bee85))
+
 ## [1.1.5](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.4...v1.1.5) (2022-10-03)
 
 
