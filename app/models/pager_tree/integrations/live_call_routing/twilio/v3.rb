@@ -83,7 +83,7 @@ module PagerTree::Integrations
     end
 
     def validate_record_emails
-      errors.add(:record_emails, "must be a valid email") if option_record_emails.any? { |x| !x.match(URI::MailTo::EMAIL_REGEXP) }
+      errors.add(:record_emails, "must be a valid email") if option_record_emails.any? { |x| !(x.match(URI::MailTo::EMAIL_REGEXP) || ["team", "team-admin", "on-call"].include?(x)) }
     end
 
     def adapter_supports_incoming?
@@ -229,8 +229,24 @@ module PagerTree::Integrations
 
         adapter_alert.logs.create!(message: "Caller left a <a href='#{recording_url}' target='_blank'>voicemail</a>.")
 
-        option_record_emails.each do |email|
-          LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
+        if option_record_emails.any?
+          emails = option_record_emails.map do |x|
+            if x == "team"
+              Array(adapter_alert.destination_teams.map(&:admin_users).flatten&.map(&:email)) + Array(adapter_alert.destination_teams.map(&:member_users).flatten&.map(&:email))
+            elsif x == "team-admin"
+              Array(adapter_alert.destination_teams.map(&:admin_users).flatten&.map(&:email))
+            elsif x == "on-call"
+              adapter_alert.destination_teams.map do |t|
+                Array(t.schedule.current_oncall_event_occurrences.map(&:attendees).flatten.map(&:attendee).uniq.map(&:email))
+              end
+            else
+              x
+            end
+          end.flatten.compact_blank.uniq
+
+          emails.each do |email|
+            LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
+          end
         end
       elsif option_record
         _twiml.play(url: option_no_answer_media_url)
