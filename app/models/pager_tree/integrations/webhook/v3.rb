@@ -74,8 +74,9 @@ module PagerTree::Integrations
     end
 
     def _urgency
-      urgency = _adapter_incoming_request_params.dig("urgency")
-      urgency&.to_s&.downcase&.strip
+      text = _adapter_incoming_request_params.dig("urgency")
+      matches = /(?<urgency>low|medium|high|critical)/.match(text&.to_s&.downcase&.strip)
+      matches ? matches[:urgency].to_s : nil
     end
 
     def _incident

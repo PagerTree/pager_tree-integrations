@@ -75,6 +75,8 @@ module PagerTree::Integrations
         "medium"
       when "low"
         "low"
+      else
+        nil
       end
     end
   end

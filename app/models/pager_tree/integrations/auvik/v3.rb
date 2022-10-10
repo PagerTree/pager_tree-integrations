@@ -73,6 +73,8 @@ module PagerTree::Integrations
       when AUVIK_SEVERITY[:warning] then "medium"
       when AUVIK_SEVERITY[:critical] then "high"
       when AUVIK_SEVERITY[:emergency] then "critical"
+      else
+        nil
       end
     end
 

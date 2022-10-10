@@ -64,7 +64,7 @@ module PagerTree::Integrations
       true_alert = Alert.new(
         title: @create_request[:freshdesk_webhook][:ticket_subject],
         description: @create_request[:freshdesk_webhook][:ticket_description],
-        urgency: :low,
+        urgency: "low",
         thirdparty_id: @create_request[:freshdesk_webhook][:ticket_public_url],
         dedup_keys: [],
         additional_data: [

@@ -100,6 +100,8 @@ module PagerTree::Integrations
         "high"
       when "critical"
         "critical"
+      else
+        nil
       end
     end
 

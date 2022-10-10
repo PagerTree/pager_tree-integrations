@@ -62,6 +62,8 @@ module PagerTree::Integrations
       when "Sev2" then "high"
       when "Sev3" then "medium"
       when "Sev4" then "low"
+      else
+        nil
       end
     end
 

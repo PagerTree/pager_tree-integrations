@@ -78,13 +78,15 @@ module PagerTree::Integrations
       priority_i = priority&.to_i
 
       if priority_i == FD_TICKET_PRIORITY[:low] || priority == "Low"
-        :low
+        "low"
       elsif priority_i == FD_TICKET_PRIORITY[:medium] || priority == "Normal"
-        :medium
+        "medium"
       elsif priority_i == FD_TICKET_PRIORITY[:high] || priority == "High"
-        :high
+        "high"
       elsif priority_i == FD_TICKET_PRIORITY[:urgent] || priority == "Urgent"
-        :critical
+        "critical"
+      else
+        nil
       end
     end
 

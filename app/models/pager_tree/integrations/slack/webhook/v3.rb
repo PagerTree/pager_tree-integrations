@@ -51,7 +51,7 @@ module PagerTree::Integrations
     def _urgency
       text = adapter_incoming_request_params.dig("text")&.downcase
       matches = /(?<urgency>low|medium|high|critical)/.match(text)
-      matches ? matches[:urgency].to_sym : urgency
+      matches ? matches[:urgency].to_s : nil
     end
 
     def _additional_datums

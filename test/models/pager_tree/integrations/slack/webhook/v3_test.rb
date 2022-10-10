@@ -46,7 +46,7 @@ module PagerTree::Integrations
 
       true_alert = Alert.new(
         title: @create_request.dig("text"),
-        urgency: :high,
+        urgency: "high",
         thirdparty_id: [@create_request.dig("channel_id"), @create_request.dig("timestamp")].join("."),
         dedup_keys: [],
         additional_data: [
