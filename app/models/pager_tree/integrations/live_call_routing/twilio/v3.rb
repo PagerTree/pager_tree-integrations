@@ -371,7 +371,6 @@ module PagerTree::Integrations
       # log that we are going to transer
       adapter_alert.logs.create!(message: "The alert was dropped. Attempting to transfer the call...")
       _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: adapter_alert.thirdparty_id))
-      music_live_call_routing_twilio_v3_path
       adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
     rescue ::Twilio::REST::RestError => e
       adapter_alert.logs.create!(message: "Tranferring the call failed. #{e.message}")
