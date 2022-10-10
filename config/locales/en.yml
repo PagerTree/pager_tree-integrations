@@ -8,6 +8,7 @@ en:
         option_outgoing_rules_hint_html: Outgoing Rules <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#rules' target='_blank'>(see docs)</a> for details.
         option_incoming_webhook_url_hint_html: "URL to POST to"
         option_alert_created_hint_html: "Send when the alert is created (before its routed)"
+        option_alert_assigned_hint_html: "Send when the alert is assigned to a team."
         option_alert_open_hint_html: "Send when the alert is marked open (it has been routed)"
         option_alert_acknowledged_hint_html: "Send when a user has acknowledged the alert"
         option_alert_rejected_hint_html: "Send when a user has rejected the alert"
@@ -99,6 +100,7 @@ en:
         option_description_template_enabled: "Description Template"
         option_incoming_webhook_url: "URL"
         option_alert_created: "alert.created"
+        option_alert_assigned: "alert.assigned"
         option_alert_open: "alert.open"
         option_alert_acknowledged: "alert.acknowledged"
         option_alert_rejected: "alert.rejected"

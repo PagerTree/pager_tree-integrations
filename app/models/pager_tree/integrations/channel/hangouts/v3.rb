@@ -3,6 +3,7 @@ module PagerTree::Integrations
     OPTIONS = [
       {key: :incoming_webhook_url, type: :string, default: nil},
       {key: :alert_open, type: :boolean, default: false},
+      {key: :alert_assigned, type: :boolean, default: false},
       {key: :alert_acknowledged, type: :boolean, default: false},
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
@@ -15,6 +16,7 @@ module PagerTree::Integrations
     after_initialize do
       self.option_incoming_webhook_url ||= nil
       self.option_alert_open ||= false
+      self.option_alert_assigned ||= false
       self.option_alert_acknowledged ||= false
       self.option_alert_resolved ||= false
       self.option_alert_dropped ||= false

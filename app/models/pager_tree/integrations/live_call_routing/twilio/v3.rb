@@ -126,7 +126,40 @@ module PagerTree::Integrations
     end
 
     def adapter_response_incoming
+      # if this was attached to a router
+      if !adapter_alert.meta["live_call_router_team_prefix_ids"].present? && routers.size > 0 && account.subscription_feature_routers?
+        adapter_alert.logs.create!(message: "Routed to router. Attempting to get a list of teams...")
+        team_ids = []
+        v3 = adapter_alert.v3_format
+        routers.each do |router|
+          if router.enabled? && router.kept?
+            actions = router.rules_eval({
+              always: true,
+              alert: v3
+            })
+
+            actions.flatten!
+
+            actions.each do |action|
+              team_ids << Array(action["receiver"]) if action["type"] == "assign"
+            end
+          end
+        end # end routers.each
+
+        team_ids.flatten!
+        team_ids.uniq!
+
+        if team_ids.size > 0
+          adapter_alert.logs.create!(message: "Router provided #{team_ids.size} teams: #{team_ids}")
+          adapter_alert.meta["live_call_router_team_prefix_ids"] = team_ids
+          adapter_alert.save!
+        else
+          adapter_alert.logs.create!(message: "Router provided no teams.")
+        end
+      end # end if routers
+
       if _teams_size == 0
+        adapter_alert.logs.create!(message: "This integration is not configured to route to any teams. Hang up.")
         _twiml.say(message: "This integration is not configured to route to any teams. Goodbye", **SPEAK_OPTIONS)
         _twiml.hangup
         return adapter_controller&.render(xml: _twiml.to_xml)
@@ -314,12 +347,16 @@ module PagerTree::Integrations
       @_twiml ||= ::Twilio::TwiML::VoiceResponse.new
     end
 
+    def _teams
+      @_teams ||= adapter_alert.meta["live_call_router_team_prefix_ids"].present? ? Team.where(account_id: account_id, prefix_id: adapter_alert.meta["live_call_router_team_prefix_ids"]) : teams
+    end
+
     def _teams_size
-      @_teams_size ||= teams.size
+      @_teams_size ||= _teams.size
     end
 
     def _teams_sorted
-      @_teams_sorted ||= teams.order(name: :desc)
+      @_teams_sorted ||= _teams.order(name: :desc)
     end
 
     def _teams_message
