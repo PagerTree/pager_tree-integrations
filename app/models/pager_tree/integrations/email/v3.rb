@@ -23,7 +23,7 @@ module PagerTree::Integrations
       postfix = "_tst" if Rails.env.test?
       postfix = "_dev" if Rails.env.development?
 
-      "#{inbox}#{postfix}+#{id}@#{domain}"
+      "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
     end
 
     def adapter_should_block?
