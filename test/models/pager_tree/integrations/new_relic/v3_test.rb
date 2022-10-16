@@ -37,8 +37,40 @@ module PagerTree::Integrations
         team: "DevOps"
       }.with_indifferent_access
 
+      @create_request_2 = {
+        id: "b6137c61-0e27-496d-bd9b-335c98c155eb",
+        issueUrl: "https://one.eu.newrelic.com/launcher/nrai.launcher?pane=123",
+        title: "Error percentage > 2.5% for at least 5 minutes on 'HIGHREV-pr-TS'",
+        priority: "HIGH",
+        impactedEntities: [
+          "HIGHREV-pr-TS"
+        ],
+        totalIncidents: 1,
+        state: "CREATED",
+        trigger: "INCIDENT_ADDED",
+        isCorrelated: false,
+        createdAt: 1665924858970,
+        updatedAt: 1665924858970,
+        sources: [
+          "newrelic"
+        ],
+        alertPolicyNames: [
+          "Error Percentage (High) Policy"
+        ],
+        alertConditionNames: [
+          "Error Percentage (High) threshold"
+        ],
+        workflowName: "DBA Team workflow"
+      }.with_indifferent_access
+
+      @create_request_3 = @create_request_2.deep_dup
+      @create_request_3["state"] = "ACTIVATED"
+
       @resolve_request = @create_request.deep_dup
       @resolve_request[:event_type] = "INCIDENT_RESOLVED"
+
+      @resolve_request_2 = @create_request_2.deep_dup
+      @resolve_request_2[:state] = "CLOSED"
 
       @other_request = @create_request.deep_dup
       @other_request[:event_type] = "baaad"
@@ -57,7 +89,16 @@ module PagerTree::Integrations
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
 
+      @integration.adapter_incoming_request_params = @create_request_2
+      assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @create_request_3
+      assert_equal :create, @integration.adapter_action
+
       @integration.adapter_incoming_request_params = @resolve_request
+      assert_equal :resolve, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @resolve_request_2
       assert_equal :resolve, @integration.adapter_action
 
       @integration.adapter_incoming_request_params = @other_request
@@ -67,6 +108,9 @@ module PagerTree::Integrations
     test "adapter_thirdparty_id" do
       @integration.adapter_incoming_request_params = @create_request
       assert_equal @create_request.dig("incident_id"), @integration.adapter_thirdparty_id
+
+      @integration.adapter_incoming_request_params = @create_request_2
+      assert_equal @create_request_2.dig("id"), @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
@@ -80,7 +124,27 @@ module PagerTree::Integrations
         dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Account Name", value: @create_request.dig("account_name")),
-          AdditionalDatum.new(format: "text", label: "Incident URL", value: @create_request.dig("incident_url"))
+          AdditionalDatum.new(format: "link", label: "Incident URL", value: @create_request.dig("incident_url")),
+          AdditionalDatum.new(format: "link", label: "Issue URL", value: @create_request.dig("issueUrl"))
+        ]
+      )
+
+      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+    end
+
+    test "adapter_process_create_2" do
+      @integration.adapter_incoming_request_params = @create_request_2
+
+      true_alert = Alert.new(
+        title: @create_request_2.dig("title"),
+        description: nil,
+        urgency: nil,
+        thirdparty_id: @create_request_2.dig("id"),
+        dedup_keys: [],
+        additional_data: [
+          AdditionalDatum.new(format: "text", label: "Account Name", value: @create_request_2.dig("account_name")),
+          AdditionalDatum.new(format: "link", label: "Incident URL", value: @create_request_2.dig("incident_url")),
+          AdditionalDatum.new(format: "link", label: "Issue URL", value: @create_request_2.dig("issueUrl"))
         ]
       )
 

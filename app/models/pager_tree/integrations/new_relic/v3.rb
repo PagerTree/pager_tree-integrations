@@ -19,16 +19,17 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      adapter_incoming_request_params.dig("incident_id")
+      adapter_incoming_request_params.dig("incident_id") || adapter_incoming_request_params.dig("id")
     end
 
     def adapter_action
       event_type = adapter_incoming_request_params.dig("event_type")
       current_state = adapter_incoming_request_params.dig("current_state")
+      state = adapter_incoming_request_params.dig("state")
 
-      if event_type == "INCIDENT_OPEN" || (event_type == "INCIDENT" && current_state == "open")
+      if event_type == "INCIDENT_OPEN" || (event_type == "INCIDENT" && current_state == "open") || (state == "CREATED" || state == "ACTIVATED")
         :create
-      elsif event_type == "INCIDENT_RESOLVED" || (event_type == "INCIDENT" && current_state == "closed")
+      elsif event_type == "INCIDENT_RESOLVED" || (event_type == "INCIDENT" && current_state == "closed") || state == "CLOSED"
         :resolve
       else
         :other
@@ -48,7 +49,7 @@ module PagerTree::Integrations
     private
 
     def _title
-      adapter_incoming_request_params.dig("condition_name")
+      adapter_incoming_request_params.dig("condition_name") || adapter_incoming_request_params.dig("title")
     end
 
     def _description
@@ -58,7 +59,8 @@ module PagerTree::Integrations
     def _additional_datums
       [
         AdditionalDatum.new(format: "text", label: "Account Name", value: adapter_incoming_request_params.dig("account_name")),
-        AdditionalDatum.new(format: "text", label: "Incident URL", value: adapter_incoming_request_params.dig("incident_url"))
+        AdditionalDatum.new(format: "link", label: "Incident URL", value: adapter_incoming_request_params.dig("incident_url")),
+        AdditionalDatum.new(format: "link", label: "Issue URL", value: adapter_incoming_request_params.dig("issueUrl"))
       ]
     end
   end
