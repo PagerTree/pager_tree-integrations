@@ -55,8 +55,6 @@ module PagerTree::Integrations
         "medium"
       when "CRITICAL"
         "critical"
-      else
-        nil
       end
     end
 

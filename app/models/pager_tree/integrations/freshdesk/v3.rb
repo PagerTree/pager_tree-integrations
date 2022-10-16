@@ -85,8 +85,6 @@ module PagerTree::Integrations
         "high"
       elsif priority_i == FD_TICKET_PRIORITY[:urgent] || priority == "Urgent"
         "critical"
-      else
-        nil
       end
     end
 
