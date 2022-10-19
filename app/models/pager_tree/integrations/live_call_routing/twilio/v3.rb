@@ -356,7 +356,11 @@ module PagerTree::Integrations
     end
 
     def _teams_sorted
-      @_teams_sorted ||= _teams.order(name: :desc)
+      @_teams_sorted ||= adapter_alert.meta["live_call_router_team_prefix_ids"].present? ?
+        # sorts by the order the user gave us in the router
+        _teams.sort_by { |t| adapter_alert.meta["live_call_router_team_prefix_ids"].index(t.prefix_id) } :
+        # sorts in alpha order (not ascii, but dictionary style order)
+        _teams.order(name: :asc)
     end
 
     def _teams_message
