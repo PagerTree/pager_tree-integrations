@@ -130,6 +130,7 @@ module PagerTree::Integrations
       if !adapter_alert.meta["live_call_router_team_prefix_ids"].present? && routers.size > 0 && account.subscription_feature_routers?
         adapter_alert.logs.create!(message: "Routed to router. Attempting to get a list of teams...")
         team_ids = []
+        default_receiver_team_ids = []
         v3 = adapter_alert.v3_format
         routers.each do |router|
           if router.enabled? && router.kept?
@@ -143,11 +144,17 @@ module PagerTree::Integrations
             actions.each do |action|
               team_ids << Array(action["receiver"]) if action["type"] == "assign"
             end
+
+            # hold on to the default destination team ids in case we need them later
+            default_receiver_team_ids |= [router.default_receiver.prefix_id] if router.default_receiver.present?
           end
         end # end routers.each
 
         team_ids.flatten!
         team_ids.uniq!
+
+        # if the router didn't return any teams, use the default receiver teams
+        team_ids = default_receiver_team_ids if team_ids.size == 0
 
         if team_ids.size > 0
           adapter_alert.logs.create!(message: "Router provided #{team_ids.size} teams: #{team_ids}")
