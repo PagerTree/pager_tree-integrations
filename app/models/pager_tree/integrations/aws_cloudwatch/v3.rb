@@ -12,7 +12,6 @@ module PagerTree::Integrations
     end
 
     def adapter_should_block_incoming?(request)
-      # !Aws::SNS::MessageVerifier.new.authentic?(request.params)
       false
     end
 
@@ -42,19 +41,29 @@ module PagerTree::Integrations
 
     def adapter_process_other
       if _type == "SubscriptionConfirmation" || _type == "UnsubscribeConfirmation"
-        url = adapter_incoming_request_params.dig("SubscribeURL")
+        url = _sns_notification.dig("SubscribeURL")
         HTTParty.get(url) if url
       end
     end
 
     private
 
+    # the sns notification is sent with a text/plain but the text is formatted as json
+    # need parse the text into json
+    def _sns_notification
+      @_sns_notification ||= begin
+        JSON.parse(adapter_incoming_deferred_request.body).with_indifferent_access
+      rescue
+        {}
+      end
+    end
+
     def _type
-      @_type ||= adapter_incoming_request_params.dig("Type")
+      @_type ||= _sns_notification.dig("Type")
     end
 
     def _message
-      @_message ||= adapter_incoming_request_params.dig("Message")
+      @_message ||= _sns_notification.dig("Message")
     end
 
     def _json
@@ -68,7 +77,7 @@ module PagerTree::Integrations
 
     def _thirdparty_id
       [
-        adapter_incoming_request_params.dig("TopicArn"),
+        _sns_notification.dig("TopicArn"),
         _json.dig("AlarmName")
       ].join(":")
     end

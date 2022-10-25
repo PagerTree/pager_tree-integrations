@@ -54,27 +54,27 @@ module PagerTree::Integrations
     end
 
     test "adapter_actions create" do
-      @integration.adapter_incoming_request_params = @create_request
+      @integration.adapter_incoming_deferred_request = OpenStruct.new(body: @create_request.to_json)
       assert_equal :create, @integration.adapter_action
     end
 
     test "adapter_actions resolve" do
-      @integration.adapter_incoming_request_params = @resolve_request
+      @integration.adapter_incoming_deferred_request = OpenStruct.new(body: @resolve_request.to_json)
       assert_equal :resolve, @integration.adapter_action
     end
 
     test "adapter_actions other" do
-      @integration.adapter_incoming_request_params = @other_request
+      @integration.adapter_incoming_deferred_request = OpenStruct.new(body: @other_request.to_json)
       assert_equal :other, @integration.adapter_action
     end
 
     test "adapter_thirdparty_id" do
-      @integration.adapter_incoming_request_params = @create_request
+      @integration.adapter_incoming_deferred_request = OpenStruct.new(body: @create_request.to_json)
       assert_equal "arn:aws:sns:us-east-1:498849832712:update-cherwell-cmdb:Saffron-Octopus-RDS", @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
-      @integration.adapter_incoming_request_params = @create_request
+      @integration.adapter_incoming_deferred_request = OpenStruct.new(body: @create_request.to_json)
 
       true_alert = Alert.new(
         title: "Saffron-Octopus-RDS",
