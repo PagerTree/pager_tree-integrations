@@ -39,7 +39,7 @@ module PagerTree::Integrations
     def adapter_action
       status = _freshdesk_webhook.dig("ticket_status")
       status_i = status&.to_i
-      if status_i == FD_TICKET_STATUS[:open] || status == "Open" || status_i == FD_TICKET_STATUS[:pending] || status == "Pending"
+      if !adapter_alert.present? || status_i == FD_TICKET_STATUS[:open] || status == "Open" || status_i == FD_TICKET_STATUS[:pending] || status == "Pending"
         :create
       elsif status_i == FD_TICKET_STATUS[:resolved] || status == "Resolved" || status_i == FD_TICKET_STATUS[:closed] || status == "Closed"
         :resolve

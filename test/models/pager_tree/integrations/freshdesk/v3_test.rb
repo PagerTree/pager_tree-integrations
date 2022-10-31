@@ -41,6 +41,13 @@ module PagerTree::Integrations
     end
 
     test "adapter_actions" do
+      # this should report a create action because there is no adapter alert
+      @integration.adapter_incoming_request_params = @other_request
+      assert_equal :create, @integration.adapter_action
+
+      # say we found an alert
+      @integration.adapter_alert = Alert.new
+
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
 
