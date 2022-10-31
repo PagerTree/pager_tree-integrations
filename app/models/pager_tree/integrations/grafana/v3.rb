@@ -19,7 +19,7 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      adapter_incoming_request_params.dig("ruleId")
+      adapter_incoming_request_params.dig("ruleId") || adapter_incoming_request_params.dig("groupKey") || SecureRandom.uuid
     end
 
     def adapter_action
@@ -46,7 +46,7 @@ module PagerTree::Integrations
     private
 
     def _title
-      adapter_incoming_request_params.dig("ruleName")
+      adapter_incoming_request_params.dig("ruleName") || adapter_incoming_request_params.dig("title")
     end
 
     def _description

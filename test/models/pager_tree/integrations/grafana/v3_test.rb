@@ -25,6 +25,47 @@ module PagerTree::Integrations
         ]
       }.with_indifferent_access
 
+      @create_request_2 = {
+        receiver: "",
+        status: "firing",
+        alerts: [
+          {
+            status: "firing",
+            labels: {
+              alertname: "TestAlert",
+              instance: "Grafana"
+            },
+            annotations: {
+              summary: "Notification test"
+            },
+            startsAt: "2022-10-31T21:42:32.8794896Z",
+            endsAt: "0001-01-01T00:00:00Z",
+            generatorURL: "",
+            fingerprint: "57c6d9296de2ad39",
+            silenceURL: "https://url.to.grafana/alerting/silence/new?alertmanager=grafana&matcher=alertname%3DTestAlert&matcher=instance%3DGrafana",
+            dashboardURL: "",
+            panelURL: "",
+            valueString: "[ metric='foo' labels={instance=bar} value=10 ]"
+          }
+        ],
+        groupLabels: {},
+        commonLabels: {
+          alertname: "TestAlert",
+          instance: "Grafana"
+        },
+        commonAnnotations: {
+          summary: "Notification test"
+        },
+        externalURL: "https://url.to.grafana/",
+        version: "1",
+        groupKey: "{alertname=\"TestAlert\", instance=\"Grafana\"}2022-10-31 21:42:32.8794896 +0000 UTC m=+2091531.637929403",
+        truncatedAlerts: 0,
+        orgId: 1,
+        title: "[FIRING:1]  (TestAlert Grafana)",
+        state: "alerting",
+        message: "**Firing**\n\nValue: [ metric='foo' labels={instance=bar} value=10 ]\nLabels:\n - alertname = TestAlert\n - instance = Grafana\nAnnotations:\n - summary = Notification test\nSilence: https://url.to.grafana/alerting/silence/new?alertmanager=grafana&matcher=alertname%3DTestAlert&matcher=instance%3DGrafana\n"
+      }.with_indifferent_access
+
       @resolve_request = @create_request.deep_dup
       @resolve_request[:state] = "ok"
 
@@ -55,6 +96,9 @@ module PagerTree::Integrations
     test "adapter_thirdparty_id" do
       @integration.adapter_incoming_request_params = @create_request
       assert_equal 1, @integration.adapter_thirdparty_id
+
+      @integration.adapter_incoming_request_params = @create_request_2
+      assert_equal @create_request_2.dig("groupKey"), @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
@@ -69,6 +113,22 @@ module PagerTree::Integrations
         additional_data: [
           AdditionalDatum.new(format: "link", label: "URL", value: @create_request.dig("ruleURL")),
           AdditionalDatum.new(format: "img", label: "Image", value: @create_request.dig("imageUrl"))
+        ]
+      )
+
+      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+
+      @integration.adapter_incoming_request_params = @create_request_2
+
+      true_alert = Alert.new(
+        title: @create_request_2.dig("title"),
+        description: @create_request_2.dig("message"),
+        urgency: nil,
+        thirdparty_id: @create_request_2.dig("groupKey"),
+        dedup_keys: [],
+        additional_data: [
+          AdditionalDatum.new(format: "link", label: "URL", value: nil),
+          AdditionalDatum.new(format: "img", label: "Image", value: nil)
         ]
       )
 
