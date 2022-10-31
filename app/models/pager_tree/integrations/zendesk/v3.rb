@@ -26,6 +26,8 @@ module PagerTree::Integrations
       case adapter_incoming_request_params.dig("event_type")
       when "create"
         :create
+      when "acknowledge"
+        :acknowledge
       when "resolve"
         :resolve
       else

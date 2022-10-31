@@ -27,6 +27,8 @@ module PagerTree::Integrations
       case alert_status
       when "active", "test"
         :create
+      when "ack"
+        :acknowledge
       when "clear"
         :resolve
       else

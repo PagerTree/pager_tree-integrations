@@ -40,8 +40,10 @@ module PagerTree::Integrations
       status = _freshservice_webhook.dig("ticket_status")
       status_i = status&.to_i
 
-      if status_i == FS_TICKET_STATUS[:open] || status == "Open" || status_i == FS_TICKET_STATUS[:pending] || status == "Pending"
+      if status_i == FS_TICKET_STATUS[:open] || status == "Open" || status_i == FS_TICKET_STATUS[:pending]
         :create
+      elsif status_i == FS_TICKET_STATUS[:pending] || status == "Pending"
+        :acknowledge
       elsif status_i == FS_TICKET_STATUS[:resolved] || status == "Resolved" || status_i == FS_TICKET_STATUS[:closed] || status == "Closed"
         :resolve
       else

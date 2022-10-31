@@ -29,6 +29,8 @@ module PagerTree::Integrations
 
       if event_type == "INCIDENT_OPEN" || (event_type == "INCIDENT" && current_state == "open") || (state == "CREATED" || state == "ACTIVATED")
         :create
+      elsif event_type == "INCIDENT_ACKNOWLEDGED" || (event_type == "INCIDENT" && current_state == "acknowledged")
+        :acknowledge
       elsif event_type == "INCIDENT_RESOLVED" || (event_type == "INCIDENT" && current_state == "closed") || state == "CLOSED"
         :resolve
       else

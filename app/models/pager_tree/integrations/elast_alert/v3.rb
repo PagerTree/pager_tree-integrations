@@ -25,6 +25,7 @@ module PagerTree::Integrations
     def adapter_action
       case _event_type
       when "create" then :create
+      when "acknowledge" then :acknowledge
       when "resolve" then :resolve
       else
         :other

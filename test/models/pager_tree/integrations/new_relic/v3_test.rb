@@ -66,6 +66,9 @@ module PagerTree::Integrations
       @create_request_3 = @create_request_2.deep_dup
       @create_request_3["state"] = "ACTIVATED"
 
+      @acknowledge_request = @create_request.deep_dup
+      @acknowledge_request[:event_type] = "INCIDENT_ACKNOWLEDGED"
+
       @resolve_request = @create_request.deep_dup
       @resolve_request[:event_type] = "INCIDENT_RESOLVED"
 
@@ -94,6 +97,9 @@ module PagerTree::Integrations
 
       @integration.adapter_incoming_request_params = @create_request_3
       assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @acknowledge_request
+      assert_equal :acknowledge, @integration.adapter_action
 
       @integration.adapter_incoming_request_params = @resolve_request
       assert_equal :resolve, @integration.adapter_action

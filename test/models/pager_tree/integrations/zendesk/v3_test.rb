@@ -17,6 +17,9 @@ module PagerTree::Integrations
         status: "New"
       }.with_indifferent_access
 
+      @acknowledge_request = @create_request.deep_dup
+      @acknowledge_request[:event_type] = "acknowledge"
+
       @resolve_request = @create_request.deep_dup
       @resolve_request[:event_type] = "resolve"
 
@@ -36,6 +39,9 @@ module PagerTree::Integrations
     test "adapter_actions" do
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @acknowledge_request
+      assert_equal :acknowledge, @integration.adapter_action
 
       @integration.adapter_incoming_request_params = @resolve_request
       assert_equal :resolve, @integration.adapter_action
