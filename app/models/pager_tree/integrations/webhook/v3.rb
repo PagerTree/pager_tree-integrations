@@ -28,7 +28,7 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      _adapter_incoming_request_params.dig("id")
+      @adapter_thirdparty_id ||= _adapter_incoming_request_params.dig("id") || SecureRandom.uuid
     end
 
     def adapter_action

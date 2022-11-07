@@ -73,7 +73,7 @@ module PagerTree::Integrations
     end
 
     def _thirdparty_id
-      _mail.message_id
+      @_thirdparty_id ||= _mail.message_id || SecureRandom.uuid
     end
 
     def _dedup_keys
