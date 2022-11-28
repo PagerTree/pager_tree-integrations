@@ -94,7 +94,7 @@ module PagerTree::Integrations
       return @_body if @_body
 
       if _mail.multipart? && _mail.html_part
-        document = Nokogiri::HTML(_mail.html_part.body.decoded)
+        document = Nokogiri::HTML(_mail_body_part_to_utf8(_mail.html_part))
 
         _attachments_hash.map do |attachment_hash|
           attachment = attachment_hash[:original]
@@ -111,12 +111,38 @@ module PagerTree::Integrations
 
         @_body = ::Sanitize.document(document, Sanitize::Config::RELAXED)
       elsif _mail.multipart? && _mail.text_part
-        @_body = _mail.text_part.body.decoded
+        @_body = _mail_body_part_to_utf8(_mail.text_part)
       else
         @_body = _mail.decoded
       end
 
       @_body
+    end
+
+    # Encodings can cause lots of issues, so we try to convert to UTF-8
+    # https://github.com/mikel/mail#encodings
+    # https://stackoverflow.com/a/15818886/2903189
+    def _mail_body_part_to_utf8(part_to_use)
+      # get the message body without the header information
+      body = part_to_use.body.decoded
+
+      if body.encoding.name != "UTF-8"
+        # readout the encoding (charset) of the part
+        encoding = part_to_use.content_type_parameters["charset"] if part_to_use.content_type_parameters
+
+        # and convert it to UTF-8
+        if encoding
+          body = body.force_encoding(encoding).encode("UTF-8")
+        else
+          raise StandardError.new "Unknown encoding for mail body part"
+        end
+      end
+
+      # return the body
+      body
+    rescue
+      # if something goes wrong, just return the original body with characters replaced
+      body.encode("UTF-8", "binary", invalid: :replace, undef: :replace, replace: "?")
     end
 
     def _attachments_hash
