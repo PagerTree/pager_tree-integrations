@@ -329,7 +329,7 @@ module PagerTree::Integrations
     end
 
     def _title
-      "Incoming call from #{adapter_incoming_request_params.dig("From")}"
+      "Incoming call from #{adapter_incoming_request_params.dig("From")&.split("")&.join(" ")}"
     end
 
     def _additional_datums
