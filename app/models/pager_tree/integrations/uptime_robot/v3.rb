@@ -6,6 +6,12 @@ module PagerTree::Integrations
     after_initialize do
     end
 
+    # SPECIAL: override integration endpoint with the get endpoint and the query string starter
+    # uptime robot doesn't handle this, so we have to do it ourselves
+    def endpoint
+      super + "/g?"
+    end
+
     def adapter_supports_incoming?
       true
     end
