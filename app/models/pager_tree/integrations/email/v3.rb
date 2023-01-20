@@ -77,9 +77,14 @@ module PagerTree::Integrations
     end
 
     def _dedup_keys
-      keys = [_thirdparty_id]
-      keys.concat(Array(_mail.references)) if option_dedup_threads
-      keys
+      keys = []
+
+      if option_dedup_threads
+        keys.concat(Array(_thirdparty_id))
+        keys.concat(Array(_mail.references))
+      end
+
+      keys.compact_blank.uniq
     end
 
     def _title

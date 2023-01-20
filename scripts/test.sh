@@ -1,0 +1,1 @@
+dotenv -f .env.test.local bundle exec rails test
