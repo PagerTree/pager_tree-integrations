@@ -7,7 +7,6 @@ module PagerTree::Integrations
     setup do
       @integration = pager_tree_integrations_integrations(:uptime_kuma_v3)
 
-      # TODO: Write some requests to test the integration
       @create_request = {
         event_type: "create",
         id: 1,
