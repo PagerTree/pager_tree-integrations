@@ -6,7 +6,8 @@ module PagerTree::Integrations
       {key: :api_secret, type: :string, default: nil},
       {key: :force_input, type: :boolean, default: false},
       {key: :record, type: :boolean, default: false},
-      {key: :record_email, type: :string, default: ""}
+      {key: :record_email, type: :string, default: ""},
+      {key: :dial_pause, type: :integer}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -397,7 +398,7 @@ module PagerTree::Integrations
 
       if number.present?
         _twiml.play(url: option_connect_now_media_url)
-        _twiml.pause(length: 1)
+        _twiml.pause(length: option_dial_pause.to_i.clamp(1, 15))
         _twiml.dial(number: number, caller_id: _call.to, answer_on_bridge: true)
         _call.update(twiml: _twiml.to_xml)
         # log if we successfully transfered or failed
