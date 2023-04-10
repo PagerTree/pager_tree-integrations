@@ -53,8 +53,18 @@ module PagerTree::Integrations
     end
 
     def _additional_datums
+      # links look like this: "https://jira.atlassian.com/rest/api/2/issue/99291"
+      # we want them to look like thish https://jira.atlassian.com/browse/CS-6157
+      jira_id = adapter_incoming_request_params.dig("issue", "id")
+      jira_link = adapter_incoming_request_params.dig("issue", "self")
+      jira_key = adapter_incoming_request_params.dig("issue", "key")
+
+      if jira_link.present? && jira_key.present? && jira_id.present?
+        jira_link = jira_link.gsub("/rest/api/2/issue/#{jira_id}", "/browse/#{jira_key}")
+      end
+
       [
-        AdditionalDatum.new(format: "link", label: "Issue URL", value: adapter_incoming_request_params.dig("issue", "self"))
+        AdditionalDatum.new(format: "link", label: "Issue URL", value: jira_link)
       ]
     end
   end

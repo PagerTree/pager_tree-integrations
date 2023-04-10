@@ -133,7 +133,7 @@ module PagerTree::Integrations
         thirdparty_id: @create_request.dig("issue", "id"),
         dedup_keys: [],
         additional_data: [
-          AdditionalDatum.new(format: "link", label: "Issue URL", value: @create_request.dig("issue", "self"))
+          AdditionalDatum.new(format: "link", label: "Issue URL", value: "https://jira.atlassian.com/browse/JRA-20002")
         ]
       )
 
