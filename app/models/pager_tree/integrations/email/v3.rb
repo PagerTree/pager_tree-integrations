@@ -23,7 +23,20 @@ module PagerTree::Integrations
       postfix = "_tst" if Rails.env.test?
       postfix = "_dev" if Rails.env.development?
 
-      "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
+      if Rails.env.production?
+        if created_at&.after?(DateTime.parse("2023-09-01"))
+          # new emails
+          # int_abc123@domain.com
+          "#{v == 3 ? prefix_id : id}@#{domain}"
+        else
+          # legacy emails
+          # a+int_abc123@domain.com
+          "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
+        end
+      else
+        # staging, test, development
+        "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
+      end
     end
 
     def adapter_should_block?
