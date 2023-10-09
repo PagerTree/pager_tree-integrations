@@ -2,16 +2,22 @@ module PagerTree::Integrations
   class Email::V3 < Integration
     OPTIONS = [
       {key: :allow_spam, type: :boolean, default: false},
-      {key: :dedup_threads, type: :boolean, default: true}
+      {key: :dedup_threads, type: :boolean, default: true},
+      {key: :sanitize_level, type: :string, default: "relaxed"}
     ]
+    
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
+
+    SANITIZE_LEVELS = ["basic", "default", "relaxed", "relaxed_2", "restricted"]
 
     validates :option_allow_spam, inclusion: {in: [true, false]}
     validates :option_dedup_threads, inclusion: {in: [true, false]}
+    validates :option_sanitize_level, inclusion: {in: SANITIZE_LEVELS}
 
     after_initialize do
       self.option_allow_spam = false if option_allow_spam.nil?
       self.option_dedup_threads = true if option_dedup_threads.nil?
+      self.option_sanitize_level =  "relaxed" if option_sanitize_level.nil?
     end
 
     # SPECIAL: override integration endpoint
@@ -127,7 +133,7 @@ module PagerTree::Integrations
           end
         end
 
-        @_body = ::Sanitize.document(document, Sanitize::Config::RELAXED)
+        @_body = ::Sanitize.fragment(document, _sanitize_config)
       elsif _mail.multipart? && _mail.text_part
         @_body = _mail_body_part_to_utf8(_mail.text_part)
       else
@@ -135,6 +141,17 @@ module PagerTree::Integrations
       end
 
       @_body
+    end
+
+    def _sanitize_config
+      case option_sanitize_level
+      when "basic" then Sanitize::Config::BASIC
+      when "default" then Sanitize::Config::DEFAULT
+      when "relaxed" then Sanitize::Config::RELAXED
+      when "restricted" then Sanitize::Config::RESTRICTED
+      when "relaxed_2"
+        Sanitize::Config.merge(Sanitize::Config::RELAXED, :elements => Sanitize::Config::RELAXED[:elements].excluding("style"))
+      end
     end
 
     # Encodings can cause lots of issues, so we try to convert to UTF-8

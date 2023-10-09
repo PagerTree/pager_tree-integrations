@@ -15,3 +15,12 @@
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_dedup_threads } %>
   </dd>
 </div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/email/v3.option_sanitize_level") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= integration.option_sanitize_level.humanize %>
+  </dd>
+</div>
