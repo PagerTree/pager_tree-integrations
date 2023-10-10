@@ -70,7 +70,7 @@ module PagerTree::Integrations
       event = adapter_outgoing_event.event_name.to_s
 
       # only send sync to logic monitor if logic monitor is the source
-      if event == "alert_acknowledged" && options_alert_acknowledged == true && adapter_outgoing_event.alert.source == self
+      if event == "alert_acknowledged" && option_alert_acknowledged == true && adapter_outgoing_event.alert.source == self
         _on_acknowledge
       end
     end
