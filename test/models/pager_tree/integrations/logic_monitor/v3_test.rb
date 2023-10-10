@@ -3,6 +3,7 @@ require "test_helper"
 module PagerTree::Integrations
   class LogicMonitor::V3Test < ActiveSupport::TestCase
     include Integrateable
+    include ActiveJob::TestHelper
 
     setup do
       @integration = pager_tree_integrations_integrations(:logic_monitor_v3)
@@ -55,10 +56,16 @@ module PagerTree::Integrations
     test "sanity" do
       assert @integration.adapter_supports_incoming?
       assert @integration.adapter_incoming_can_defer?
-      assert_not @integration.adapter_supports_outgoing?
+      assert @integration.adapter_supports_outgoing?
       assert @integration.adapter_show_alerts?
       assert @integration.adapter_show_logs?
-      assert_not @integration.adapter_show_outgoing_webhook_delivery?
+      assert @integration.adapter_show_outgoing_webhook_delivery?
+    end
+
+    test "outgoing_interest" do
+      assert_not @integration.adapter_outgoing_interest?(:alert_created)
+      assert @integration.adapter_outgoing_interest?(:alert_acknowledged)
+      assert_not @integration.adapter_outgoing_interest?(:foo)
     end
 
     test "adapter_actions" do
@@ -93,6 +100,43 @@ module PagerTree::Integrations
       )
 
       assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+    end
+
+    test "can_process_outgoing" do
+      assert_no_performed_jobs
+
+      expected_payload = {
+        "ackComment" => "Acknowledged by test-user"
+      }
+
+      outgoing_event = OutgoingEvent.new
+      outgoing_event.event_name = :alert_acknowledged
+      outgoing_event.alert = OpenStruct.new(
+        thirdparty_id: "LMS22",
+        foo: "bar",
+        source: @integration
+      )
+      outgoing_event.changes = [{
+        before: {
+          foo: "baz"
+        },
+        after: {
+          foo: "bar"
+        }
+      }]
+      outgoing_event.account_user = OpenStruct.new(
+        name: "test-user"
+      )
+
+      @integration.adapter_outgoing_event = outgoing_event
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+
+      assert_equal "https://#{@integration.option_logic_monitor_account_name}.logicmonitor.com/santaba/rest/alert/alerts/#{outgoing_event.alert.thirdparty_id}/ack", outgoing_webhook_delivery.url
+      assert_equal :queued.to_s, outgoing_webhook_delivery.status
+      assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert outgoing_webhook_delivery.options.dig("headers", "Authorization").starts_with?("LMv1 #{@integration.option_access_id}:")
     end
   end
 end

@@ -89,7 +89,11 @@ kapacitor_v3:
 
 logic_monitor_v3:
   type: "PagerTree::Integrations::LogicMonitor::V3"
-  # options: no_options
+  options:
+    alert_acknowledged: true
+    access_id: abc123
+    access_key: def345
+    logic_monitor_account_name: acme
 
 live_call_routing_twilio_v3:
   type: "PagerTree::Integrations::LiveCallRouting::Twilio::V3"

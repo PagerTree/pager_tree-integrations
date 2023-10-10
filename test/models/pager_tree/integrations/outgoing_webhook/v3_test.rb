@@ -54,5 +54,22 @@ module PagerTree::Integrations
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
       assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
     end
+
+    test "basic authorization works" do
+      @integration.option_username = "test"
+      @integration.option_password = "pass"
+
+      assert_no_performed_jobs
+
+      data = {
+        event_name: :alert_created
+      }
+
+      @integration.adapter_outgoing_event = OutgoingEvent.new(**data)
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+      assert_equal Base64.strict_encode64("#{@integration.option_username}:#{@integration.option_password}"), outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
+    end
   end
 end

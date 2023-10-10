@@ -31,35 +31,7 @@ module PagerTree::Integrations
     def deliver
       run_callbacks :deliver do
         begin
-          hook_relay_options = {
-            headers: {
-              HR_TARGET_URL: url
-            }
-          }
-
-          pagertree_options = {
-            headers: {
-              Accept: "*/*",
-              "User-Agent": "pagertree outgoing webhook service; ref: #{resource&.id}; report: support@pagertree.com",
-              "Content-Type": "application/json"
-            }
-          }
-
-          auth_options = {}
-          if auth.is_a?(Hash) && (username = auth.dig(:username)).present? && (password = auth.dig(:password)).present?
-            auth_options = {
-              headers: {
-                Authorization: Base64.strict_encode64("#{username}:#{password}")
-              }
-            }
-          end
-
-          options = OutgoingWebhookDelivery::HTTP_OPTIONS
-            .deep_merge(hook_relay_options)
-            .deep_merge(pagertree_options)
-            .deep_merge(auth_options)
-
-          response = HTTParty.post(hook_relay_hook_url, body: body.to_json, **options)
+          response = HTTParty.post(hook_relay_hook_url, body: body.to_json, **httparty_opts)
 
           self.thirdparty_id = response["id"]
           self.status = :sent
@@ -71,19 +43,53 @@ module PagerTree::Integrations
       end # run_callbacks
     end
 
+    def httparty_opts
+      hook_relay_options = {
+        headers: {
+          "HR_TARGET_URL" => url
+        }
+      }
+
+      pagertree_options = {
+        headers: {
+          "Accept" => "*/*",
+          "User-Agent" => "pagertree outgoing webhook service; ref: #{resource&.id}; report: support@pagertree.com",
+          "Content-Type" => "application/json"
+        }
+      }
+
+      auth_options = {}
+      if auth.is_a?(Hash)
+        auth_indifferent = auth.with_indifferent_access
+        if (username = auth_indifferent.dig(:username)).present? && (password = auth_indifferent.dig(:password)).present?
+          auth_options = {
+            headers: {
+              "Authorization" => Base64.strict_encode64("#{username}:#{password}")
+            }
+          }
+        end
+      end
+
+      OutgoingWebhookDelivery::HTTP_OPTIONS
+        .deep_merge(hook_relay_options)
+        .deep_merge(pagertree_options)
+        .deep_merge(auth_options)
+        .deep_merge((options&.symbolize_keys || {}))
+    end
+
     def delivery
       return @delivery if @delivery
       return {} unless thirdparty_id
 
-      options = {
+      opts = {
         headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer #{OutgoingWebhookDelivery::HookRelay.hook_relay_api_key}"
+          "Content-Type" => "application/json",
+          "Authorization" => "Bearer #{OutgoingWebhookDelivery::HookRelay.hook_relay_api_key}"
         },
         timeout: 15
       }
 
-      response = ::HTTParty.get(hook_relay_delivery_url, **options)
+      response = ::HTTParty.get(hook_relay_delivery_url, **opts)
       @delivery = response.parsed_response if response.success?
 
       @delivery || {}
