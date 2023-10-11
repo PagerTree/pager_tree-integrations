@@ -1,7 +1,7 @@
 module PagerTree::Integrations
   class Sentry::V3 < Integration
     OPTIONS = [
-      {key: :client_secret, type: :string, default: nil},
+      {key: :client_secret, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -11,7 +11,7 @@ module PagerTree::Integrations
     def adapter_should_block_incoming?(request)
       should_block = false
       # https://docs.sentry.io/product/integrations/integration-platform/webhooks/#sentry-hook-signature
-      if self.option_client_secret.present? && request.headers["sentry-hook-signature"].present?
+      if option_client_secret.present? && request.headers["sentry-hook-signature"].present?
         sentry_signature = request.headers["sentry-hook-signature"]
         data = adapter_incoming_request_params.to_json
         digest = OpenSSL::HMAC.hexdigest("SHA256", option_client_secret, data)
@@ -145,7 +145,7 @@ module PagerTree::Integrations
     def _event_alert_adapter_thirdparty_id
       incoming_json.dig("data", "event", "issue_id")
     end
-    
+
     def _event_alert_adapter_action
       case action
       when "triggered"
@@ -166,7 +166,7 @@ module PagerTree::Integrations
 
     def _event_alert_additional_datums
       [
-        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "event", "web_url")), 
+        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "event", "web_url"))
       ]
     end
 
@@ -208,7 +208,7 @@ module PagerTree::Integrations
 
     def _metric_alert_additional_datums
       [
-        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "metric_alert", "web_url")),
+        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "metric_alert", "web_url"))
       ]
     end
 
@@ -249,7 +249,7 @@ module PagerTree::Integrations
 
     def _error_additional_datums
       [
-        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "error", "web_url")),
+        AdditionalDatum.new(format: "link", label: "Web URL", value: incoming_json.dig("data", "error", "web_url"))
       ]
     end
 
@@ -260,7 +260,7 @@ module PagerTree::Integrations
     ############################
     # END ERRORS
     ############################
-    
+
     ############################
     # START COMMON
     ############################
@@ -284,7 +284,6 @@ module PagerTree::Integrations
     ############################
     # END COMMON
     ############################
-
 
     ############################
     # START DATA ACCESS
