@@ -129,6 +129,10 @@ prtg_v3:
   type: "PagerTree::Integrations::Prtg::V3"
   # options: no_options
 
+sentry_v3:
+  type: "PagerTree::Integrations::Sentry::V3"
+  # options: no_options
+
 server_guard24_v3:
   type: "PagerTree::Integrations::ServerGuard24::V3"
   # options: no_options
