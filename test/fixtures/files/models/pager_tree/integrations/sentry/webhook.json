@@ -1,0 +1,326 @@
+{
+  "id": "4541177592",
+  "project": "ruby-rails",
+  "project_name": "ruby-rails",
+  "project_slug": "ruby-rails",
+  "logger": null,
+  "level": "error",
+  "culprit": "lib/tasks/one_off.rake in /",
+  "message": "",
+  "url": "https://acme.sentry.io/issues/4541177592/?referrer=webhooks_plugin",
+  "triggering_rules": [
+      "Send a notification for new issues"
+  ],
+  "event": {
+      "event_id": "0427d05ff3b04075994036c688377965",
+      "level": "error",
+      "version": "7",
+      "type": "error",
+      "fingerprint": [
+          "9d643e96-c2f2-48cf-9281-25567854dc79"
+      ],
+      "culprit": "lib/tasks/one_off.rake in /",
+      "logger": "",
+      "modules": {
+      },
+      "platform": "ruby",
+      "timestamp": 1697041045,
+      "received": 1697041043.914488,
+      "release": "6861c89f",
+      "environment": "development",
+      "contexts": {
+      },
+      "exception": {
+          "values": [
+              {
+                  "type": "ZeroDivisionError",
+                  "value": "divided by 0",
+                  "module": "",
+                  "stacktrace": {
+                      "frames": [
+                          {
+                              "function": "<main>",
+                              "filename": "/home/user/.rbenv/versions/3.1.0/bin/rake",
+                              "abs_path": "/home/user/.rbenv/versions/3.1.0/bin/rake",
+                              "lineno": 25,
+                              "pre_context": [
+                                  "end\n",
+                                  "\n",
+                                  "if Gem.respond_to?(:activate_bin_path)\n"
+                              ],
+                              "context_line": "load Gem.activate_bin_path('rake', 'rake', version)\n",
+                              "post_context": [
+                                  "else\n",
+                                  "gem \"rake\", version\n",
+                                  "load Gem.bin_path(\"rake\", \"rake\", version)\n"
+                              ],
+                              "in_app": false
+                          },
+                          {
+                              "function": "load",
+                              "filename": "/home/user/.rbenv/versions/3.1.0/bin/rake",
+                              "abs_path": "/home/user/.rbenv/versions/3.1.0/bin/rake",
+                              "lineno": 25,
+                              "pre_context": [
+                                  "end\n",
+                                  "\n",
+                                  "if Gem.respond_to?(:activate_bin_path)\n"
+                              ],
+                              "context_line": "load Gem.activate_bin_path('rake', 'rake', version)\n",
+                              "post_context": [
+                                  "else\n",
+                                  "gem \"rake\", version\n",
+                                  "load Gem.bin_path(\"rake\", \"rake\", version)\n"
+                              ],
+                              "in_app": false
+                          },
+                          {
+                              "function": "<top (required)>",
+                              "filename": "rake (13.0.6) exe/rake",
+                              "abs_path": "rake (13.0.6) exe/rake",
+                              "lineno": 27,
+                              "in_app": false
+                          },
+                          {
+                              "function": "run",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 80,
+                              "in_app": false
+                          },
+                          {
+                              "function": "standard_exception_handling",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 186,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block in run",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 83,
+                              "in_app": false
+                          },
+                          {
+                              "function": "top_level",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 110,
+                              "in_app": false
+                          },
+                          {
+                              "function": "run_with_threads",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 125,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block in top_level",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 116,
+                              "in_app": false
+                          },
+                          {
+                              "function": "each",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 116,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block (2 levels) in top_level",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 116,
+                              "in_app": false
+                          },
+                          {
+                              "function": "invoke_task",
+                              "filename": "rake (13.0.6) lib/rake/application.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/application.rb",
+                              "lineno": 160,
+                              "in_app": false
+                          },
+                          {
+                              "function": "invoke",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 188,
+                              "in_app": false
+                          },
+                          {
+                              "function": "invoke_with_call_chain",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 199,
+                              "in_app": false
+                          },
+                          {
+                              "function": "synchronize",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 199,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block in invoke_with_call_chain",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 219,
+                              "in_app": false
+                          },
+                          {
+                              "function": "execute",
+                              "filename": "sentry-ruby (5.12.0) lib/sentry/rake.rb",
+                              "abs_path": "sentry-ruby (5.12.0) lib/sentry/rake.rb",
+                              "lineno": 26,
+                              "in_app": false
+                          },
+                          {
+                              "function": "execute",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 281,
+                              "in_app": false
+                          },
+                          {
+                              "function": "each",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 281,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block in execute",
+                              "filename": "rake (13.0.6) lib/rake/task.rb",
+                              "abs_path": "rake (13.0.6) lib/rake/task.rb",
+                              "lineno": 281,
+                              "in_app": false
+                          },
+                          {
+                              "function": "block (2 levels) in <main>",
+                              "filename": "lib/tasks/one_off.rake",
+                              "abs_path": "lib/tasks/one_off.rake",
+                              "lineno": 163,
+                              "pre_context": [
+                                  "  desc \"Generate Sentry Exception\"\n",
+                                  "  task :sentry_exception, [:scope] => [:environment] do |task, args|\n",
+                                  "    begin\n"
+                              ],
+                              "context_line": "      1 / 0\n",
+                              "post_context": [
+                                  "    rescue ZeroDivisionError => exception\n",
+                                  "      Sentry.capture_exception(exception, fingerprint: [SecureRandom.uuid])\n",
+                                  "    end\n"
+                              ],
+                              "in_app": true
+                          },
+                          {
+                              "function": "/",
+                              "filename": "lib/tasks/one_off.rake",
+                              "abs_path": "lib/tasks/one_off.rake",
+                              "lineno": 163,
+                              "pre_context": [
+                                  "  desc \"Generate Sentry Exception\"\n",
+                                  "  task :sentry_exception, [:scope] => [:environment] do |task, args|\n",
+                                  "    begin\n"
+                              ],
+                              "context_line": "      1 / 0\n",
+                              "post_context": [
+                                  "    rescue ZeroDivisionError => exception\n",
+                                  "      Sentry.capture_exception(exception, fingerprint: [SecureRandom.uuid])\n",
+                                  "    end\n"
+                              ],
+                              "in_app": true
+                          }
+                      ]
+                  },
+                  "thread_id": 10560
+              }
+          ]
+      },
+      "threads": {
+          "values": [
+              {
+                  "id": 10560,
+                  "crashed": true,
+                  "current": true
+              }
+          ]
+      },
+      "tags": [
+          [
+              "environment",
+              "development"
+          ],
+          [
+              "level",
+              "error"
+          ],
+          [
+              "os",
+              "Linux #1 SMP Wed Oct 28 23:40:43 UTC 2020"
+          ],
+          [
+              "os.name",
+              "Linux"
+          ],
+          [
+              "runtime",
+              "ruby ruby 3.1.0p0 (2021-12-25 revision fb4df44d16) [x86_64-linux]"
+          ],
+          [
+              "runtime.name",
+              "ruby"
+          ],
+          [
+              "sentry:release",
+              "6861c89f"
+          ],
+          [
+              "server_name",
+              "FOXCON"
+          ]
+      ],
+      "sdk": {
+          "name": "sentry.ruby",
+          "version": "5.12.0"
+      },
+      "ingest_path": [
+          {
+              "version": "23.9.1",
+              "public_key": "XE7QiyuNlja9PZ7I9qJlwQotzecWrUIN91BAO7Q5R38"
+          }
+      ],
+      "key_id": "3425108",
+      "project": 4506032375267123,
+      "grouping_config": {
+          "enhancements": "eJybzDRxc15qeXFJZU6qlZGBkbGugaGuoeEEAHJMCAM",
+          "id": "newstyle:2023-01-11"
+      },
+      "_metrics": {
+          "bytes.ingested.event": 13027,
+          "bytes.stored.event": 19656
+      },
+      "_ref": 4506032375267123,
+      "_ref_version": 2,
+      "hashes": [
+          "493af45890c1033bed74c3605999fcad"
+      ],
+      "location": "lib/tasks/one_off.rake",
+      "metadata": {
+          "display_title_with_tree_label": false,
+          "filename": "lib/tasks/one_off.rake",
+          "function": "/",
+          "in_app_frame_mix": "mixed",
+          "type": "ZeroDivisionError",
+          "value": "divided by 0"
+      },
+      "nodestore_insert": 1697041047.639883,
+      "title": "ZeroDivisionError: divided by 0",
+      "id": "0427d05ff3b04075994036c688377965"
+  }
+}

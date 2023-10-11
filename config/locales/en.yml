@@ -84,6 +84,10 @@ en:
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
+      sentry:
+        v3:
+          form_options:
+            option_client_secret_hint_html: "The client secret can be used to authenticate requests from Sentry servers (optional)"
       server_guard24:
         v3:
           form_options:
@@ -164,6 +168,8 @@ en:
         option_access_key: "Logic Monitor Access Key"
         option_logic_monitor_account_name: "Logic Monitor Account Name"
         option_alert_acknowledged: "Acknowledge in Logic Monitor"
+      "pager_tree/integrations/sentry/v3":
+        option_client_secret: "Sentry Client Secret"
       "pager_tree/integrations/slack/webhook/v3":
         option_token: "Slack Token"
       "pager_tree/integrations/server_guard24/v3":
