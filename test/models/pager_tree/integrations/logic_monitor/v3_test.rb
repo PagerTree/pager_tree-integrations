@@ -43,7 +43,8 @@ module PagerTree::Integrations
         servicedetail: nil,
         serviceurl: "https://pagertree-test-server.net/",
         servicegroup: "Functional Testing",
-        clearvalue: "1"
+        clearvalue: "1",
+        internalid: "1234567890"
       }.with_indifferent_access
 
       @resolve_request = @create_request.deep_dup
@@ -81,7 +82,7 @@ module PagerTree::Integrations
 
     test "adapter_thirdparty_id" do
       @integration.adapter_incoming_request_params = @create_request
-      assert_equal @create_request.dig("alertid"), @integration.adapter_thirdparty_id
+      assert_equal @create_request.dig("internalid"), @integration.adapter_thirdparty_id
     end
 
     test "adapter_process_create" do
@@ -91,7 +92,7 @@ module PagerTree::Integrations
         title: @create_request.dig("eventmsg"),
         description: @create_request.dig("eventlogmsg"),
         urgency: "medium",
-        thirdparty_id: @create_request.dig("alertid"),
+        thirdparty_id: @create_request.dig("internalid"),
         dedup_keys: [],
         additional_data: [
           AdditionalDatum.new(format: "text", label: "Host", value: @create_request.dig("host")),
@@ -112,7 +113,7 @@ module PagerTree::Integrations
       outgoing_event = OutgoingEvent.new
       outgoing_event.event_name = :alert_acknowledged
       outgoing_event.alert = OpenStruct.new(
-        thirdparty_id: "LMS22",
+        thirdparty_id: "1234567890",
         foo: "bar",
         source: @integration
       )

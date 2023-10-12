@@ -38,7 +38,7 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      adapter_incoming_request_params.dig("alertid")
+      adapter_incoming_request_params.dig("internalid")
     end
 
     def adapter_action
@@ -118,9 +118,10 @@ module PagerTree::Integrations
       url = base_url + resource_path
       timestamp_ms = Time.current.to_i * 1000
       data_string = data.to_json
-      signature = Base64.strict_encode64(
-        OpenSSL::HMAC.digest(
-          OpenSSL::Digest.new("sha256"),
+      # https://gist.github.com/abeland/e09a559e243f70670f2f4da3fd0fdabd
+      signature = Base64.urlsafe_encode64(
+        OpenSSL::HMAC.hexdigest(
+          "SHA256",
           option_access_key,
           (http_verb.upcase + timestamp_ms.to_s + data_string + resource_path)
         )
