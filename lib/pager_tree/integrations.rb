@@ -25,5 +25,11 @@ module PagerTree
 
     mattr_accessor :integration_email_v3_inbox
     @@integration_email_v3_inbox = "a"
+
+    mattr_accessor :integration_sentry_v3_client_id
+    @@integration_sentry_v3_client_id = ""
+
+    mattr_accessor :integration_sentry_v3_client_secret
+    @@integration_sentry_v3_client_secret = ""
   end
 end

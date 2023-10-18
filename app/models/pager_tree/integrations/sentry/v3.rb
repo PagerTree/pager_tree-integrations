@@ -1,11 +1,19 @@
 module PagerTree::Integrations
   class Sentry::V3 < Integration
     OPTIONS = [
-      {key: :client_secret, type: :string, default: nil}
+      {key: :client_secret, type: :string, default: nil},
+      {key: :authorization_token, type: :string, default: nil},
+      {key: :authorization_token_expires_at, type: :string, default: nil},
+      {key: :authorization_refresh_token, type: :string, default: nil},
+      {key: :code, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     after_initialize do
+    end
+
+    after_create_commit do
+      verify_installation if initialize_authorization_token!
     end
 
     def adapter_should_block_incoming?(request)
@@ -53,7 +61,133 @@ module PagerTree::Integrations
       )
     end
 
+    def adapter_process_other
+      _installation_process_other if installation?
+    end
+
+    def verify_installation
+      if thirdparty_id.present?
+        HTTParty.put("https://sentry.io/api/0/sentry-app-installations/#{thirdparty_id}/",
+          headers: {
+            "Content-Type" => "application/json",
+            "Authorization" => "Bearer #{option_authorization_token}"
+          }, body: {
+            status: "installed"
+          }.to_json)
+
+        return true
+      end
+
+      false
+    rescue => e
+      Rails.logger.error("Error sending Sentry App Installation Confirmation: #{e.message}")
+      false
+    end
+
+    def initialize_authorization_token!
+      if thirdparty_id.present? && option_code.present?
+        response = HTTParty.post("https://sentry.io/api/0/sentry-app-installations/#{thirdparty_id}/authorizations/",
+          headers: {
+            "Content-Type" => "application/json"
+          }, body: {
+            grant_type: "authorization_code",
+            code: option_code,
+            client_id: PagerTree::Integrations.integration_sentry_v3_client_id,
+            client_secret: PagerTree::Integrations.integration_sentry_v3_client_secret
+          }.to_json)
+
+        if response.code == 201
+          json = JSON.parse(response.body)
+          self.option_authorization_token = json.dig("token")
+          self.option_authorization_refresh_token = json.dig("refreshToken")
+          self.option_authorization_token_expires_at = json.dig("expiresAt")
+          save!
+
+          return true
+        end
+      end
+
+      false
+    rescue => e
+      Rails.logger.error("Error initializing Sentry App Authorization Token: #{e.message}")
+      false
+    end
+
+    def refresh_authorization_token!
+      if thirdparty_id.present? && option_authorization_refresh_token.present?
+        response = HTTParty.post("https://sentry.io/api/0/sentry-app-installations/#{thirdparty_id}/authorizations/",
+          headers: {
+            "Content-Type" => "application/json"
+          }, body: {
+            grant_type: "refresh_token",
+            refresh_token: option_authorization_refresh_token,
+            client_id: PagerTree::Integrations.integration_sentry_v3_client_id,
+            client_secret: PagerTree::Integrations.integration_sentry_v3_client_secret
+          }.to_json)
+
+        if response.code == 201
+          json = JSON.parse(response.body)
+          self.option_authorization_token = json.dig("token")
+          self.option_authorization_refresh_token = json.dig("refreshToken")
+          self.option_authorization_token_expires_at = json.dig("expiresAt")
+          save!
+
+          return true
+        end
+      end
+
+      false
+    rescue => e
+      Rails.logger.error("Error refreshing Sentry App Authorization Token: #{e.message}")
+      false
+    end
+
     private
+
+    ############################
+    # START INSTALLATION
+    # https://docs.sentry.io/product/integrations/integration-platform/webhooks/installation/
+    ############################
+
+    def _installation_adapter_thirdparty_id
+      incoming_json.dig("id")
+    end
+
+    def _installation_adapter_action
+      :other
+    end
+
+    def _installation_title
+      ""
+    end
+
+    def _installation_description
+      ""
+    end
+
+    def _installation_additional_datums
+      []
+    end
+
+    def _installation_dedup_keys
+      []
+    end
+
+    def _installation_process_other
+      action = incoming_json.dig("action")
+      if action == "created"
+        # intentionally left blank
+      elsif action == "deleted"
+        # clear the thirdparty id off this integration and save
+        self.thirdparty_id = nil
+        self.discarded_at = Time.current
+        save!
+      end
+    end
+
+    ############################
+    # END Installation
+    ############################
 
     ############################
     # START WEBHOOK
@@ -89,7 +223,7 @@ module PagerTree::Integrations
     end
 
     ############################
-    # END ISSUE
+    # END WEBHOOK
     ############################
 
     ############################
@@ -320,12 +454,16 @@ module PagerTree::Integrations
       hook_resource == "error"
     end
 
+    def installation?
+      hook_resource == "installation"
+    end
+
     def webhook?
       incoming_headers["HTTP_SENTRY_HOOK_RESOURCE"].blank? && (hook_resource == "webhook")
     end
 
     def should_process?
-      issue? || event_alert? || metric_alert? || error? || webhook?
+      issue? || event_alert? || metric_alert? || error? || installation? || webhook?
     end
 
     def action
