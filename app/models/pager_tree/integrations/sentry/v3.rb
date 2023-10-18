@@ -180,7 +180,6 @@ module PagerTree::Integrations
       elsif action == "deleted"
         # clear the thirdparty id off this integration and save
         self.thirdparty_id = nil
-        self.discarded_at = Time.current
         save!
       end
     end
