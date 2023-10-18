@@ -19,10 +19,10 @@ module PagerTree::Integrations
     def adapter_should_block_incoming?(request)
       should_block = false
       # https://docs.sentry.io/product/integrations/integration-platform/webhooks/#sentry-hook-signature
-      if option_client_secret.present? && request.headers["sentry-hook-signature"].present?
+      if PagerTree::Integrations.integration_sentry_v3_client_secret.present? && request.headers["sentry-hook-signature"].present?
         sentry_signature = request.headers["sentry-hook-signature"]
-        data = adapter_incoming_request_params.to_json
-        digest = OpenSSL::HMAC.hexdigest("SHA256", option_client_secret, data)
+        data = request.body.read
+        digest = OpenSSL::HMAC.hexdigest("SHA256", PagerTree::Integrations.integration_sentry_v3_client_secret, data)
         should_block = sentry_signature != digest
       end
 
