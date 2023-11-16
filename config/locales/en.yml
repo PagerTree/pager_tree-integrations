@@ -77,6 +77,15 @@ en:
           v3:
             form_options:
               option_token_hint_html: "The token can be used to authenticate requests from Mattermost servers (optional)"
+      meta:
+        workplace:
+          v3:
+            form_options:
+              option_group_id_hint_html: "Workplace Group ID"
+              option_access_token_hint_html: "Workplace Integration Access Token"
+              option_app_secret_hint_html: "Workplace Integration App Secret"
+              option_incoming_enabled_hint_html: "Enable incoming requests (Workplace to PagerTree)"
+              option_outgoing_enabled_hint_html: "Enable outgoing requests (PagerTree to Workplace)"
       outgoing_webhook:
         v3:
           form_options:
@@ -144,6 +153,12 @@ en:
         option_issue_updated: "Trigger on issue.updated event"
       "pager_tree/integrations/mattermost/outgoing_webhook/v3":
         option_token: "Mattermost Token"
+      "pager_tree/integrations/meta/workplace/v3":
+        option_group_id: "Workplace Group ID"
+        option_access_token: "Workplace Integration Access Token"
+        option_app_secret: "Workplace Integration App Secret"
+        option_incoming_enabled: "Incoming Requests Enabled"
+        option_outgoing_enabled: "Outgoing Requests Enabled"
       "pager_tree/integrations/outgoing_webhook/v3":
         option_webhook_url: "URL"
         option_username: "Username"

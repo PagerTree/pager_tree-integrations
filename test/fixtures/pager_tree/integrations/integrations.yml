@@ -107,6 +107,11 @@ mattermost_outgoing_webhook_v3:
   options:
     token: abc123
 
+meta_workplace_v3:
+  type: "PagerTree::Integrations::Meta::Workplace::V3"
+  options:
+    access_token: abc123
+
 new_relic_v3:
   type: "PagerTree::Integrations::NewRelic::V3"
   # options: no_options
