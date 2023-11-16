@@ -1,0 +1,57 @@
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_group_id") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= integration.option_group_id %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_access_token") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_access_token %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-2">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_app_secret") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= mask integration.option_app_secret %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<% 
+  opts = [
+    :outgoing_enabled,
+    :incoming_enabled
+  ]
+%>
+<% opts.each do |opt| %>
+  <div class="sm:col-span-1">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_#{opt.to_s}") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>
+    </dd>
+  </div>
+<% end %>
+
+<!-- TODO: add/edit your integration options here. See CREATING_AN_INTEGRATION.md for different form fields. You should only show "very important" options -->
