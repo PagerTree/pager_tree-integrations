@@ -103,7 +103,8 @@ module PagerTree::Integrations
         keys.concat(Array(_mail.references))
       end
 
-      keys.compact_blank.uniq
+      # only dedup the references per integration. Customer like sending one email to multiple integration inboxes
+      keys.compact_blank.uniq.map { |x| "#{prefix_id}_#{x}" }
     end
 
     def _title
