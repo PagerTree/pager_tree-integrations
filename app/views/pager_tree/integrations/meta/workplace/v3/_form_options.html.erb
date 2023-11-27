@@ -18,7 +18,7 @@
   <% 
     opts = [
       :outgoing_enabled,
-    :incoming_enabled
+      :incoming_enabled
     ]
   %>
   <% opts.each do |opt| %>
@@ -27,5 +27,14 @@
       <%= form.label "option_#{opt.to_s}".to_sym, class: "inline-block" %>
       <p class="form-hint md:inline-block"><%== t(".option_#{opt.to_s}_hint_html") %></p>
     </div>
+  <% end %>
+</div>
+
+<div class="grid grid-cols-1 gap-4">
+  <%= tag.div class: "form-group group", data: {controller: "code-editor", code_editor_language_value: "yaml", code_editor_read_only_value: false } do %>
+    <%= form.label :option_outgoing_rules, t("pager_tree.integrations.common.option_outgoing_rules") %>
+    <%= form.hidden_field :option_outgoing_rules, class: "form-control", data: {code_editor_target: "form"} %>
+    <%= tag.div class: "h-96", data: {code_editor_target: "editor"} do %><%= form.object.option_outgoing_rules %><% end %>
+    <p class="form-hint"><%== t("pager_tree.integrations.common.option_outgoing_rules_hint_html") %></p>
   <% end %>
 </div>

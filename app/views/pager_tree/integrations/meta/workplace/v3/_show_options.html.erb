@@ -54,4 +54,11 @@
   </div>
 <% end %>
 
-<!-- TODO: add/edit your integration options here. See CREATING_AN_INTEGRATION.md for different form fields. You should only show "very important" options -->
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("pager_tree.integrations.common.option_outgoing_rules") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
+  </dd>
+</div>

@@ -5,7 +5,7 @@ en:
         default: "default"
         none: "none"
         option_outgoing_rules: "Outgoing Rules"
-        option_outgoing_rules_hint_html: Outgoing Rules <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#rules' target='_blank'>(see docs)</a> for details.
+        option_outgoing_rules_hint_html: Outgoing Rules <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#outgoing-rules' target='_blank'>(see docs)</a> for details.
         option_incoming_webhook_url_hint_html: "URL to POST to"
         option_alert_created_hint_html: "Send when the alert is created (before its routed)"
         option_alert_assigned_hint_html: "Send when the alert is assigned to a team."
@@ -16,7 +16,7 @@ en:
         option_alert_resolved_hint_html: "Send when the alert is marked resolved"
         option_alert_dropped_hint_html: "Send when the alert is dropped"
         option_alert_handoff_hint_html: "Send when the alert has been handed off"
-        option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
+        option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
         option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
       email:
         v3:
@@ -93,7 +93,7 @@ en:
             option_webhook_url_hint_html: "URL to POST to"
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
-            option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/knowledge-base/outgoing-webhooks/#custom-format' target='_blank'>docs</a> for details."
+            option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
       sentry:
         v3:
           form_options:

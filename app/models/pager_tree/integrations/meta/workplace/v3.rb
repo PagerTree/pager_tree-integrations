@@ -5,7 +5,8 @@ module PagerTree::Integrations
       {key: :outgoing_enabled, type: :boolean, default: true},
       {key: :access_token, type: :string, default: nil},
       {key: :app_secret, type: :string, default: nil},
-      {key: :group_id, type: :string, default: nil}
+      {key: :group_id, type: :string, default: nil},
+      {key: :outgoing_rules, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -18,6 +19,7 @@ module PagerTree::Integrations
     after_initialize do
       self.option_incoming_enabled = false if option_incoming_enabled.nil?
       self.option_outgoing_enabled = true if option_outgoing_enabled.nil?
+      self.option_outgoing_rules ||= ""
     end
 
     def endpoint
@@ -42,6 +44,10 @@ module PagerTree::Integrations
     end
 
     def adapter_supports_outgoing?
+      true
+    end
+
+    def adapter_show_outgoing_webhook_delivery?
       true
     end
 
