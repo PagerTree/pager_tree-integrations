@@ -4,7 +4,8 @@ module PagerTree::Integrations
       {key: :alert_acknowledged, type: :boolean, default: false},
       {key: :logic_monitor_account_name, type: :string, default: nil},
       {key: :access_id, type: :string, default: nil},
-      {key: :access_key, type: :string, default: nil}
+      {key: :access_key, type: :string, default: nil},
+      {key: :bearer_token, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -12,6 +13,7 @@ module PagerTree::Integrations
     validates :option_logic_monitor_account_name, presence: true, if: -> { option_alert_acknowledged == true }
     validates :option_access_key, presence: true, if: -> { option_alert_acknowledged == true }
     validates :option_access_id, presence: true, if: -> { option_alert_acknowledged == true }
+    validates :option_bearer_token, presence: true, if: -> { option_alert_acknowledged == true }
 
     after_initialize do
       self.option_alert_acknowledged = false if option_alert_acknowledged.nil?
@@ -107,9 +109,19 @@ module PagerTree::Integrations
     def _on_acknowledge
       lm_alert_id = adapter_outgoing_event.alert.thirdparty_id
       acknowledger = adapter_outgoing_event.account_user&.name || name || "someone"
-      resource_path = "/alert/alerts/#{lm_alert_id}/ack"
       http_verb = "POST"
-      send_request_with_hmac(resource_path, http_verb, {ackComment: "Acknowledged by #{acknowledger}"})
+
+      if adapter_outgoing_event.alert.source_log&.message&.dig("params", "alerttype") == "agentDownAlert"
+        # try to get the collector id
+        collector_id = lm_alert_id.gsub(/[^0-9]/, "")
+        resource_path = "/setting/collector/collectors/#{collector_id}/ackdown?v=2"
+        data = {comment: "Acknowledged by #{acknowledger}"}
+        send_request_with_bearer_token(resource_path, http_verb, data)
+      else
+        resource_path = "/alert/alerts/#{lm_alert_id}/ack"
+        data = {ackComment: "Acknowledged by #{acknowledger}"}
+        send_request_with_hmac(resource_path, http_verb, data)
+      end
     end
 
     # https://www.logicmonitor.com/support/rest-api-authentication
@@ -129,6 +141,27 @@ module PagerTree::Integrations
       headers = {
         "Content-Type" => "application/json",
         "Authorization" => "LMv1 #{option_access_id}:#{signature}:#{timestamp_ms}"
+      }
+
+      # note outgoing webhook delivery only supports the post method
+      outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
+        resource: self,
+        url: url,
+        body: data,
+        options: {headers: headers}
+      )
+      outgoing_webhook_delivery.save!
+      outgoing_webhook_delivery.deliver_later
+
+      outgoing_webhook_delivery
+    end
+
+    def send_request_with_bearer_token(resource_path, http_verb, data)
+      base_url = "https://#{option_logic_monitor_account_name}.logicmonitor.com/santaba/rest"
+      url = base_url + resource_path
+      headers = {
+        "Content-Type" => "application/json",
+        "Authorization" => "Bearer #{option_bearer_token}"
       }
 
       # note outgoing webhook delivery only supports the post method
