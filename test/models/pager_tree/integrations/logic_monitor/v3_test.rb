@@ -103,7 +103,7 @@ module PagerTree::Integrations
       assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
     end
 
-    test "can_process_outgoing" do
+    test "can_process_outgoing_hmac" do
       assert_no_performed_jobs
 
       expected_payload = {
@@ -138,6 +138,50 @@ module PagerTree::Integrations
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
       assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
       assert outgoing_webhook_delivery.options.dig("headers", "Authorization").starts_with?("LMv1 #{@integration.option_access_id}:")
+    end
+
+    test "can_process_outgoing_bearer" do
+      assert_no_performed_jobs
+
+      expected_payload = {
+        "comment" => "Acknowledged by test-user"
+      }
+
+      outgoing_event = OutgoingEvent.new
+      outgoing_event.event_name = :alert_acknowledged
+      outgoing_event.alert = OpenStruct.new(
+        thirdparty_id: "LM1234567890",
+        foo: "bar",
+        source: @integration,
+        source_log: OpenStruct.new(
+          message: {
+            "params" => {
+              "alerttype" => "agentDownAlert"
+            }
+          }
+        )
+      )
+      outgoing_event.changes = [{
+        before: {
+          foo: "baz"
+        },
+        after: {
+          foo: "bar"
+        }
+      }]
+      outgoing_event.account_user = OpenStruct.new(
+        name: "test-user"
+      )
+
+      @integration.adapter_outgoing_event = outgoing_event
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+
+      assert_equal "https://#{@integration.option_logic_monitor_account_name}.logicmonitor.com/santaba/rest/setting/collector/collectors/1234567890/ackdown?v=2", outgoing_webhook_delivery.url
+      assert_equal :queued.to_s, outgoing_webhook_delivery.status
+      assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert outgoing_webhook_delivery.options.dig("headers", "Authorization").starts_with?("Bearer #{@integration.option_bearer_token}")
     end
   end
 end

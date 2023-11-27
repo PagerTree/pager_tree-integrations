@@ -1,5 +1,11 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
   <div class="form-group group">
+    <%= form.check_box :option_alert_acknowledged, class: "form-checkbox" %>
+    <%= form.label :option_alert_acknowledged, class: "inline-block" %>
+    <p class="form-hint md:inline-block"><%== t(".option_alert_acknowledged_hint_html") %></p>
+  </div>
+
+  <div class="form-group group">
     <%= form.label :option_logic_monitor_account_name %>
     <%= form.text_field :option_logic_monitor_account_name, class: "form-control" %>
     <p class="form-hint"><%== t(".option_logic_monitor_account_name_hint_html") %></p>
@@ -18,9 +24,8 @@
   </div>
 
   <div class="form-group group">
-    <%= form.check_box :option_alert_acknowledged, class: "form-checkbox" %>
-    <%= form.label :option_alert_acknowledged, class: "inline-block" %>
-    <p class="form-hint md:inline-block"><%== t(".option_alert_acknowledged_hint_html") %></p>
+    <%= form.label :option_bearer_token %>
+    <%= form.text_field :option_bearer_token, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_bearer_token_hint_html") %></p>
   </div>
-
 </div>

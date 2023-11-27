@@ -70,6 +70,7 @@ en:
           form_options:
             option_access_id_hint_html: "Logic Monitor Access <b>ID</b>"
             option_access_key_hint_html: "Logic Monitor Access <b>Key</b>"
+            option_bearer_token_hint_html: "Logic Monitor <b>Bearer Token</b>"
             option_logic_monitor_account_name_hint_html: "Your Logic Monitor account name. (ex: https://<b>account_name</b>.logicmonitor.com)"
             option_alert_acknowledged_hint_html: "Acknowledge the alert in Logic Monitor when the alert is acknowledged in PagerTree. (PagerTree => Logic Monitor)"
       mattermost:
@@ -166,6 +167,7 @@ en:
       "pager_tree/integrations/logic_monitor/v3":
         option_access_id: "Logic Monitor Access ID"
         option_access_key: "Logic Monitor Access Key"
+        option_bearer_token: "Logic Monitor Bearer Token"
         option_logic_monitor_account_name: "Logic Monitor Account Name"
         option_alert_acknowledged: "Acknowledge in Logic Monitor"
       "pager_tree/integrations/sentry/v3":

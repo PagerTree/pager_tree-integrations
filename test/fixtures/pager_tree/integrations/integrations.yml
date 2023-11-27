@@ -93,6 +93,7 @@ logic_monitor_v3:
     alert_acknowledged: true
     access_id: abc123
     access_key: def345
+    bearer_token: ghi678
     logic_monitor_account_name: acme
 
 live_call_routing_twilio_v3:
