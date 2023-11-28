@@ -12,6 +12,7 @@ module PagerTree::Integrations
     attr_accessor :handoff
     attr_accessor :team
     attr_accessor :account_user
+    attr_accessor :comment
 
     define_model_callbacks :initialize
 
@@ -31,6 +32,7 @@ module PagerTree::Integrations
       self.handoff ||= nil
       self.team ||= nil
       self.account_user ||= nil
+      self.comment ||= nil
     end
   end
 end

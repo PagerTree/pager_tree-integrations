@@ -13,7 +13,7 @@ module PagerTree::Integrations
     validates :option_incoming_enabled, inclusion: {in: [true, false]}
     validates :option_outgoing_enabled, inclusion: {in: [true, false]}
     validates :option_access_token, presence: true
-    validates :option_app_secret, presence: true
+    # validates :option_app_secret, presence: true
     validates :option_group_id, presence: true
 
     after_initialize do
@@ -40,7 +40,9 @@ module PagerTree::Integrations
     end
 
     def adapter_supports_incoming?
-      true
+      # TODO - change this to true once we are ready to support this. The code currently works, but we don't want to confuse our users.
+      # Let's work with them to see what they want the functionality to look like
+      false
     end
 
     def adapter_supports_outgoing?
@@ -104,7 +106,8 @@ module PagerTree::Integrations
         "alert_rejected",
         "alert_resolved",
         "alert_dropped",
-        "alert_handoff"
+        "alert_handoff",
+        "comment_created"
       ].include?(event_name)
     end
 
@@ -215,6 +218,10 @@ module PagerTree::Integrations
       when "alert_handoff"
         handoff = adapter_outgoing_event.handoff
         "Handed off from #{handoff.source.name} to #{handoff.destination.name}"
+      when "comment_created"
+        comment = adapter_outgoing_event.comment
+        commenter = comment.account_user&.name || "PagerTree"
+        "#{commenter} commented: \"#{comment.body.to_plain_text}\""
       end
     end
   end

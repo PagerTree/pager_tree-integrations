@@ -24,7 +24,9 @@
   </dd>
 </div>
 
-<div class="sm:col-span-2">
+<%
+=begin%>
+ <div class="sm:col-span-2">
   <dt class="text-sm font-medium text-gray-500">
     <%= t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_app_secret") %>
   </dt>
@@ -35,12 +37,14 @@
       </p>
     </div>
   </dd>
-</div>
+</div> 
+<%
+=end%>
 
 <% 
   opts = [
-    :outgoing_enabled,
-    :incoming_enabled
+    # :outgoing_enabled,
+    # :incoming_enabled
   ]
 %>
 <% opts.each do |opt| %>

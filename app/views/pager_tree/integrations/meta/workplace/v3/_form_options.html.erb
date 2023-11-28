@@ -1,24 +1,28 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-  <div class="form-group">
+  <div class="form-group group">
     <%= form.label :option_group_id %>
     <%= form.text_field :option_group_id, class: "form-control" %>
     <p class="form-hint"><%== t(".option_group_id_hint_html") %></p>
   </div>
-  <div class="form-group">
+  <div class="form-group group">
     <%= form.label :option_access_token %>
     <%= form.text_field :option_access_token, class: "form-control" %>
     <p class="form-hint"><%== t(".option_access_token_hint_html") %></p>
   </div>
-  <div class="form-group">
+  <%
+=begin%>
+ <div class="form-group">
     <%= form.label :option_app_secret %>
     <%= form.text_field :option_app_secret, class: "form-control" %>
     <p class="form-hint"><%== t(".option_app_secret_hint_html") %></p>
-  </div>
+  </div> 
+<%
+=end%>
 
   <% 
     opts = [
-      :outgoing_enabled,
-      :incoming_enabled
+      # :outgoing_enabled,
+      # :incoming_enabled
     ]
   %>
   <% opts.each do |opt| %>

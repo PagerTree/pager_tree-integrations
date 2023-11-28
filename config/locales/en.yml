@@ -82,8 +82,8 @@ en:
         workplace:
           v3:
             form_options:
-              option_group_id_hint_html: "Workplace Group ID"
-              option_access_token_hint_html: "Workplace Integration Access Token"
+              option_group_id_hint_html: "Workplace Group ID (find this in the URL when viewing the group in Workplace)"
+              option_access_token_hint_html: "Workplace Integration Access Token (generate this on the integration settings page in Workplace)"
               option_app_secret_hint_html: "Workplace Integration App Secret"
               option_incoming_enabled_hint_html: "Enable incoming requests (Workplace to PagerTree)"
               option_outgoing_enabled_hint_html: "Enable outgoing requests (PagerTree to Workplace)"
