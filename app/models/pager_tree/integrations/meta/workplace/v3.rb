@@ -120,10 +120,10 @@ module PagerTree::Integrations
       if event_type == "alert_created"
         _post_message(option_group_id, message)
       else
-        post_id = _alert.meta["meta_workplace_post_id"]
+        post_id = _alert.meta["#{id}_meta_workplace_post_id"]
 
         if post_id.blank?
-          outgoing_webhook_delivery_id = _alert.meta["meta_workplace_outgoing_webhook_delivery_id"]
+          outgoing_webhook_delivery_id = _alert.meta["#{id}_meta_workplace_outgoing_webhook_delivery_id"]
           outgoing_webhook_delivery = OutgoingWebhookDelivery.find(outgoing_webhook_delivery_id)
           post_id = begin
             JSON.parse(outgoing_webhook_delivery.responses.first.dig("body"))["id"]
@@ -132,7 +132,7 @@ module PagerTree::Integrations
           end
 
           if post_id.present?
-            _alert.meta["meta_workplace_post_id"] = post_id
+            _alert.meta["#{id}_meta_workplace_post_id"] = post_id
             _alert.save!
           end
         end
@@ -169,7 +169,7 @@ module PagerTree::Integrations
       # This operation needs to happen immediately because we need to attach the post_id to the alert
       url = "https://graph.facebook.com/#{group_id}/feed?message=#{CGI.escape(message)}&formatting=MARKDOWN"
       outgoing_webhook_delivery = _send_outgoing(url)
-      _alert.meta["meta_workplace_outgoing_webhook_delivery_id"] = outgoing_webhook_delivery.id
+      _alert.meta["#{id}_meta_workplace_outgoing_webhook_delivery_id"] = outgoing_webhook_delivery.id
       _alert.save!
 
       outgoing_webhook_delivery

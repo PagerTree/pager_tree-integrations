@@ -94,7 +94,7 @@ module PagerTree::Integrations
     end
 
     test "can_process_outgoing_comment" do
-      @alert.meta["meta_workplace_post_id"] = "1234"
+      @alert.meta["#{@integration.id}_meta_workplace_post_id"] = "1234"
       data = {
         event_name: :alert_resolved,
         alert: @alert,
@@ -112,7 +112,7 @@ module PagerTree::Integrations
 
       assert_enqueued_jobs 1
 
-      assert_equal expected_comment_url(@alert.meta["meta_workplace_post_id"], "Resolved"), outgoing_webhook_delivery.url
+      assert_equal expected_comment_url(@alert.meta["#{@integration.id}_meta_workplace_post_id"], "Resolved"), outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
       assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
     end
