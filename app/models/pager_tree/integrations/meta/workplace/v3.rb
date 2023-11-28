@@ -101,7 +101,7 @@ module PagerTree::Integrations
 
     def adapter_outgoing_interest?(event_name)
       option_outgoing_enabled && [
-        "alert_created",
+        "alert_assigned",
         "alert_acknowledged",
         "alert_rejected",
         "alert_resolved",
@@ -117,7 +117,7 @@ module PagerTree::Integrations
 
       return unless message.present?
 
-      if event_type == "alert_created"
+      if event_type == "alert_assigned"
         _post_message(option_group_id, message)
       else
         post_id = _alert.meta["#{id}_meta_workplace_post_id"]
@@ -200,7 +200,7 @@ module PagerTree::Integrations
 
     def _generate_message(event_name)
       case event_name
-      when "alert_created"
+      when "alert_assigned"
         if _alert.incident?
           "[Incident ##{_alert.tiny_id}](#{Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}")}) [#{_alert.incident_severity.upcase.dasherize}] #{_alert.incident_message} - #{_alert.title}"
         else

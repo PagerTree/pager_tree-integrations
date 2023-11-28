@@ -61,7 +61,8 @@ module PagerTree::Integrations
       assert @integration.option_outgoing_enabled
       assert_not @integration.adapter_outgoing_interest?(:alert_open)
       assert_not @integration.adapter_outgoing_interest?(:alert_timeout)
-      assert @integration.adapter_outgoing_interest?(:alert_created)
+      assert_not @integration.adapter_outgoing_interest?(:alert_created)
+      assert @integration.adapter_outgoing_interest?(:alert_assigned)
       assert @integration.adapter_outgoing_interest?(:alert_acknowledged)
       assert @integration.adapter_outgoing_interest?(:alert_rejected)
       assert @integration.adapter_outgoing_interest?(:alert_resolved)
@@ -72,7 +73,7 @@ module PagerTree::Integrations
 
     test "can_process_outgoing_message" do
       data = {
-        event_name: :alert_created,
+        event_name: :alert_assigned,
         alert: @alert,
         changes: [{
           before: nil,
