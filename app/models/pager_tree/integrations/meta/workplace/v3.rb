@@ -108,11 +108,11 @@ module PagerTree::Integrations
         "alert_dropped",
         "alert_handoff",
         "comment_created"
-      ].include?(event_name)
+      ].include?(event_name.to_s)
     end
 
     def adapter_process_outgoing
-      event_type = adapter_outgoing_event.event_name
+      event_type = adapter_outgoing_event.event_name.to_s
       message = _generate_message(event_type)
 
       return unless message.present?
