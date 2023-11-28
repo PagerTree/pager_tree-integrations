@@ -124,7 +124,7 @@ module PagerTree::Integrations
 
         if post_id.blank?
           outgoing_webhook_delivery_id = _alert.meta["#{id}_meta_workplace_outgoing_webhook_delivery_id"]
-          outgoing_webhook_delivery = OutgoingWebhookDelivery.find(outgoing_webhook_delivery_id)
+          outgoing_webhook_delivery = OutgoingWebhookDelivery.find_by(id: outgoing_webhook_delivery_id)
           post_id = begin
             JSON.parse(outgoing_webhook_delivery.responses.first.dig("body"))["id"]
           rescue
@@ -139,6 +139,8 @@ module PagerTree::Integrations
 
         _post_comment(post_id, message) if post_id.present?
       end
+    rescue => e
+      Rails.logger.error "[Workplace] Error processing outgoing event: #{e.message}"
     end
 
     private
