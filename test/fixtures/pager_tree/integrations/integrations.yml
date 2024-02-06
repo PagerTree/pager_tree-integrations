@@ -135,6 +135,10 @@ prtg_v3:
   type: "PagerTree::Integrations::Prtg::V3"
   # options: no_options
 
+pulsetic_v3:
+  type: "PagerTree::Integrations::Pulsetic::V3"
+  # options: no_options
+
 sentry_v3:
   type: "PagerTree::Integrations::Sentry::V3"
   # options: no_options
