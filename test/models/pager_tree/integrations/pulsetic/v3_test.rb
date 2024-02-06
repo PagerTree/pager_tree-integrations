@@ -36,7 +36,6 @@ module PagerTree::Integrations
     end
 
     test "adapter_actions" do
-      # TODO: Check that the adapter_actions returns expected results based on the inputs
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
 
