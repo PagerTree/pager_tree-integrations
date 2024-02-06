@@ -8,10 +8,10 @@ module PagerTree::Integrations
       @integration = pager_tree_integrations_integrations(:pulsetic_v3)
 
       @create_request = {
-        "alert_type": "monitor_offline",
-        "monitor": {
-            "id": 123456,
-            "url": "https://statuscode.app/200"
+        alert_type: "monitor_offline",
+        monitor: {
+          id: 123456,
+          url: "https://statuscode.app/200"
         }
       }.with_indifferent_access
 
