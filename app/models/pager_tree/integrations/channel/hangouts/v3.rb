@@ -43,6 +43,10 @@ module PagerTree::Integrations
       false
     end
 
+    def adapter_supports_auto_aggregate?
+      false
+    end
+
     def adapter_outgoing_interest?(event_name)
       try("option_#{event_name}") || false
     end

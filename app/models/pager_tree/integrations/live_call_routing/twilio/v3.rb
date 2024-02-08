@@ -95,6 +95,10 @@ module PagerTree::Integrations
       true
     end
 
+    def adapter_supports_auto_aggregate?
+      false
+    end
+
     def adapter_outgoing_interest?(event_name)
       ["alert_acknowledged", "alert_dropped"].include?(event_name) && adapter_alert.source_id == id
     end

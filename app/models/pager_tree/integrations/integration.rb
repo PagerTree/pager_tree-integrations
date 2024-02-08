@@ -91,6 +91,14 @@ module PagerTree::Integrations
       false
     end
 
+    def adapter_supports_auto_aggregate?
+      true
+    end
+
+    def adapter_supports_auto_resolve?
+      true
+    end
+
     # START basic show functions
     def adapter_show_alerts?
       adapter_supports_incoming?
