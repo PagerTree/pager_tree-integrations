@@ -18,6 +18,10 @@ en:
         option_alert_handoff_hint_html: "Send when the alert has been handed off"
         option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
         option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
+      cloudflare:
+        v3:
+          form_options:
+            option_webhook_secret_hint_html: "Cloudflare Webhook Secret"
       email:
         v3:
           form_options:
@@ -133,6 +137,8 @@ en:
         option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"
+      "pager_tree/integrations/cloudflare/v3":
+        option_webhook_secret: "Webhook Secret"
       "pager_tree/integrations/email/v3":
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"
