@@ -20,6 +20,11 @@ azure_monitor_v3:
   type: "PagerTree::Integrations::AzureMonitor::V3"
   # options: no_options
 
+cloudflare_v3:
+  type: "PagerTree::Integrations::Cloudflare::V3"
+  options:
+    webhook_secret: "abc123"
+
 cronitor_v3:
   type: "PagerTree::Integrations::Cronitor::V3"
   # options: no_options
