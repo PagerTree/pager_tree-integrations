@@ -191,7 +191,7 @@ module PagerTree::Integrations
       @integration.adapter_incoming_deferred_request = OpenStruct.new(headers: {"HTTP_SENTRY_HOOK_RESOURCE" => "event_alert"}, body: @event_alert_create_request.to_json)
 
       true_alert = Alert.new(
-        title: @event_alert_create_request.dig("data", "issue_alert", "title"),
+        title: @event_alert_create_request.dig("data", "event", "title"),
         description: "Please see <a href='#{@event_alert_create_request.dig("data", "event", "web_url")}' target='_blank'>Sentry event</a> for full details.",
         thirdparty_id: @event_alert_create_request.dig("data", "event", "issue_id"),
         dedup_keys: [],

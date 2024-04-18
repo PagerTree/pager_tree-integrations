@@ -7,213 +7,1772 @@
   },
   "data": {
     "event": {
-      "_ref": 1,
-      "_ref_version": 2,
-      "contexts": {
-        "browser": {
-          "name": "Chrome",
-          "type": "browser",
-          "version": "75.0.3770"
+      "event_id": "b5f204b0076b46f99644468c359e4304",
+      "project": 5826974,
+      "release": null,
+      "dist": null,
+      "platform": "python",
+      "message": "",
+      "datetime": "2024-04-17T09:24:25.519567Z",
+      "tags": [
+        [
+          "browser",
+          "Google Chrome 116"
+        ],
+        [
+          "browser.name",
+          "Google Chrome"
+        ],
+        [
+          "client_os.name",
+          "macOS"
+        ],
+        [
+          "device",
+          "Mac"
+        ],
+        [
+          "device.family",
+          "Mac"
+        ],
+        [
+          "environment",
+          "production"
+        ],
+        [
+          "handled",
+          "no"
+        ],
+        [
+          "level",
+          "error"
+        ],
+        [
+          "mechanism",
+          "django"
+        ],
+        [
+          "runtime",
+          "CPython 3.10.12"
+        ],
+        [
+          "runtime.name",
+          "CPython"
+        ],
+        [
+          "user",
+          "id:AD=-,BO=-,PR=-,FO=-"
+        ],
+        [
+          "server_name",
+          "ip-10-1-17-149"
+        ],
+        [
+          "transaction",
+          "/ref/coupon.gif"
+        ],
+        [
+          "url",
+          "https://app.acmecorp.com/ref/coupon.gif"
+        ]
+      ],
+      "_meta": {
+        "exception": {
+          "values": {
+            "1": {
+              "stacktrace": {
+                "frames": {
+                  "10": {
+                    "vars": {
+                      "": {
+                        "len": 14
+                      }
+                    }
+                  },
+                  "9": {
+                    "vars": {
+                      "": {
+                        "len": 11
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         },
-        "os": {
-          "name": "Mac OS X",
-          "type": "os",
-          "version": "10.14.0"
+        "request": {
+          "headers": {
+            "21": {
+              "1": {
+                "": {
+                  "rem": [
+                    [
+                      "!config",
+                      "x"
+                    ]
+                  ]
+                }
+              }
+            },
+            "9": {
+              "1": {
+                "": {
+                  "rem": [
+                    [
+                      "!config",
+                      "s"
+                    ]
+                  ]
+                }
+              }
+            }
+          }
         }
       },
-      "culprit": "?(<anonymous>)",
-      "datetime": "2019-08-19T21:06:17.677000Z",
-      "dist": null,
-      "event_id": "e4874d664c3540c1a32eab185f12c5ab",
-      "exception": {
+      "_metrics": {
+        "bytes.ingested.event": 35254,
+        "bytes.stored.event": 41953
+      },
+      "_ref": 5826974,
+      "_ref_version": 2,
+      "breadcrumbs": {
         "values": [
           {
-            "mechanism": {
-              "data": {
-                "message": "heck is not defined",
-                "mode": "stack",
-                "name": "ReferenceError"
-              },
-              "description": null,
-              "handled": false,
-              "help_link": null,
-              "meta": null,
-              "synthetic": null,
-              "type": "onerror"
-            },
-            "stacktrace": {
-              "frames": [
-                {
-                  "abs_path": "https://static.jsbin.com/js/prod/runner-4.1.7.min.js",
-                  "colno": 10866,
-                  "context_line": "{snip} e(a.old),a.active=b,e(a.target,b),setTimeout(function(){c&&c();for(var b,d=a.target.getElementsByTagName(\"iframe\"),e=d.length,f=0,g=a.active {snip}",
-                  "data": {
-                    "orig_in_app": 1
-                  },
-                  "errors": null,
-                  "filename": "/js/prod/runner-4.1.7.min.js",
-                  "function": null,
-                  "image_addr": null,
-                  "in_app": false,
-                  "instruction_addr": null,
-                  "lineno": 1,
-                  "module": "prod/runner-4.1.7",
-                  "package": null,
-                  "platform": null,
-                  "post_context": null,
-                  "pre_context": null,
-                  "raw_function": null,
-                  "symbol": null,
-                  "symbol_addr": null,
-                  "trust": null,
-                  "vars": null
-                },
-                {
-                  "abs_path": "https://static.jsbin.com/js/prod/runner-4.1.7.min.js",
-                  "colno": 13924,
-                  "context_line": "{snip} e){i._raw(\"error\",e&&e.stack?e.stack:a+\" (line \"+c+\")\")},c.write(f),c.close(),b.postMessage(\"complete\"),k.wrap(e,a.options)})},b[\"console:ru {snip}",
-                  "data": {
-                    "orig_in_app": 1
-                  },
-                  "errors": null,
-                  "filename": "/js/prod/runner-4.1.7.min.js",
-                  "function": null,
-                  "image_addr": null,
-                  "in_app": false,
-                  "instruction_addr": null,
-                  "lineno": 1,
-                  "module": "prod/runner-4.1.7",
-                  "package": null,
-                  "platform": null,
-                  "post_context": null,
-                  "pre_context": null,
-                  "raw_function": null,
-                  "symbol": null,
-                  "symbol_addr": null,
-                  "trust": null,
-                  "vars": null
-                },
-                {
-                  "abs_path": "<anonymous>",
-                  "colno": 5,
-                  "context_line": null,
-                  "data": {
-                    "orig_in_app": 1
-                  },
-                  "errors": null,
-                  "filename": "<anonymous>",
-                  "function": null,
-                  "image_addr": null,
-                  "in_app": false,
-                  "instruction_addr": null,
-                  "lineno": 3,
-                  "module": null,
-                  "package": null,
-                  "platform": null,
-                  "post_context": null,
-                  "pre_context": null,
-                  "raw_function": null,
-                  "symbol": null,
-                  "symbol_addr": null,
-                  "trust": null,
-                  "vars": null
-                }
-              ]
-            },
-            "type": "ReferenceError",
-            "value": "heck is not defined"
+            "timestamp": 1713345865.488214,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "connect"
+          },
+          {
+            "timestamp": 1713345865.499473,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "SELECT \"acmecorp_coupon\".\"id\", \"acmecorp_coupon\".\"created_at\", \"acmecorp_coupon\".\"code\", \"acmecorp_coupon\".\"description\", \"acmecorp_coupon\".\"owner_partner_id\", \"acmecorp_coupon\".\"owner_user_id\", \"acmecorp_coupon\".\"consultant_id\", \"acmecorp_coupon\".\"value_eur_owner\", \"acmecorp_coupon\".\"value_eur_referral\", \"acmecorp_coupon\".\"value_eur_agreement\", \"acmecorp_coupon\".\"shown_in_website\", \"acmecorp_coupon\".\"domain\", \"acmecorp_coupon\".\"next_coupon_id\", \"acmecorp_coupon\".\"can_be_assigned_by_consultant\", \"acmecorp_coupon\".\"is_active\" FROM \"acmecorp_coupon\" WHERE UPPER(\"acmecorp_coupon\".\"code\"::text) = UPPER(%s) LIMIT 21"
+          },
+          {
+            "timestamp": 1713345865.508083,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\""
+          },
+          {
+            "timestamp": 1713345865.509027,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "CREATE OR REPLACE FUNCTION pg_temp.lastval() RETURNS bigint AS 'BEGIN RETURN LASTVAL(); EXCEPTION WHEN object_not_in_prerequisite_state THEN RETURN NULL; END' LANGUAGE plpgsql IMMUTABLE"
+          },
+          {
+            "timestamp": 1713345865.513122,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "SELECT pg_temp.lastval()"
+          },
+          {
+            "timestamp": 1713345865.514069,
+            "type": "default",
+            "category": "query",
+            "level": "info",
+            "message": "INSERT INTO \"acmecorp_changelog\" (\"timestamp\", \"sql\", \"admin_id\", \"backoffice_id\", \"partner_id\", \"user_id\", \"os_command\", \"os_user\", \"ip\", \"request_url\", \"request_method\", \"referrer\", \"sql_command\", \"table\", \"row_pk\") VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING \"acmecorp_changelog\".\"id\""
           }
         ]
       },
-      "fingerprint": ["{{ default }}"],
+      "contexts": {
+        "browser": {
+          "name": "Google Chrome",
+          "version": "116",
+          "type": "browser"
+        },
+        "client_os": {
+          "name": "macOS",
+          "type": "os"
+        },
+        "device": {
+          "family": "Mac",
+          "model": "Mac",
+          "brand": "Apple",
+          "type": "device"
+        },
+        "runtime": {
+          "name": "CPython",
+          "version": "3.10.12",
+          "build": "3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]",
+          "type": "runtime"
+        },
+        "trace": {
+          "trace_id": "8c78068124cc489e86b2161a23832992",
+          "span_id": "baa40c911b56052b",
+          "parent_span_id": "b1934b69f2805204",
+          "op": "event.django",
+          "status": "unknown",
+          "client_sample_rate": 0.002,
+          "sampled": false,
+          "description": "sentry_sdk.integrations.django._got_request_exception",
+          "type": "trace"
+        }
+      },
+      "culprit": "/ref/coupon.gif",
+      "environment": "production",
+      "exception": {
+        "values": [
+          {
+            "type": "StringDataRightTruncation",
+            "value": "value too long for type character varying(15)\n",
+            "module": "psycopg2.errors",
+            "stacktrace": {
+              "frames": [
+                {
+                  "function": "_execute",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 89,
+                  "pre_context": [
+                    "        with self.db.wrap_database_errors:",
+                    "            if params is None:",
+                    "                # params default might be backend specific.",
+                    "                return self.cursor.execute(sql)",
+                    "            else:"
+                  ],
+                  "context_line": "                return self.cursor.execute(sql, params)",
+                  "post_context": [
+                    "",
+                    "    def _executemany(self, sql, param_list, *ignored_wrapper_args):",
+                    "        self.db.validate_no_broken_transaction()",
+                    "        with self.db.wrap_database_errors:",
+                    "            return self.cursor.executemany(sql, param_list)"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "ignored_wrapper_args": [
+                      "False",
+                      {
+                        "connection": "<DatabaseWrapper vendor='postgresql' alias='default'>",
+                        "cursor": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>"
+                      }
+                    ],
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                }
+              ]
+            },
+            "mechanism": {
+              "type": "django",
+              "handled": false,
+              "synthetic": null,
+              "description": null,
+              "help_link": null,
+              "data": null,
+              "meta": null,
+              "source": null,
+              "is_exception_group": null,
+              "exception_id": null,
+              "parent_id": null
+            }
+          },
+          {
+            "type": "DataError",
+            "value": "value too long for type character varying(15)\n",
+            "module": "django.db.utils",
+            "stacktrace": {
+              "frames": [
+                {
+                  "function": "inner",
+                  "module": "django.core.handlers.exception",
+                  "filename": "django/core/handlers/exception.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/core/handlers/exception.py",
+                  "lineno": 55,
+                  "pre_context": [
+                    "    else:",
+                    "",
+                    "        @wraps(get_response)",
+                    "        def inner(request):",
+                    "            try:"
+                  ],
+                  "context_line": "                response = get_response(request)",
+                  "post_context": [
+                    "            except Exception as exc:",
+                    "                response = response_for_exception(request, exc)",
+                    "            return response",
+                    "",
+                    "        return inner"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "exc": "DataError('value too long for type character varying(15)\\n')",
+                    "get_response": "<bound method BaseHandler._get_response of <django.core.handlers.wsgi.WSGIHandler object at 0x7f73ae3efb50>>",
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_get_response",
+                  "module": "django.core.handlers.base",
+                  "filename": "django/core/handlers/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/core/handlers/base.py",
+                  "lineno": 197,
+                  "pre_context": [
+                    "            wrapped_callback = self.make_view_atomic(callback)",
+                    "            # If it is an asynchronous view, run it in a subthread.",
+                    "            if iscoroutinefunction(wrapped_callback):",
+                    "                wrapped_callback = async_to_sync(wrapped_callback)",
+                    "            try:"
+                  ],
+                  "context_line": "                response = wrapped_callback(request, *callback_args, **callback_kwargs)",
+                  "post_context": [
+                    "            except Exception as e:",
+                    "                response = self.process_exception_by_middleware(e, request)",
+                    "                if response is None:",
+                    "                    raise",
+                    ""
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "callback": "<function View.as_view.<locals>.view at 0x7f73ab487400>",
+                    "callback_args": [],
+                    "callback_kwargs": {},
+                    "middleware_method": "<function CsrfViewMiddleware.process_view at 0x7f73aca6ca60>",
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>",
+                    "response": "None",
+                    "self": "<django.core.handlers.wsgi.WSGIHandler object at 0x7f73ae3efb50>",
+                    "wrapped_callback": "<function View.as_view.<locals>.view at 0x7f73a059aa70>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "view",
+                  "module": "django.views.generic.base",
+                  "filename": "django/views/generic/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/views/generic/base.py",
+                  "lineno": 104,
+                  "pre_context": [
+                    "            if not hasattr(self, \"request\"):",
+                    "                raise AttributeError(",
+                    "                    \"%s instance has no 'request' attribute. Did you override \"",
+                    "                    \"setup() and forget to call super()?\" % cls.__name__",
+                    "                )"
+                  ],
+                  "context_line": "            return self.dispatch(request, *args, **kwargs)",
+                  "post_context": [
+                    "",
+                    "        view.view_class = cls",
+                    "        view.view_initkwargs = initkwargs",
+                    "",
+                    "        # __name__ and __qualname__ are intentionally left unchanged as"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "args": [],
+                    "cls": "<class 'acmecorp.views.website.coupon_pixel.CouponPixelView'>",
+                    "initkwargs": {},
+                    "kwargs": {},
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>",
+                    "self": "<acmecorp.views.website.coupon_pixel.CouponPixelView object at 0x7f73a21197e0>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "dispatch",
+                  "module": "django.views.generic.base",
+                  "filename": "django/views/generic/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/views/generic/base.py",
+                  "lineno": 143,
+                  "pre_context": [
+                    "            handler = getattr(",
+                    "                self, request.method.lower(), self.http_method_not_allowed",
+                    "            )",
+                    "        else:",
+                    "            handler = self.http_method_not_allowed"
+                  ],
+                  "context_line": "        return handler(request, *args, **kwargs)",
+                  "post_context": [
+                    "",
+                    "    def http_method_not_allowed(self, request, *args, **kwargs):",
+                    "        logger.warning(",
+                    "            \"Method Not Allowed (%s): %s\",",
+                    "            request.method,"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "args": [],
+                    "handler": "<bound method CouponPixelView.get of <acmecorp.views.website.coupon_pixel.CouponPixelView object at 0x7f73a21197e0>>",
+                    "kwargs": {},
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>",
+                    "self": "<acmecorp.views.website.coupon_pixel.CouponPixelView object at 0x7f73a21197e0>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "get",
+                  "module": "acmecorp.views.website.coupon_pixel",
+                  "filename": "acmecorp/views/website/coupon_pixel.py",
+                  "abs_path": "/home/ubuntu/src/acmecorp_django/acmecorp/views/website/coupon_pixel.py",
+                  "lineno": 17,
+                  "pre_context": [
+                    "",
+                    "",
+                    "class CouponPixelView(CouponMixin, View):",
+                    "    def get(self, request, *args, **kwargs):",
+                    "        response = HttpResponse(TRANSPARENT_1_PIXEL_GIF, content_type=\"image/gif\")"
+                  ],
+                  "context_line": "        return self.handle_coupon(request, response)",
+                  "in_app": true,
+                  "vars": {
+                    "args": [],
+                    "kwargs": {},
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>",
+                    "response": "<HttpResponse status_code=200, \"image/gif\">",
+                    "self": "<acmecorp.views.website.coupon_pixel.CouponPixelView object at 0x7f73a21197e0>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "post_context": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "handle_coupon",
+                  "module": "acmecorp.views.website.mixins",
+                  "filename": "acmecorp/views/website/mixins.py",
+                  "abs_path": "/home/ubuntu/src/acmecorp_django/acmecorp/views/website/mixins.py",
+                  "lineno": 14,
+                  "pre_context": [
+                    "    def handle_coupon(self, request, response):",
+                    "        # If coupon in query string and not bot: save click, set cookie",
+                    "        if \"coupon\" in request.GET and not is_bot(request):",
+                    "            try:",
+                    "                coupon = Coupon.objects.get(code__iexact=request.GET[\"coupon\"])"
+                  ],
+                  "context_line": "                CouponClick.objects.create(coupon=coupon, ip=request.client_ip)",
+                  "post_context": [
+                    "                set_cookie(request, response, \"coupon\", coupon.code)",
+                    "            except Coupon.DoesNotExist:",
+                    "                pass",
+                    "        return response"
+                  ],
+                  "in_app": true,
+                  "vars": {
+                    "coupon": "<Coupon: INDIEPRODUCTIVITY50>",
+                    "request": "<WSGIRequest: GET '/ref/coupon.gif?coupon=INDIEPRODUCTIVITY50'>",
+                    "response": "<HttpResponse status_code=200, \"image/gif\">",
+                    "self": "<acmecorp.views.website.coupon_pixel.CouponPixelView object at 0x7f73a21197e0>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "manager_method",
+                  "module": "django.db.models.manager",
+                  "filename": "django/db/models/manager.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/manager.py",
+                  "lineno": 87,
+                  "pre_context": [
+                    "    @classmethod",
+                    "    def _get_queryset_methods(cls, queryset_class):",
+                    "        def create_method(name, method):",
+                    "            @wraps(method)",
+                    "            def manager_method(self, *args, **kwargs):"
+                  ],
+                  "context_line": "                return getattr(self.get_queryset(), name)(*args, **kwargs)",
+                  "post_context": [
+                    "",
+                    "            return manager_method",
+                    "",
+                    "        new_methods = {}",
+                    "        for name, method in inspect.getmembers("
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "args": [],
+                    "kwargs": {
+                      "coupon": "<Coupon: INDIEPRODUCTIVITY50>",
+                      "ip": "'2a07:7e87:2698:0:7468:67e7:994a:abd0'"
+                    },
+                    "name": "'create'",
+                    "self": "<django.db.models.manager.Manager object at 0x7f73a3de9c90>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "create",
+                  "module": "django.db.models.query",
+                  "filename": "django/db/models/query.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/query.py",
+                  "lineno": 658,
+                  "pre_context": [
+                    "        Create a new object with the given kwargs, saving it to the database",
+                    "        and returning the created object.",
+                    "        \"\"\"",
+                    "        obj = self.model(**kwargs)",
+                    "        self._for_write = True"
+                  ],
+                  "context_line": "        obj.save(force_insert=True, using=self.db)",
+                  "post_context": [
+                    "        return obj",
+                    "",
+                    "    async def acreate(self, **kwargs):",
+                    "        return await sync_to_async(self.create)(**kwargs)",
+                    ""
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "kwargs": {
+                      "coupon": "<Coupon: INDIEPRODUCTIVITY50>",
+                      "ip": "'2a07:7e87:2698:0:7468:67e7:994a:abd0'"
+                    },
+                    "obj": "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>",
+                    "self": "<QuerySet from django.db.models.query at 0x7f73a211af80>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "save",
+                  "module": "django.db.models.base",
+                  "filename": "django/db/models/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/base.py",
+                  "lineno": 814,
+                  "pre_context": [
+                    "                    field_names.add(field.attname)",
+                    "            loaded_fields = field_names.difference(deferred_fields)",
+                    "            if loaded_fields:",
+                    "                update_fields = frozenset(loaded_fields)",
+                    ""
+                  ],
+                  "context_line": "        self.save_base(",
+                  "post_context": [
+                    "            using=using,",
+                    "            force_insert=force_insert,",
+                    "            force_update=force_update,",
+                    "            update_fields=update_fields,",
+                    "        )"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "deferred_fields": [],
+                    "force_insert": "True",
+                    "force_update": "False",
+                    "self": "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>",
+                    "update_fields": "None",
+                    "using": "'default'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "save_base",
+                  "module": "django.db.models.base",
+                  "filename": "django/db/models/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/base.py",
+                  "lineno": 877,
+                  "pre_context": [
+                    "            context_manager = transaction.mark_for_rollback_on_error(using=using)",
+                    "        with context_manager:",
+                    "            parent_inserted = False",
+                    "            if not raw:",
+                    "                parent_inserted = self._save_parents(cls, using, update_fields)"
+                  ],
+                  "context_line": "            updated = self._save_table(",
+                  "post_context": [
+                    "                raw,",
+                    "                cls,",
+                    "                force_insert or parent_inserted,",
+                    "                force_update,",
+                    "                using,"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "cls": "<class 'acmecorp.models.affiliations.coupon_click.CouponClick'>",
+                    "context_manager": "<contextlib._GeneratorContextManager object at 0x7f73a2119540>",
+                    "force_insert": "True",
+                    "force_update": "False",
+                    "meta": "<Options for CouponClick>",
+                    "origin": "<class 'acmecorp.models.affiliations.coupon_click.CouponClick'>",
+                    "raw": "False",
+                    "self": "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>",
+                    "update_fields": "None",
+                    "using": "'default'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_save_table",
+                  "module": "django.db.models.base",
+                  "filename": "django/db/models/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/base.py",
+                  "lineno": 1020,
+                  "pre_context": [
+                    "            fields = meta.local_concrete_fields",
+                    "            if not pk_set:",
+                    "                fields = [f for f in fields if f is not meta.auto_field]",
+                    "",
+                    "            returning_fields = meta.db_returning_fields"
+                  ],
+                  "context_line": "            results = self._do_insert(",
+                  "post_context": [
+                    "                cls._base_manager, using, fields, returning_fields, raw",
+                    "            )",
+                    "            if results:",
+                    "                for value, field in zip(results[0], returning_fields):",
+                    "                    setattr(self, field.attname, value)"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "cls": "<class 'acmecorp.models.affiliations.coupon_click.CouponClick'>",
+                    "fields": [
+                      "<django.db.models.fields.related.ForeignKey: coupon>",
+                      "<django.db.models.fields.CharField: ip>",
+                      "<django.db.models.fields.DateTimeField: timestamp>"
+                    ],
+                    "force_insert": "True",
+                    "force_update": "False",
+                    "non_pks": [
+                      "<django.db.models.fields.related.ForeignKey: coupon>",
+                      "<django.db.models.fields.CharField: ip>",
+                      "<django.db.models.fields.DateTimeField: timestamp>"
+                    ],
+                    "pk_set": "False",
+                    "pk_val": "None",
+                    "returning_fields": [
+                      "<django.db.models.fields.BigAutoField: id>"
+                    ],
+                    "updated": "False",
+                    "using": "'default'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_do_insert",
+                  "module": "django.db.models.base",
+                  "filename": "django/db/models/base.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/base.py",
+                  "lineno": 1061,
+                  "pre_context": [
+                    "    def _do_insert(self, manager, using, fields, returning_fields, raw):",
+                    "        \"\"\"",
+                    "        Do an INSERT. If returning_fields is defined then this method should",
+                    "        return the newly created data for the model.",
+                    "        \"\"\""
+                  ],
+                  "context_line": "        return manager._insert(",
+                  "post_context": [
+                    "            [self],",
+                    "            fields=fields,",
+                    "            returning_fields=returning_fields,",
+                    "            using=using,",
+                    "            raw=raw,"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "fields": [
+                      "<django.db.models.fields.related.ForeignKey: coupon>",
+                      "<django.db.models.fields.CharField: ip>",
+                      "<django.db.models.fields.DateTimeField: timestamp>"
+                    ],
+                    "manager": "<django.db.models.manager.Manager object at 0x7f73a3deb760>",
+                    "raw": "False",
+                    "returning_fields": [
+                      "<django.db.models.fields.BigAutoField: id>"
+                    ],
+                    "self": "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>",
+                    "using": "'default'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "manager_method",
+                  "module": "django.db.models.manager",
+                  "filename": "django/db/models/manager.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/manager.py",
+                  "lineno": 87,
+                  "pre_context": [
+                    "    @classmethod",
+                    "    def _get_queryset_methods(cls, queryset_class):",
+                    "        def create_method(name, method):",
+                    "            @wraps(method)",
+                    "            def manager_method(self, *args, **kwargs):"
+                  ],
+                  "context_line": "                return getattr(self.get_queryset(), name)(*args, **kwargs)",
+                  "post_context": [
+                    "",
+                    "            return manager_method",
+                    "",
+                    "        new_methods = {}",
+                    "        for name, method in inspect.getmembers("
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "args": [
+                      [
+                        "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>"
+                      ]
+                    ],
+                    "kwargs": {
+                      "fields": [
+                        "<django.db.models.fields.related.ForeignKey: coupon>",
+                        "<django.db.models.fields.CharField: ip>",
+                        "<django.db.models.fields.DateTimeField: timestamp>"
+                      ],
+                      "raw": "False",
+                      "returning_fields": [
+                        "<django.db.models.fields.BigAutoField: id>"
+                      ],
+                      "using": "'default'"
+                    },
+                    "name": "'_insert'",
+                    "self": "<django.db.models.manager.Manager object at 0x7f73a3deb760>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_insert",
+                  "module": "django.db.models.query",
+                  "filename": "django/db/models/query.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/query.py",
+                  "lineno": 1805,
+                  "pre_context": [
+                    "            on_conflict=on_conflict,",
+                    "            update_fields=update_fields,",
+                    "            unique_fields=unique_fields,",
+                    "        )",
+                    "        query.insert_values(fields, objs, raw=raw)"
+                  ],
+                  "context_line": "        return query.get_compiler(using=using).execute_sql(returning_fields)",
+                  "post_context": [
+                    "",
+                    "    _insert.alters_data = True",
+                    "    _insert.queryset_only = False",
+                    "",
+                    "    def _batched_insert("
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "fields": [
+                      "<django.db.models.fields.related.ForeignKey: coupon>",
+                      "<django.db.models.fields.CharField: ip>",
+                      "<django.db.models.fields.DateTimeField: timestamp>"
+                    ],
+                    "objs": [
+                      "<CouponClick: INDIEPRODUCTIVITY50 2a07:7e87:2698:0:7468:67e7:994a:abd0 2024-04-17 09:24:25.508007+00:00>"
+                    ],
+                    "on_conflict": "None",
+                    "query": "<django.db.models.sql.subqueries.InsertQuery object at 0x7f73a2118dc0>",
+                    "raw": "False",
+                    "returning_fields": [
+                      "<django.db.models.fields.BigAutoField: id>"
+                    ],
+                    "self": "<QuerySet from django.db.models.query at 0x7f73a211a170>",
+                    "unique_fields": "None",
+                    "update_fields": "None",
+                    "using": "'default'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "execute_sql",
+                  "module": "django.db.models.sql.compiler",
+                  "filename": "django/db/models/sql/compiler.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/models/sql/compiler.py",
+                  "lineno": 1822,
+                  "pre_context": [
+                    "        )",
+                    "        opts = self.query.get_meta()",
+                    "        self.returning_fields = returning_fields",
+                    "        with self.connection.cursor() as cursor:",
+                    "            for sql, params in self.as_sql():"
+                  ],
+                  "context_line": "                cursor.execute(sql, params)",
+                  "post_context": [
+                    "            if not self.returning_fields:",
+                    "                return []",
+                    "            if (",
+                    "                self.connection.features.can_return_rows_from_bulk_insert",
+                    "                and len(self.query.objs) > 1"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "cursor": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "opts": "<Options for CouponClick>",
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "returning_fields": [
+                      "<django.db.models.fields.BigAutoField: id>"
+                    ],
+                    "self": "<SQLInsertCompiler model=CouponClick connection=<DatabaseWrapper vendor='postgresql' alias='default'> using='default'>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "execute",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 102,
+                  "pre_context": [
+                    "class CursorDebugWrapper(CursorWrapper):",
+                    "    # XXX callproc isn't instrumented at this time.",
+                    "",
+                    "    def execute(self, sql, params=None):",
+                    "        with self.debug_sql(sql, params, use_last_executed_query=True):"
+                  ],
+                  "context_line": "            return super().execute(sql, params)",
+                  "post_context": [
+                    "",
+                    "    def executemany(self, sql, param_list):",
+                    "        with self.debug_sql(sql, param_list, many=True):",
+                    "            return super().executemany(sql, param_list)",
+                    ""
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "__class__": "<class 'django.db.backends.utils.CursorDebugWrapper'>",
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "execute",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 67,
+                  "pre_context": [
+                    "            else:",
+                    "                params = params or ()",
+                    "                return self.cursor.callproc(procname, params, kparams)",
+                    "",
+                    "    def execute(self, sql, params=None):"
+                  ],
+                  "context_line": "        return self._execute_with_wrappers(",
+                  "post_context": [
+                    "            sql, params, many=False, executor=self._execute",
+                    "        )",
+                    "",
+                    "    def executemany(self, sql, param_list):",
+                    "        return self._execute_with_wrappers("
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_execute_with_wrappers",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 80,
+                  "pre_context": [
+                    "",
+                    "    def _execute_with_wrappers(self, sql, params, many, executor):",
+                    "        context = {\"connection\": self.db, \"cursor\": self}",
+                    "        for wrapper in reversed(self.db.execute_wrappers):",
+                    "            executor = functools.partial(wrapper, executor)"
+                  ],
+                  "context_line": "        return executor(sql, params, many, context)",
+                  "post_context": [
+                    "",
+                    "    def _execute(self, sql, params, *ignored_wrapper_args):",
+                    "        self.db.validate_no_broken_transaction()",
+                    "        with self.db.wrap_database_errors:",
+                    "            if params is None:"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "context": {
+                      "connection": "<DatabaseWrapper vendor='postgresql' alias='default'>",
+                      "cursor": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>"
+                    },
+                    "executor": "<bound method CursorWrapper._execute of <django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>>",
+                    "many": "False",
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_execute",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 84,
+                  "pre_context": [
+                    "            executor = functools.partial(wrapper, executor)",
+                    "        return executor(sql, params, many, context)",
+                    "",
+                    "    def _execute(self, sql, params, *ignored_wrapper_args):",
+                    "        self.db.validate_no_broken_transaction()"
+                  ],
+                  "context_line": "        with self.db.wrap_database_errors:",
+                  "post_context": [
+                    "            if params is None:",
+                    "                # params default might be backend specific.",
+                    "                return self.cursor.execute(sql)",
+                    "            else:",
+                    "                return self.cursor.execute(sql, params)"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "ignored_wrapper_args": [
+                      "False",
+                      {
+                        "connection": "<DatabaseWrapper vendor='postgresql' alias='default'>",
+                        "cursor": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>"
+                      }
+                    ],
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "__exit__",
+                  "module": "django.db.utils",
+                  "filename": "django/db/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/utils.py",
+                  "lineno": 91,
+                  "pre_context": [
+                    "                dj_exc_value = dj_exc_type(*exc_value.args)",
+                    "                # Only set the 'errors_occurred' flag for errors that may make",
+                    "                # the connection unusable.",
+                    "                if dj_exc_type not in (DataError, IntegrityError):",
+                    "                    self.wrapper.errors_occurred = True"
+                  ],
+                  "context_line": "                raise dj_exc_value.with_traceback(traceback) from exc_value",
+                  "post_context": [
+                    "",
+                    "    def __call__(self, func):",
+                    "        # Note that we are intentionally not using @wraps here for performance",
+                    "        # reasons. Refs #21109.",
+                    "        def inner(*args, **kwargs):"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "db_exc_type": "<class 'psycopg2.DataError'>",
+                    "dj_exc_type": "<class 'django.db.utils.DataError'>",
+                    "dj_exc_value": "DataError('value too long for type character varying(15)\\n')",
+                    "exc_type": "<class 'psycopg2.errors.StringDataRightTruncation'>",
+                    "exc_value": "StringDataRightTruncation('value too long for type character varying(15)\\n')",
+                    "self": "<django.db.utils.DatabaseErrorWrapper object at 0x7f73af089030>",
+                    "traceback": "<traceback object at 0x7f73a1846740>"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                },
+                {
+                  "function": "_execute",
+                  "module": "django.db.backends.utils",
+                  "filename": "django/db/backends/utils.py",
+                  "abs_path": "/home/ubuntu/venvs/acmecorp/lib/python3.10/site-packages/django/db/backends/utils.py",
+                  "lineno": 89,
+                  "pre_context": [
+                    "        with self.db.wrap_database_errors:",
+                    "            if params is None:",
+                    "                # params default might be backend specific.",
+                    "                return self.cursor.execute(sql)",
+                    "            else:"
+                  ],
+                  "context_line": "                return self.cursor.execute(sql, params)",
+                  "post_context": [
+                    "",
+                    "    def _executemany(self, sql, param_list, *ignored_wrapper_args):",
+                    "        self.db.validate_no_broken_transaction()",
+                    "        with self.db.wrap_database_errors:",
+                    "            return self.cursor.executemany(sql, param_list)"
+                  ],
+                  "in_app": false,
+                  "vars": {
+                    "ignored_wrapper_args": [
+                      "False",
+                      {
+                        "connection": "<DatabaseWrapper vendor='postgresql' alias='default'>",
+                        "cursor": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>"
+                      }
+                    ],
+                    "params": [
+                      "17513",
+                      "'2a07:7e87:2698:0:7468:67e7:994a:abd0'",
+                      "datetime.datetime(2024, 4, 17, 9, 24, 25, 508007, tzinfo=datetime.timezone.utc)"
+                    ],
+                    "self": "<django.db.backends.postgresql.base.CursorDebugWrapper object at 0x7f73a2119b70>",
+                    "sql": "'INSERT INTO \"acmecorp_couponclick\" (\"coupon_id\", \"ip\", \"timestamp\") VALUES (%s, %s, %s) RETURNING \"acmecorp_couponclick\".\"id\"'"
+                  },
+                  "colno": null,
+                  "data": null,
+                  "errors": null,
+                  "raw_function": null,
+                  "image_addr": null,
+                  "instruction_addr": null,
+                  "addr_mode": null,
+                  "package": null,
+                  "platform": null,
+                  "source_link": null,
+                  "symbol": null,
+                  "symbol_addr": null,
+                  "trust": null,
+                  "snapshot": null,
+                  "lock": null
+                }
+              ]
+            },
+            "mechanism": {
+              "type": "django",
+              "handled": false,
+              "synthetic": null,
+              "description": null,
+              "help_link": null,
+              "data": null,
+              "meta": null,
+              "source": null,
+              "is_exception_group": null,
+              "exception_id": null,
+              "parent_id": null
+            }
+          }
+        ]
+      },
+      "extra": {
+        "sys.argv": [
+          "/home/ubuntu/venvs/acmecorp/bin/gunicorn",
+          "--pid",
+          "/run/gunicorn/pid",
+          "--bind",
+          "127.0.0.1:8000",
+          "project.wsgi",
+          "--workers=9",
+          "--timeout",
+          "120"
+        ]
+      },
+      "fingerprint": [
+        "{{ default }}"
+      ],
       "grouping_config": {
-        "enhancements": "eJybzDhxY05qemJypZWRgaGlroGxrqHRBABbEwcC",
-        "id": "legacy:2019-03-12"
+        "enhancements": "KLUv_SAYwQAAkwKRs25ld3N0eWxlOjIwMjMtMDEtMTGQ",
+        "id": "newstyle:2023-01-11"
       },
-      "hashes": ["29f7ffc4903a8a990408b80a3b4c95a2"],
-      "issue_url": "https://sentry.io/api/0/issues/1117540176/",
-      "issue_id": "1117540176",
-      "key_id": "667532",
+      "hashes": [
+        "8643aff220ef53f84dda44f19eb0d603",
+        "018ebb1cb16e9ad32df36dc3553834fb"
+      ],
+      "ingest_path": [
+        {
+          "version": "24.4.0",
+          "public_key": "XE7QiyuNlja9PZ7I9qJlwQotzecWrUIN91BAO7Q5R38"
+        }
+      ],
+      "key_id": "1677597",
       "level": "error",
-      "location": "<anonymous>",
+      "location": "acmecorp/views/website/mixins.py",
       "logger": "",
-      "message": "",
       "metadata": {
-        "filename": "<anonymous>",
-        "type": "ReferenceError",
-        "value": "heck is not defined"
+        "display_title_with_tree_label": false,
+        "filename": "acmecorp/views/website/mixins.py",
+        "function": "handle_coupon",
+        "in_app_frame_mix": "mixed",
+        "type": "DataError",
+        "value": "value too long for type character varying(15)\n"
       },
-      "platform": "javascript",
-      "project": 1,
-      "received": 1566248777.677,
-      "release": null,
+      "modules": {
+        "amqp": "5.2.0",
+        "annotated-types": "0.6.0",
+        "anyio": "3.7.1",
+        "asgiref": "3.7.2",
+        "asn1crypto": "1.5.1",
+        "asttokens": "2.4.1",
+        "attrs": "23.1.0",
+        "babel": "2.12.1",
+        "bcrypt": "4.1.2",
+        "beautifulsoup4": "4.12.2",
+        "billiard": "4.2.0",
+        "black": "23.12.1",
+        "boto3": "1.34.9",
+        "botocore": "1.34.9",
+        "brotli": "1.0.9",
+        "build": "1.0.3",
+        "cachetools": "5.3.2",
+        "cairocffi": "1.6.1",
+        "cairosvg": "2.7.0",
+        "captcha-solver": "0.1.5",
+        "celery": "5.3.6",
+        "celery-types": "0.20.0",
+        "certifi": "2023.7.22",
+        "cffi": "1.15.1",
+        "charset-normalizer": "3.2.0",
+        "click": "8.1.7",
+        "click-didyoumean": "0.3.0",
+        "click-plugins": "1.1.1",
+        "click-repl": "0.3.0",
+        "coverage": "7.2.7",
+        "cron_descriptor": "1.4.0",
+        "cryptography": "41.0.3",
+        "cssselect2": "0.7.0",
+        "decorator": "5.1.1",
+        "defusedxml": "0.7.1",
+        "deprecated": "1.2.14",
+        "deprecation": "2.1.0",
+        "django": "4.2.7",
+        "django-celery-beat": "2.5.0",
+        "django-constance": "2.9.1",
+        "django-cors-headers": "4.2.0",
+        "django-debug-toolbar": "4.1.0",
+        "django-extensions": "3.2.3",
+        "django-filter": "23.2",
+        "django-localflavor": "4.0",
+        "django-picklefield": "3.1",
+        "django-service-urls": "1.7",
+        "django-storages": "1.14",
+        "django-stubs": "4.2.7",
+        "django-stubs-ext": "4.2.7",
+        "django-timezone-field": "6.1.0",
+        "django-waffle": "4.0.0",
+        "djangorestframework": "3.14.0",
+        "djangorestframework-stubs": "3.14.5",
+        "exceptiongroup": "1.2.0",
+        "executing": "2.0.1",
+        "fabric": "3.2.2",
+        "factory-boy": "3.3.0",
+        "faker": "19.2.0",
+        "filelock": "3.12.2",
+        "google-analytics-data": "0.18.4",
+        "google-api-core": "2.15.0",
+        "google-api-python-client": "2.114.0",
+        "google-auth": "2.26.2",
+        "google-auth-httplib2": "0.2.0",
+        "googleapis-common-protos": "1.62.0",
+        "grpcio": "1.60.1",
+        "grpcio-status": "1.60.1",
+        "gunicorn": "21.2.0",
+        "h11": "0.14.0",
+        "h2": "4.1.0",
+        "hpack": "4.0.0",
+        "html5lib": "1.1",
+        "httpcore": "0.17.3",
+        "httplib2": "0.22.0",
+        "httpx": "0.24.1",
+        "hyperframe": "6.0.1",
+        "idna": "3.4",
+        "imapclient": "2.3.1",
+        "img2pdf": "0.4.4",
+        "invoke": "2.2.0",
+        "ipdb": "0.13.13",
+        "ipython": "8.19.0",
+        "isodate": "0.6.1",
+        "jedi": "0.19.1",
+        "jinja2": "3.1.2",
+        "jmespath": "1.0.1",
+        "kombu": "5.3.4",
+        "lxml": "4.9.3",
+        "lxml-stubs": "0.4.0",
+        "m2crypto": "0.39.0",
+        "markdown": "3.4.4",
+        "markdown-it-py": "3.0.0",
+        "markupsafe": "2.1.3",
+        "matplotlib-inline": "0.1.6",
+        "mdurl": "0.1.2",
+        "moto": "4.2.4",
+        "mypy": "1.8.0",
+        "mypy-extensions": "1.0.0",
+        "olefile": "0.46",
+        "packaging": "23.2",
+        "paramiko": "3.4.0",
+        "parso": "0.8.3",
+        "pathspec": "0.12.1",
+        "pdfrw": "0.4",
+        "pdftotext": "2.2.2",
+        "pexpect": "4.9.0",
+        "pikepdf": "8.2.3",
+        "pillow": "10.1.0",
+        "pip": "24.0",
+        "pip-tools": "7.3.0",
+        "pipdeptree": "2.12.0",
+        "platformdirs": "4.1.0",
+        "prompt-toolkit": "3.0.43",
+        "proto-plus": "1.23.0",
+        "protobuf": "4.25.2",
+        "psycopg2": "2.9.6",
+        "ptyprocess": "0.7.0",
+        "pure-eval": "0.2.2",
+        "py-partiql-parser": "0.3.7",
+        "pyasn1": "0.5.1",
+        "pyasn1-modules": "0.3.0",
+        "pycparser": "2.21",
+        "pycryptodome": "3.18.0",
+        "pycurl": "7.45.2",
+        "pydantic": "2.6.4",
+        "pydantic_core": "2.16.3",
+        "pygments": "2.15.1",
+        "pyjwt": "2.8.0",
+        "pynacl": "1.5.0",
+        "pyparsing": "3.1.1",
+        "pypdf2": "1.26.0",
+        "pyphen": "0.14.0",
+        "pyproject_hooks": "1.0.0",
+        "python-codicefiscale": "0.8.0",
+        "python-crontab": "3.0.0",
+        "python-dateutil": "2.8.2",
+        "python-fsutil": "0.10.0",
+        "python-magic": "0.4.27",
+        "python-readenv": "0.7",
+        "python-slugify": "8.0.1",
+        "python-stdnum": "1.18",
+        "pytz": "2023.3",
+        "pyyaml": "6.0.1",
+        "rarfile": "4.0",
+        "reportlab": "4.0.4",
+        "requests": "2.31.0",
+        "requests-file": "1.5.1",
+        "requests-toolbelt": "1.0.0",
+        "responses": "0.23.3",
+        "rich": "13.5.2",
+        "rsa": "4.9",
+        "ruff": "0.1.9",
+        "s3transfer": "0.10.0",
+        "sentry-sdk": "1.29.2",
+        "setuptools": "69.5.1",
+        "six": "1.16.0",
+        "snakeviz": "2.2.0",
+        "sniffio": "1.3.0",
+        "soupsieve": "2.4.1",
+        "sqlparse": "0.4.4",
+        "stack-data": "0.6.3",
+        "stripe": "5.5.0",
+        "text-unidecode": "1.3",
+        "tinycss2": "1.2.1",
+        "tldextract": "3.4.4",
+        "tomli": "2.0.1",
+        "tornado": "6.3.2",
+        "traitlets": "5.14.0",
+        "types-attrs": "19.1.0",
+        "types-beautifulsoup4": "4.12.0.7",
+        "types-certifi": "2021.10.8.3",
+        "types-chardet": "5.0.4.6",
+        "types-cryptography": "3.3.23.2",
+        "types-html5lib": "1.1.11.15",
+        "types-python-dateutil": "2.8.19.14",
+        "types-pytz": "2023.3.1.1",
+        "types-pyyaml": "6.0.12.12",
+        "types-requests": "2.31.0.6",
+        "types-setuptools": "69.0.0.0",
+        "types-toml": "0.10.8.7",
+        "types-typed-ast": "1.5.8.7",
+        "types-urllib3": "1.26.25.14",
+        "typing_extensions": "4.9.0",
+        "tzdata": "2023.3",
+        "untangle": "1.2.1",
+        "uritemplate": "4.1.1",
+        "urllib3": "1.26.16",
+        "vine": "5.1.0",
+        "wand": "0.6.11",
+        "wcwidth": "0.2.12",
+        "weasyprint": "52.5",
+        "webencodings": "0.5.1",
+        "websockets": "11.0.3",
+        "werkzeug": "2.3.7",
+        "wheel": "0.42.0",
+        "wrapt": "1.16.0",
+        "xmltodict": "0.13.0",
+        "zeep": "4.2.1"
+      },
+      "nodestore_insert": 1713345867.801624,
+      "received": 1713345865.748007,
       "request": {
-        "cookies": null,
-        "data": null,
-        "env": null,
-        "fragment": null,
-        "headers": [
+        "url": "https://app.acmecorp.com/ref/coupon.gif",
+        "method": "GET",
+        "query_string": [
           [
-            "User-Agent",
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+            "coupon",
+            "PRODUCT"
           ]
         ],
-        "inferred_content_type": null,
-        "method": null,
-        "query_string": [],
-        "url": "https://null.jsbin.com/runner"
+        "headers": [
+          [
+            "Accept",
+            "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+          ],
+          [
+            "Accept-Encoding",
+            "gzip, br"
+          ],
+          [
+            "Accept-Language",
+            "it-IT,it;q=0.9,en-US;q=0.8,en;q=0.7"
+          ],
+          [
+            "Cdn-Loop",
+            "cloudflare"
+          ],
+          [
+            "Cf-Connecting-Ip",
+            "2a07:7e87:2698:0:7468:67e7:994a:abd0"
+          ],
+          [
+            "Cf-Ipcountry",
+            "IT"
+          ],
+          [
+            "Cf-Ray",
+            "875b5caa6b7559cb-MXP"
+          ],
+          [
+            "Cf-Visitor",
+            "{\"scheme\":\"https\"}"
+          ],
+          [
+            "Connection",
+            "close"
+          ],
+          [
+            "Cookie",
+            "[Filtered]"
+          ],
+          [
+            "Dnt",
+            "1"
+          ],
+          [
+            "Host",
+            "app.acmecorp.com"
+          ],
+          [
+            "Referer",
+            "https://www.acmecorp.com/promo/partner/"
+          ],
+          [
+            "Sec-Ch-Ua",
+            "\"Chromium\";v=\"116\", \"Not)A;Brand\";v=\"24\", \"Google Chrome\";v=\"116\""
+          ],
+          [
+            "Sec-Ch-Ua-Mobile",
+            "?0"
+          ],
+          [
+            "Sec-Ch-Ua-Platform",
+            "\"macOS\""
+          ],
+          [
+            "Sec-Fetch-Dest",
+            "image"
+          ],
+          [
+            "Sec-Fetch-Mode",
+            "no-cors"
+          ],
+          [
+            "Sec-Fetch-Site",
+            "same-site"
+          ],
+          [
+            "User-Agent",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36"
+          ],
+          [
+            "X-Amzn-Trace-Id",
+            "Root=1-661f9549-4dc9395603bec01b7215f932"
+          ],
+          [
+            "X-Forwarded-For",
+            ""
+          ],
+          [
+            "X-Forwarded-Port",
+            "80"
+          ],
+          [
+            "X-Forwarded-Proto",
+            "https"
+          ],
+          [
+            "X-Server-Name",
+            "nginx"
+          ]
+        ],
+        "env": {
+          "SERVER_NAME": "127.0.0.1",
+          "SERVER_PORT": "8000"
+        },
+        "api_target": null,
+        "fragment": null,
+        "cookies": null,
+        "data": null,
+        "inferred_content_type": null
       },
       "sdk": {
+        "name": "sentry.python.django",
+        "version": "1.29.2",
         "integrations": [
-          "InboundFilters",
-          "FunctionToString",
-          "TryCatch",
-          "Breadcrumbs",
-          "GlobalHandlers",
-          "LinkedErrors",
-          "HttpContext"
+          "argv",
+          "atexit",
+          "boto3",
+          "celery",
+          "dedupe",
+          "django",
+          "excepthook",
+          "httpx",
+          "logging",
+          "modules",
+          "redis",
+          "stdlib",
+          "threading",
+          "tornado"
         ],
-        "name": "sentry.javascript.browser",
         "packages": [
           {
-            "name": "npm:@sentry/browser",
-            "version": "5.5.0"
+            "name": "pypi:sentry-sdk",
+            "version": "1.29.2"
           }
-        ],
-        "version": "5.5.0"
+        ]
       },
-      "tags": [
-        ["browser", "Chrome 75.0.3770"],
-        ["browser.name", "Chrome"],
-        ["handled", "no"],
-        ["level", "error"],
-        ["mechanism", "onerror"],
-        ["os", "Mac OS X 10.14.0"],
-        ["os.name", "Mac OS X"],
-        ["user", "ip:162.217.75.90"],
-        ["url", "https://null.jsbin.com/runner"]
-      ],
-      "time_spent": null,
-      "timestamp": 1566248777.677,
-      "title": "ReferenceError: heck is not defined",
+      "timestamp": 1713345865.519567,
+      "title": "DataError: value too long for type character varying(15)",
+      "transaction": "/ref/coupon.gif",
+      "transaction_info": {
+        "source": "route"
+      },
       "type": "error",
-      "url": "https://sentry.io/api/0/projects/test-org/front-end/events/e4874d664c3540c1a32eab185f12c5ab/",
       "user": {
-        "ip_address": "162.218.85.90"
+        "id": "AD=-,BO=-,PR=-,FO=-",
+        "sentry_user": "id:AD=-,BO=-,PR=-,FO=-",
+        "data": {
+          "admin": "-",
+          "bo": "-",
+          "fo": "-",
+          "partner": "-"
+        }
       },
       "version": "7",
-      "web_url": "https://sentry.io/organizations/test-org/issues/1117540176/events/e4874d664c3540c1a32eab185f12c5ab/"
+      "url": "https://sentry.io/api/0/projects/acmecorp/acmecorp-app-django/events/b5f204b0076b46f99644468c359e4304/",
+      "web_url": "https://sentry.io/organizations/acmecorp/issues/5210290442/events/b5f204b0076b46f99644468c359e4304/",
+      "issue_url": "https://sentry.io/api/0/issues/5210290442/",
+      "issue_id": "5210290442"
     },
-    "triggered_rule": "Very Important Alert Rule!",
-    "issue_alert": {
-      "title": "Very Important Alert Rule!",
-      "settings": [
-        {
-          "name": "channel",
-          "value": "#general"
-        }
-      ]
-    }
+    "triggered_rule": "django-sentry-production"
   },
   "installation": {
     "uuid": "a8e5d37a-696c-4c54-adb5-b3f28d64c7de"

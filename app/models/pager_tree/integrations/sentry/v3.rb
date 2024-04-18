@@ -289,7 +289,7 @@ module PagerTree::Integrations
     end
 
     def _event_alert_title
-      incoming_json.dig("data", "issue_alert", "title")
+      incoming_json.dig("data", "event", "title")
     end
 
     def _event_alert_description
