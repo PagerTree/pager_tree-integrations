@@ -229,6 +229,7 @@ channel_microsoft_teams_v3:
     alert_resolved: false
     alert_dropped: false
     outgoing_rules: ""
+    time_zone: "Pacific Time (US & Canada)"
 
 
 channel_slack_v3:
