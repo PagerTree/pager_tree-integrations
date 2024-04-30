@@ -1,7 +1,7 @@
 module PagerTree::Integrations
   class HetrixTools::V3 < Integration
     OPTIONS = [
-      {key: :authentication_token, type: :string, default: nil},
+      {key: :authentication_token, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -26,11 +26,11 @@ module PagerTree::Integrations
     end
 
     def adapter_thirdparty_id
-      try("_adapter_thirdparty_id_#{_webhook_type.to_s}") || SecureRandom.hex(16)
+      try("_adapter_thirdparty_id_#{_webhook_type}") || SecureRandom.hex(16)
     end
 
     def adapter_action
-      try("_adapter_action_#{_webhook_type.to_s}") || :other
+      try("_adapter_action_#{_webhook_type}") || :other
     end
 
     def _adapter_action_uptime
@@ -98,7 +98,7 @@ module PagerTree::Integrations
     end
 
     def _title
-      try("_title_#{_webhook_type.to_s}") || "HetrixTools Alert"
+      try("_title_#{_webhook_type}") || "HetrixTools Alert"
     end
 
     def _title_uptime
@@ -114,12 +114,12 @@ module PagerTree::Integrations
     end
 
     def _description
-      try("_description_#{_webhook_type.to_s}") || "No description provided"
+      try("_description_#{_webhook_type}") || "No description provided"
     end
 
     def _description_uptime
       "<p>#{adapter_incoming_request_params.dig("monitor_target")} is #{adapter_incoming_request_params.dig("monitor_status")}</p>" +
-        adapter_incoming_request_params.dig("monitor_errors").map{ |k, v| "<p>#{k}: #{v}</p>" }.join("")
+        adapter_incoming_request_params.dig("monitor_errors").map { |k, v| "<p>#{k}: #{v}</p>" }.join("")
     end
 
     def _description_blacklist
@@ -128,21 +128,21 @@ module PagerTree::Integrations
 
     def _description_resource_usage
       [
-        "<p>Resource Type: #{adapter_incoming_request_params.dig("resource_usage", "resource_type")}</p>", 
-        "<p>Current Usage: #{adapter_incoming_request_params.dig("resource_usage", "current_usage")}</p>", 
+        "<p>Resource Type: #{adapter_incoming_request_params.dig("resource_usage", "resource_type")}</p>",
+        "<p>Current Usage: #{adapter_incoming_request_params.dig("resource_usage", "current_usage")}</p>",
         "<p>Average Usage: #{adapter_incoming_request_params.dig("resource_usage", "average_usage")} / #{adapter_incoming_request_params.dig("resource_usage", "average_minutes")}m</p>"
       ].join("")
     end
 
     def _additional_datums
-      try("_additional_datums_#{_webhook_type.to_s}") || []
+      try("_additional_datums_#{_webhook_type}") || []
     end
 
     def _additional_datums_uptime
       [
         AdditionalDatum.new(format: "datetime", label: "Timestamp", value: Time.at(adapter_incoming_request_params.dig("timestamp"))),
         AdditionalDatum.new(format: "text", label: "Monitor Type", value: adapter_incoming_request_params.dig("monitor_type")),
-        AdditionalDatum.new(format: "link", label: "Monitor Target", value: adapter_incoming_request_params.dig("monitor_target")),
+        AdditionalDatum.new(format: "link", label: "Monitor Target", value: adapter_incoming_request_params.dig("monitor_target"))
       ]
     end
 
