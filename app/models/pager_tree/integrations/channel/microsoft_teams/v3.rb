@@ -6,11 +6,13 @@ module PagerTree::Integrations
       {key: :alert_acknowledged, type: :boolean, default: false},
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
-      {key: :outgoing_rules, type: :string, default: nil}
+      {key: :outgoing_rules, type: :string, default: nil},
+      {key: :time_zone, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     validates :option_incoming_webhook_url, presence: true, url: {no_local: true}
+    validate :validate_time_zone_exists
 
     after_initialize do
       self.option_incoming_webhook_url ||= nil
@@ -19,6 +21,7 @@ module PagerTree::Integrations
       self.option_alert_resolved ||= false
       self.option_alert_dropped ||= false
       self.option_outgoing_rules ||= ""
+      self.option_time_zone ||= "UTC"
     end
 
     def adapter_supports_incoming?
@@ -94,7 +97,7 @@ module PagerTree::Integrations
             },
             {
               name: "Created",
-              value: _alert.created_at.utc
+              value: _alert.created_at.in_time_zone(option_time_zone).iso8601
             },
             {
               name: "Source",
@@ -145,6 +148,11 @@ module PagerTree::Integrations
       else
         "#555555"
       end
+    end
+
+    def validate_time_zone_exists
+      return if option_time_zone.present? && ActiveSupport::TimeZone[option_time_zone].present?
+      errors.add(:option_time_zone, "does not exist")
     end
   end
 end

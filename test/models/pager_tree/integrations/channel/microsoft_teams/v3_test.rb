@@ -71,7 +71,7 @@ module PagerTree::Integrations
             },
             {
               name: "Created",
-              value: @alert.created_at.utc
+              value: @alert.created_at.in_time_zone(@integration.option_time_zone).iso8601
             },
             {
               name: "Source",

@@ -5,6 +5,12 @@
     <p class="form-hint"><%== t("pager_tree.integrations.common.option_incoming_webhook_url_hint_html") %></p>
   </div>
 
+  <div class="form-group group md:col-span-3" data-controller="select">
+    <%= form.label :option_time_zone %>
+    <%= form.time_zone_select :option_time_zone, nil, {default: "UTC"}, { class: "form-control", data: { select_target: "select" }} %>
+    <p class="form-hint"><%== t(".option_time_zone_hint_html") %></p>
+  </div>
+
   <% 
     opts = [
       :alert_open,
