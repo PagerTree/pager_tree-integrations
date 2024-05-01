@@ -46,6 +46,10 @@ en:
             option_form_phone_required_hint_html: "Should the phone field be required to submit?"
             option_form_description_required_hint_html: "Should the description field be required to submit?"
             option_form_urgency_required_hint_html: "Should the urgency field be required to submit?"
+      hetrix_tools:
+        v3:
+          form_options:
+            option_authentication_token_hint_html: "Authentication Token to be used to authenticate requests from Hetrix Tools servers (optional, <a href=\"https://docs.hetrixtools.com/webhook-authentication-token/\" target=\"_blank\">see docs</a>)"
       honeybadger:
         v3:
           form_options:
@@ -161,6 +165,8 @@ en:
         option_form_phone_required: "Phone Required?"
         option_form_description_required: "Description Required?"
         option_form_urgency_required: "Urgency Required?"
+      "pager_tree/integrations/hetrix_tools/v3":
+        option_authentication_token: "Authentication Token"
       "pager_tree/integrations/honeybadger/v3":
         option_token: "Honeybadger Token"
       "pager_tree/integrations/jira_server/v3":

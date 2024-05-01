@@ -70,6 +70,10 @@ healthchecks_v3:
   type: "PagerTree::Integrations::Healthchecks::V3"
   # options: no_options
 
+hetrix_tools_v3:
+  type: "PagerTree::Integrations::HetrixTools::V3"
+  # options: no_options
+
 honeybadger_v3:
   type: "PagerTree::Integrations::Honeybadger::V3"
   options:
