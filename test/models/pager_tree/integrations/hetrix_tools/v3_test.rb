@@ -202,5 +202,14 @@ module PagerTree::Integrations
       actual.thirdparty_id = nil
       assert_equal true_alert.to_json, actual.to_json
     end
+
+    test "blocking_incoming" do
+      assert @integration.option_authentication_token.blank?
+      assert_not @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"Authorization" => ""}}))
+
+      @integration.option_authentication_token = "abc123456"
+      assert @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"Authorization" => ""}}))
+      assert_not @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"Authorization" => "Bearer abc123456"}}))
+    end
   end
 end
