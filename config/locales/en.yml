@@ -16,6 +16,8 @@ en:
         option_alert_resolved_hint_html: "Send when the alert is marked resolved"
         option_alert_dropped_hint_html: "Send when the alert is dropped"
         option_alert_handoff_hint_html: "Send when the alert has been handed off"
+        option_event_reminder_going_on_call_hint_html: "Send when a user is going on call"
+        option_event_reminder_going_off_call_hint_html: "Send when a user is going off call"
         option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
         option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
       channel:
@@ -143,6 +145,8 @@ en:
         option_alert_resolved: "alert.resolved"
         option_alert_dropped: "alert.dropped"
         option_alert_handoff: "alert.handoff"
+        option_event_reminder_going_on_call: "event.reminder.going_on_call"
+        option_event_reminder_going_off_call: "event.reminder.going_off_call"
         option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"

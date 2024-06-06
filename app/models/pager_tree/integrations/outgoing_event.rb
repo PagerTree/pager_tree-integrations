@@ -13,6 +13,7 @@ module PagerTree::Integrations
     attr_accessor :team
     attr_accessor :account_user
     attr_accessor :comment
+    attr_accessor :event_reminder
 
     define_model_callbacks :initialize
 
@@ -33,6 +34,7 @@ module PagerTree::Integrations
       self.team ||= nil
       self.account_user ||= nil
       self.comment ||= nil
+      self.event_reminder ||= nil
     end
   end
 end
