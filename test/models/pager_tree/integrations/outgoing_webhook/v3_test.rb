@@ -52,7 +52,7 @@ module PagerTree::Integrations
 
       assert_equal @integration.option_webhook_url, outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_equal expected_payload.as_json, outgoing_webhook_delivery.body.as_json
     end
 
     test "basic authorization works" do
