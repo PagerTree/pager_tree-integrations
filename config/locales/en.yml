@@ -145,8 +145,8 @@ en:
         option_alert_resolved: "alert.resolved"
         option_alert_dropped: "alert.dropped"
         option_alert_handoff: "alert.handoff"
-        option_event_reminder_going_on_call: "event.reminder.going_on_call"
-        option_event_reminder_going_off_call: "event.reminder.going_off_call"
+        option_event_reminder_going_on_call: "event_reminder.going_on_call"
+        option_event_reminder_going_off_call: "event_reminder.going_off_call"
         option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"

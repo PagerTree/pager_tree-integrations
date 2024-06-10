@@ -125,7 +125,6 @@ module PagerTree::Integrations
                   email: adapter_outgoing_event.event_reminder.account_user.user.email
                 }
               }
-
             }
           }
         else
