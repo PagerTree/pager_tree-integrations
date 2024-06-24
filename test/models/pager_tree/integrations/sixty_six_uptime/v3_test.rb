@@ -8,63 +8,63 @@ module PagerTree::Integrations
       @integration = pager_tree_integrations_integrations(:sixty_six_uptime_v3)
 
       @website_create_request = {
-        "monitor_id": "14",
-        "name": "Test",
-        "type": "website",
-        "target": "https://example.com",
-        "port": nil,
-        "is_ok": 0
+        monitor_id: "14",
+        name: "Test",
+        type: "website",
+        target: "https://example.com",
+        port: nil,
+        is_ok: 0
       }.with_indifferent_access
       @website_resolve_request = @website_create_request.deep_dup
       @website_resolve_request["is_ok"] = 1
 
       @ping_create_request = {
-        "monitor_id": "14",
-        "name": "Test",
-        "type": "ping",
-        "target": "https://example.com",
-        "port": nil,
-        "is_ok": 0
+        monitor_id: "14",
+        name: "Test",
+        type: "ping",
+        target: "https://example.com",
+        port: nil,
+        is_ok: 0
       }.with_indifferent_access
       @ping_resolve_request = @ping_create_request.deep_dup
       @ping_resolve_request["is_ok"] = 1
 
       @port_create_request = {
-        "monitor_id": "12",
-        "name": "Port",
-        "type": "port",
-        "target": "199.59.2.8",
-        "port": ":1313",
-        "is_ok": 0
+        monitor_id: "12",
+        name: "Port",
+        type: "port",
+        target: "199.59.2.8",
+        port: ":1313",
+        is_ok: 0
       }.with_indifferent_access
       @port_resolve_request = @port_create_request.deep_dup
       @port_resolve_request["is_ok"] = 1
 
       @heartbeat_create_request = {
-        "heartbeat_id": "1",
-        "name": "Payments Cron",
-        "type": "heartbeat",
-        "is_ok": 0
+        heartbeat_id: "1",
+        name: "Payments Cron",
+        type: "heartbeat",
+        is_ok: 0
       }.with_indifferent_access
       @heartbeat_resolve_request = @heartbeat_create_request.deep_dup
       @heartbeat_resolve_request["is_ok"] = 1
 
       @domain_expiry_create_request = {
-        "domain_name_id": "1",
-        "name": "Textpro main site",
-        "target": "textpro.xyz",
-        "type": "domain-expiry",
-        "whois_end_datetime": "2023-01-01 11:28:45",
-        "timezone": "UTC"
+        domain_name_id: "1",
+        name: "Textpro main site",
+        target: "textpro.xyz",
+        type: "domain-expiry",
+        whois_end_datetime: "2023-01-01 11:28:45",
+        timezone: "UTC"
       }.with_indifferent_access
 
       @ssl_expiry_create_request = {
-        "domain_name_id": "1",
-        "name": "Textpro main site",
-        "target": "textpro.xyz",
-        "type": "ssl-expiry",
-        "ssl_end_datetime": "2023-03-23 11:28:45",
-        "timezone": "UTC"
+        domain_name_id: "1",
+        name: "Textpro main site",
+        target: "textpro.xyz",
+        type: "ssl-expiry",
+        ssl_end_datetime: "2023-03-23 11:28:45",
+        timezone: "UTC"
       }.with_indifferent_access
 
       @other_request = @website_create_request.deep_dup

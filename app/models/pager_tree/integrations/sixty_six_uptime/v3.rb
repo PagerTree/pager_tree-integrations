@@ -1,7 +1,6 @@
 module PagerTree::Integrations
-  class SixtySixUptime::V3 < Integration    
-    OPTIONS = [
-    ]
+  class SixtySixUptime::V3 < Integration
+    OPTIONS = []
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     after_initialize do
@@ -36,7 +35,7 @@ module PagerTree::Integrations
         adapter_incoming_request_params.dig("is_ok") == 1 ? :resolve : :create
       when "domain-expiry", "ssl-expiry"
         :create
-      else 
+      else
         :other
       end
     end
@@ -59,7 +58,7 @@ module PagerTree::Integrations
       when "heartbeat" then "Heartbeat monitor #{adapter_incoming_request_params.dig("name")} has not checked in"
       when "domain-expiry" then "Domain monitor #{adapter_incoming_request_params.dig("name")} is expiring soon"
       when "ssl-expiry" then "SSL Certificate monitor #{adapter_incoming_request_params.dig("name")} is expiring soon"
-      else 
+      else
         "Unknown Webhook Type"
       end
     end
@@ -70,7 +69,7 @@ module PagerTree::Integrations
       when "heartbeat" then "Heartbeat monitor #{adapter_incoming_request_params.dig("name")} has not checked in"
       when "domain-expiry" then "Domain monitor #{adapter_incoming_request_params.dig("name")} (#{adapter_incoming_request_params.dig("target")}) is expiring soon (#{adapter_incoming_request_params.dig("whois_end_datetime")} #{adapter_incoming_request_params.dig("timezone")})"
       when "ssl-expiry" then "SSL Certificate monitor #{adapter_incoming_request_params.dig("name")} (#{adapter_incoming_request_params.dig("target")}) is expiring soon (#{adapter_incoming_request_params.dig("ssl_end_datetime")} #{adapter_incoming_request_params.dig("timezone")})"
-      else 
+      else
         "Unknown Webhook Type"
       end
     end
@@ -89,7 +88,7 @@ module PagerTree::Integrations
         [
           AdditionalDatum.new(format: "link", label: "URL", value: adapter_incoming_request_params.dig("url")),
           AdditionalDatum.new(format: "text", label: "Name", value: adapter_incoming_request_params.dig("name")),
-          AdditionalDatum.new(format: "text", label: "Type", value: adapter_incoming_request_params.dig("type")),
+          AdditionalDatum.new(format: "text", label: "Type", value: adapter_incoming_request_params.dig("type"))
         ]
       when "domain-expiry"
         [
@@ -97,7 +96,7 @@ module PagerTree::Integrations
           AdditionalDatum.new(format: "text", label: "Name", value: adapter_incoming_request_params.dig("name")),
           AdditionalDatum.new(format: "text", label: "Type", value: adapter_incoming_request_params.dig("type")),
           AdditionalDatum.new(format: "link", label: "Target", value: adapter_incoming_request_params.dig("target")),
-          AdditionalDatum.new(format: "text", label: "WHOIS End DateTime", value: "#{adapter_incoming_request_params.dig("whois_end_datetime")} #{adapter_incoming_request_params.dig("timezone")}"),
+          AdditionalDatum.new(format: "text", label: "WHOIS End DateTime", value: "#{adapter_incoming_request_params.dig("whois_end_datetime")} #{adapter_incoming_request_params.dig("timezone")}")
         ]
       when "ssl-expiry"
         [
@@ -105,7 +104,7 @@ module PagerTree::Integrations
           AdditionalDatum.new(format: "text", label: "Name", value: adapter_incoming_request_params.dig("name")),
           AdditionalDatum.new(format: "text", label: "Type", value: adapter_incoming_request_params.dig("type")),
           AdditionalDatum.new(format: "link", label: "Target", value: adapter_incoming_request_params.dig("target")),
-          AdditionalDatum.new(format: "text", label: "SSL End DateTime", value: "#{adapter_incoming_request_params.dig("ssl_end_datetime")} #{adapter_incoming_request_params.dig("timezone")}"),
+          AdditionalDatum.new(format: "text", label: "SSL End DateTime", value: "#{adapter_incoming_request_params.dig("ssl_end_datetime")} #{adapter_incoming_request_params.dig("timezone")}")
         ]
       else
         []
