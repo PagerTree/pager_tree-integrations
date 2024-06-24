@@ -72,7 +72,6 @@ module PagerTree::Integrations
     end
 
     test "sanity" do
-      # TODO: Check some sane defaults your integration should have
       assert @integration.adapter_supports_incoming?
       assert @integration.adapter_incoming_can_defer?
       assert_not @integration.adapter_supports_outgoing?
@@ -82,7 +81,6 @@ module PagerTree::Integrations
     end
 
     test "adapter_actions" do
-      # TODO: Check that the adapter_actions returns expected results based on the inputs
       @integration.adapter_incoming_request_params = @website_create_request
       assert_equal :create, @integration.adapter_action
 
