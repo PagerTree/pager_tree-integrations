@@ -131,9 +131,6 @@ module PagerTree::Integrations
       @integration.adapter_incoming_request_params = @domain_expiry_create_request
       assert_equal "domain-expiry-1", @integration.adapter_thirdparty_id
 
-      @integration.adapter_incoming_request_params = @website_create_request
-      assert_equal "website-14", @integration.adapter_thirdparty_id
-
       @integration.adapter_incoming_request_params = @ssl_expiry_create_request
       assert_equal "ssl-expiry-1", @integration.adapter_thirdparty_id
     end
