@@ -79,6 +79,10 @@ honeybadger_v3:
   options:
     token: "abc123"
 
+hydrozen_v3:
+  type: "PagerTree::Integrations::Hydrozen::V3"
+  # options: no_options
+
 hyperping_v3:
   type: "PagerTree::Integrations::Hyperping::V3"
   # options: no_options
@@ -158,6 +162,10 @@ server_guard24_v3:
 
 site24x7_v3:
   type: "PagerTree::Integrations::Site24x7::V3"
+  # options: no_options
+
+sixty_six_uptime_v3:
+  type: "PagerTree::Integrations::SixtySixUptime::V3"
   # options: no_options
 
 slack_webhook_v3:
