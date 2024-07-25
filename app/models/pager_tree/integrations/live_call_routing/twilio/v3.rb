@@ -226,7 +226,7 @@ module PagerTree::Integrations
             end
           end
         else
-          adapter_alert.logs.create!(message: "Caller input bad input (too many times). Hangup.")
+          adapter_alert.logs.create!(message: "Caller input: bad input (too many times). Hangup.")
           adapter_alert.resolve!(self)
           _twiml.say(message: "Too much invalid input. Goodbye.", **SPEAK_OPTIONS)
           _twiml.hangup
@@ -306,7 +306,7 @@ module PagerTree::Integrations
 
     def adapter_process_queue_status_deferred
       queue_result = adapter_incoming_request_params.dig("QueueResult")
-      adapter_source_log&.sublog("Processing queus status #{queue_result}")
+      adapter_source_log&.sublog("Processing queue status #{queue_result}")
 
       if queue_result == "hangup"
         self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
@@ -406,17 +406,17 @@ module PagerTree::Integrations
         _twiml.dial(number: number, caller_id: _call.to, answer_on_bridge: true)
         _call.update(twiml: _twiml.to_xml)
         # log if we successfully transfered or failed
-        adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+        adapter_alert.logs.create!(message: "Transferring the call succeeded.")
       else
         _twiml.say(message: "Someone has acknowledged this call, but they do not have a phone number on file. Goodbye.")
         _twiml.hangup
         _call.update(twiml: _twiml.to_xml)
-        adapter_alert.logs.create!(message: "Tranferring the call failed. #{account_user.user.name} has no phone number on file.")
+        adapter_alert.logs.create!(message: "Transferring the call failed. #{account_user.user.name} has no phone number on file.")
       end
     rescue ::Twilio::REST::RestError => e
       # 21220 - Unable to update record. Call is not in-progress. Cannot redirect.
       if e.code != 21220
-        adapter_alert.logs.create!(message: "Tranferring the call failed. #{e.message}")
+        adapter_alert.logs.create!(message: "Transferring the call failed. #{e.message}")
       end
     end
 
@@ -424,9 +424,9 @@ module PagerTree::Integrations
       # log that we are going to transer
       adapter_alert.logs.create!(message: "The alert was dropped. Attempting to transfer the call...")
       _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: adapter_alert.thirdparty_id))
-      adapter_alert.logs.create!(message: "Tranferring the call succeeded.")
+      adapter_alert.logs.create!(message: "Transferring the call succeeded.")
     rescue ::Twilio::REST::RestError => e
-      adapter_alert.logs.create!(message: "Tranferring the call failed. #{e.message}")
+      adapter_alert.logs.create!(message: "Transferring the call failed. #{e.message}")
     end
 
     def queue_destroy
