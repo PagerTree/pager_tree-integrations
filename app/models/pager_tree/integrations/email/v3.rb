@@ -151,7 +151,28 @@ module PagerTree::Integrations
       when "relaxed" then Sanitize::Config::RELAXED
       when "restricted" then Sanitize::Config::RESTRICTED
       when "relaxed_2"
-        Sanitize::Config.merge(Sanitize::Config::RELAXED, elements: Sanitize::Config::RELAXED[:elements].excluding("style"))
+        Sanitize::Config.merge(
+          Sanitize::Config::RELAXED,
+          {
+            elements: Sanitize::Config::RELAXED[:elements].excluding("style"),
+            protocols: Sanitize::Config::RELAXED[:protocols].merge(
+              {
+                "a" => {
+                  "href" => (Sanitize::Config::RELAXED[:protocols]["a"]["href"] + [
+                    "x-safari-https",
+                    "brave",
+                    "googlechrome",
+                    "ddgQuickLink",
+                    "microsoft-edge-https",
+                    "firefox",
+                    "firefox-focus",
+                    "yandexbrowser-open-url"
+                  ]).uniq
+                }
+              }
+            )
+          }
+        )
       end
     end
 
