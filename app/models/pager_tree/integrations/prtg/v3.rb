@@ -25,7 +25,8 @@ module PagerTree::Integrations
     def adapter_action
       status = adapter_incoming_request_params.dig("status").to_s.downcase
 
-      if status == "down"
+      # %status is a special value that PRTG uses to indicate that will be used in the test webhook
+      if status == "down" || status == "%status"
         :create
       elsif status.include?("now: up")
         :resolve
