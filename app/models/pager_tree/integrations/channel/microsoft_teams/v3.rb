@@ -24,6 +24,10 @@ module PagerTree::Integrations
       self.option_time_zone ||= "UTC"
     end
 
+    def converts_to
+      "PagerTree::Integrations::Channel::MicrosoftTeams::V4"
+    end
+
     def adapter_supports_incoming?
       false
     end
