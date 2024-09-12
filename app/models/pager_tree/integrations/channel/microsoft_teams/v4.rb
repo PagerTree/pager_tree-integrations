@@ -79,108 +79,108 @@ module PagerTree::Integrations
 
     def _blocks
       {
-        "type": "message",
-        "attachments": [
+        type: "message",
+        attachments: [
           {
-            "contentType":"application/vnd.microsoft.card.adaptive",
-            "contentUrl": nil,
-            "content": {
-              "type": "AdaptiveCard",
-              "body": [
-                  {
-                    "type": "Container",
-                    "backgroundImage": _color,
-                    "items": [
-                      {
-                          "type": "TextBlock",
-                          "size": "Large",
-                          "weight": "Bolder",
-                          "text": _title
-                      },
-                      {
-                          "type": "ColumnSet",
-                          "columns": [
-                              {
-                                  "type": "Column",
-                                  "items": [
-                                      {
-                                          "type": "TextBlock",
-                                          "weight": "Bolder",
-                                          "text": _title,
-                                          "wrap": true
-                                      },
-                                      {
-                                          "type": "TextBlock",
-                                          "spacing": "None",
-                                          "text": "Created #{_alert.created_at.in_time_zone(option_time_zone).iso8601}",
-                                          "wrap": true
-                                      }
-                                  ],
-                                  "width": "stretch"
-                              }
-                          ]
-                      },
-                    ]
-                  },
-                  {
-                      "type": "Container",
-                      "items": [
-                          {
-                              "type": "FactSet",
-                              "facts": [
-                                  {
-                                      "title": "Status:",
-                                      "value": _alert.status&.upcase
-                                  }, {
-                                      "title": "Urgency:",
-                                      "value": _alert.urgency&.upcase
-                                  }, {
-                                    "title": "Source:",
-                                    "value": _alert.source&.name,
-                                  }, {
-                                      "title": "Destinations:",
-                                      "value": _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
-                                  }, {
-                                      "title": "User:",
-                                      "value": _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
-                                  }
-                              ],
-                              "spacing": "None"
-                          }
+            contentType: "application/vnd.microsoft.card.adaptive",
+            contentUrl: nil,
+            content: {
+              type: "AdaptiveCard",
+              body: [
+                {
+                  type: "Container",
+                  backgroundImage: _color,
+                  items: [
+                    {
+                      type: "TextBlock",
+                      size: "Large",
+                      weight: "Bolder",
+                      text: _title
+                    },
+                    {
+                      type: "ColumnSet",
+                      columns: [
+                        {
+                          type: "Column",
+                          items: [
+                            {
+                              type: "TextBlock",
+                              weight: "Bolder",
+                              text: _title,
+                              wrap: true
+                            },
+                            {
+                              type: "TextBlock",
+                              spacing: "None",
+                              text: "Created #{_alert.created_at.in_time_zone(option_time_zone).iso8601}",
+                              wrap: true
+                            }
+                          ],
+                          width: "stretch"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: "Container",
+                  items: [
+                    {
+                      type: "FactSet",
+                      facts: [
+                        {
+                          title: "Status:",
+                          value: _alert.status&.upcase
+                        }, {
+                          title: "Urgency:",
+                          value: _alert.urgency&.upcase
+                        }, {
+                          title: "Source:",
+                          value: _alert.source&.name
+                        }, {
+                          title: "Destinations:",
+                          value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
+                        }, {
+                          title: "User:",
+                          value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
+                        }
                       ],
-                      "spacing": "Medium"
-                  },
-                  {
-                      "type": "Container",
-                      "items": [
-                          {
-                              "type": "TextBlock",
-                              "text": _alert.description&.try(:to_plain_text),
-                              "wrap": true,
-                              "separator": true,
-                              "color": "Light"
-                          },
-                          {
-                              "type": "FactSet",
-                              "facts": _alert.additional_data.map{|ad| {title: ad["label"], value: ad["value"] }},
-                              "spacing": "Medium",
-                              "separator": true
-                          }
-                      ],
-                      "spacing": "Medium",
-                      "separator": true
-                  }
+                      spacing: "None"
+                    }
+                  ],
+                  spacing: "Medium"
+                },
+                {
+                  type: "Container",
+                  items: [
+                    {
+                      type: "TextBlock",
+                      text: _alert.description&.try(:to_plain_text),
+                      wrap: true,
+                      separator: true,
+                      color: "Light"
+                    },
+                    {
+                      type: "FactSet",
+                      facts: _alert.additional_data.map { |ad| {title: ad["label"], value: ad["value"]} },
+                      spacing: "Medium",
+                      separator: true
+                    }
+                  ],
+                  spacing: "Medium",
+                  separator: true
+                }
               ],
-              "actions": [
-                  {
-                      "type": "Action.OpenUrl",
-                      "title": "View",
-                      "url": Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}"),
-                      "style": "positive"
-                  }
+              actions: [
+                {
+                  type: "Action.OpenUrl",
+                  title: "View",
+                  url: Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}"),
+                  style: "positive"
+                }
               ],
               "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-              "version": "1.2"
+              version: "1.2"
             }
           }
         ]
