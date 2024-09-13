@@ -25,6 +25,9 @@ en:
           v3:
             form_options:
               option_time_zone_hint_html: "The time zone to use when formatting dates and times"
+          v4:
+            form_options:
+              option_time_zone_hint_html: "The time zone to use when formatting dates and times"
       cloudflare:
         v3:
           form_options:

@@ -243,6 +243,17 @@ channel_microsoft_teams_v3:
     outgoing_rules: ""
     time_zone: "Pacific Time (US & Canada)"
 
+channel_microsoft_teams_v4:
+  type: "PagerTree::Integrations::Channel::MicrosoftTeams::V4"
+  options:
+    incoming_webhook_url: "https://statuscode.app/200"
+    alert_open: false
+    alert_acknowledged: false
+    alert_resolved: false
+    alert_dropped: false
+    outgoing_rules: ""
+    time_zone: "Pacific Time (US & Canada)"
+
 
 channel_slack_v3:
   type: "PagerTree::Integrations::Channel::Slack::V3"

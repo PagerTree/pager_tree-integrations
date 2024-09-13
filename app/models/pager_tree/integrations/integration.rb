@@ -29,6 +29,9 @@ module PagerTree::Integrations
     # the outgoing event
     attribute :adapter_outgoing_event
 
+    def converts_to
+    end
+
     # START basic incoming functions
     def adapter_supports_incoming?
       false
