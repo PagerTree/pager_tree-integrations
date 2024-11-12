@@ -32,6 +32,9 @@ module PagerTree::Integrations
       @resolve_request = @create_request.deep_dup
       @resolve_request[:ALERT_TRANSITION] = "Recovered"
 
+      @retriggered_request = @create_request.deep_dup
+      @retriggered_request[:ALERT_TRANSITION] = "Re-Triggered"
+
       @other_request = @create_request.deep_dup
       @other_request[:ALERT_TRANSITION] = "baaad"
     end
@@ -54,6 +57,13 @@ module PagerTree::Integrations
 
       @integration.adapter_incoming_request_params = @other_request
       assert_equal :other, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @retriggered_request
+      assert_equal :other, @integration.adapter_action
+
+      @integration.option_support_retriggered_event = true
+      @integration.adapter_incoming_request_params = @retriggered_request
+      assert_equal :recreate, @integration.adapter_action
     end
 
     test "adapter_thirdparty_id" do

@@ -32,6 +32,10 @@ en:
         v3:
           form_options:
             option_webhook_secret_hint_html: "Cloudflare Webhook Secret"
+      datadog:
+        v3:
+          form_options:
+            option_support_retriggered_event_hint_html: "Create a new alert when the 'Re-Triggered' event is sent by Datadog"
       email:
         v3:
           form_options:
@@ -157,6 +161,8 @@ en:
         option_time_zone: "Display Time Zone"
       "pager_tree/integrations/cloudflare/v3":
         option_webhook_secret: "Webhook Secret"
+      "pager_tree/integrations/datadog/v3":
+        option_support_retriggered_event: "Retriggered Event"
       "pager_tree/integrations/email/v3":
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"

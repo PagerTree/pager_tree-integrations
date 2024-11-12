@@ -1,9 +1,12 @@
 module PagerTree::Integrations
   class Datadog::V3 < Integration
-    OPTIONS = []
+    OPTIONS = [
+      {key: :support_retriggered_event, type: :boolean, default: false}
+    ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     after_initialize do
+      self.option_support_retriggered_event ||= false
     end
 
     def adapter_supports_incoming?
@@ -24,8 +27,12 @@ module PagerTree::Integrations
 
     def adapter_action
       case _transition
-      when "Triggered" then :create
-      when "Recovered" then :resolve
+      when "Triggered"
+        :create
+      when "Recovered"
+        :resolve
+      when "Re-Triggered"
+        self.option_support_retriggered_event == true ? :recreate : :other
       else
         :other
       end
