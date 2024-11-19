@@ -83,6 +83,7 @@ en:
               option_force_input_hint_html: "Force the caller to select a team (even if the integration only has one team)"
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
+              option_banned_phones_list_hint_html: "List of phone numbers that are banned from calling the integration"
           v3_mailer:
             call_recording:
               subject: "🎧 Alert #%{tiny_id} - New voicemail from %{from}"
@@ -211,6 +212,7 @@ en:
         option_force_input: "Force Caller Input"
         option_record: "Voicemail"
         option_record_emails_list: "Voicemail Emails"
+        option_banned_phones_list: "Banned Phones"
       "pager_tree/integrations/logic_monitor/v3":
         option_access_id: "Logic Monitor Access ID"
         option_access_key: "Logic Monitor Access Key"
