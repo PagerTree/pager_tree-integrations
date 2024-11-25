@@ -7,6 +7,7 @@ module PagerTree::Integrations
       {key: :force_input, type: :boolean, default: false},
       {key: :record, type: :boolean, default: false},
       {key: :record_email, type: :string, default: ""},
+      {key: :banned_phone, type: :string, default: ""},
       {key: :dial_pause, type: :integer}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
@@ -32,6 +33,7 @@ module PagerTree::Integrations
       self.option_force_input ||= false
       self.option_record ||= false
       self.option_record_email ||= ""
+      self.option_banned_phone ||= ""
     end
 
     SPEAK_OPTIONS = {
@@ -67,6 +69,14 @@ module PagerTree::Integrations
       self.option_record_email.split(",")
     end
 
+    def option_banned_phones=(x)
+      self.option_banned_phone = Array(x).join(",")
+    end
+
+    def option_banned_phones
+      self.option_banned_phone.split(",")
+    end
+
     def option_record_emails_list=(x)
       # what comes in as json, via tagify
       uniq_array = []
@@ -81,6 +91,22 @@ module PagerTree::Integrations
 
     def option_record_emails_list
       option_record_emails
+    end
+
+    def option_banned_phones_list=(x)
+      # what comes in as json, via tagify
+      uniq_array = []
+      begin
+        uniq_array = JSON.parse(x).map { |y| y["value"] }.uniq
+      rescue JSON::ParserError => exception
+        Rails.logger.debug(exception)
+      end
+
+      self.option_banned_phones = uniq_array
+    end
+
+    def option_banned_phones_list
+      option_banned_phones
     end
 
     def validate_record_emails
@@ -111,8 +137,20 @@ module PagerTree::Integrations
       true
     end
 
+    def is_banned?
+      from_number = adapter_incoming_request_params.dig("From")
+      return false unless from_number.present?
+      option_banned_phones.any? { |x| from_number.include?(x) }
+    rescue
+      false
+    end
+
     def adapter_action
-      :create
+      if is_banned?
+        :other
+      else
+        :create
+      end
     end
 
     def adapter_thirdparty_id
@@ -131,6 +169,14 @@ module PagerTree::Integrations
     end
 
     def adapter_response_incoming
+      if is_banned?
+        _twiml.reject
+
+        adapter_source_log&.sublog("Caller #{adapter_incoming_request_params.dig("From")} on blocked list. Rejected call.")
+        adapter_source_log&.save
+
+        return adapter_controller&.render(xml: _twiml.to_xml)
+      end
       # if this was attached to a router
       if !adapter_alert.meta["live_call_router_team_prefix_ids"].present? && routers.size > 0 && account.subscription_feature_routers?
         adapter_alert.logs.create!(message: "Routed to router. Attempting to get a list of teams...")

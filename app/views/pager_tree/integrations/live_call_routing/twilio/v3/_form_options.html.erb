@@ -77,4 +77,10 @@
     <p class="form-hint"><%== t(".option_record_emails_list_hint_html") %></p>
   </div>
 
+  <div class="form-group group" data-controller="tagify">
+    <%= form.label :option_banned_phones_list %>
+    <%= form.text_field :option_banned_phones_list, class: "form-control", data: { tagify_target: "input" } %>
+    <p class="form-hint"><%== t(".option_banned_phones_list_hint_html") %></p>
+  </div>
+
 </div>
