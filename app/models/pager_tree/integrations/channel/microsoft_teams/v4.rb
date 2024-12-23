@@ -162,7 +162,7 @@ module PagerTree::Integrations
                     },
                     {
                       type: "FactSet",
-                      facts: _alert.additional_data&.map { |ad| {title: ad["label"], value: ad["value"]} } || [],
+                      facts: _alert.additional_data&.map { |ad| {title: ad["label"], value: Array(ad["value"]).join(", ")} } || [],
                       spacing: "Medium",
                       separator: true
                     }
