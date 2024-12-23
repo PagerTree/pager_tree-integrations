@@ -158,7 +158,7 @@ module PagerTree::Integrations
                       text: _alert.description&.try(:to_plain_text),
                       wrap: true,
                       separator: true,
-                      color: "Light"
+                      maxLines: 24
                     },
                     {
                       type: "FactSet",
