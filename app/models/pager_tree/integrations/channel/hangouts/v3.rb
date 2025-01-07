@@ -62,7 +62,7 @@ module PagerTree::Integrations
       body = _blocks.merge(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
 
       if option_thread_same_alert == true
-        body.merge!({thread: {threadKey: _alert.id}})
+        body[:thread] = {threadKey: _alert.id}
 
         uri = URI(url)
         uri_params = URI.decode_www_form(uri.query || "").to_h.merge({messageReplyOption: "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"})
