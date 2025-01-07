@@ -11,6 +11,15 @@
   </dd>
 </div>
 
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/channel/hangouts/v3.option_thread_same_alert") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_thread_same_alert } %>
+  </dd>
+</div>
+
 <% 
   opts = [
     :alert_open,

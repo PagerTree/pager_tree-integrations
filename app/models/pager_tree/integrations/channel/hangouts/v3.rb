@@ -7,6 +7,7 @@ module PagerTree::Integrations
       {key: :alert_acknowledged, type: :boolean, default: false},
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
+      {key: :thread_same_alert, type: :boolean, default: false},
       {key: :outgoing_rules, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
@@ -20,6 +21,7 @@ module PagerTree::Integrations
       self.option_alert_acknowledged ||= false
       self.option_alert_resolved ||= false
       self.option_alert_dropped ||= false
+      self.option_thread_same_alert ||= false
       self.option_outgoing_rules ||= ""
     end
 
@@ -58,6 +60,15 @@ module PagerTree::Integrations
     def adapter_process_outgoing
       url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || self.option_incoming_webhook_url
       body = _blocks.merge(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
+
+      if option_thread_same_alert == true
+        body.merge!({thread: {threadKey: _alert.id}})
+
+        uri = URI(url)
+        uri_params = URI.decode_www_form(uri.query || "").to_h.merge({messageReplyOption: "REPLY_MESSAGE_FALLBACK_TO_NEW_THREAD"})
+        uri.query = URI.encode_www_form(uri_params)
+        url = uri.to_s
+      end
 
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
         resource: self,
