@@ -21,6 +21,10 @@ en:
         option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
         option_send_linked_hint_html: "Send linked data (source, source_log, user, team)"
       channel:
+        hangouts:
+          v3:
+            form_options:
+              option_thread_same_alert_hint_html: "Send all messages for the same alert to the same thread"
         microsoft_teams:
           v3:
             form_options:
@@ -158,6 +162,8 @@ en:
         option_outgoing_rules: "Outgoing Rules"
       "pager_tree/integrations/apex_ping/v3":
         option_api_key: "API Key"
+      "pager_tree/integrations/channel/hangouts/v3":
+        option_thread_same_alert: "Thread Same Alert"
       "pager_tree/integrations/channel/microsoft_teams/v3":
         option_time_zone: "Display Time Zone"
       "pager_tree/integrations/cloudflare/v3":

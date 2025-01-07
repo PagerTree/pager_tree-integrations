@@ -5,6 +5,12 @@
     <p class="form-hint"><%== t("pager_tree.integrations.common.option_incoming_webhook_url_hint_html") %></p>
   </div>
 
+  <div class="form-group group">
+    <%= form.check_box :option_thread_same_alert, class: "form-checkbox mr-1" %>
+    <%= form.label :option_thread_same_alert, class: "inline-block" %>
+    <p class="form-hint inline-block"><%== t(".option_thread_same_alert_hint_html") %></p>
+  </div>
+
   <% 
     opts = [
       :alert_open,

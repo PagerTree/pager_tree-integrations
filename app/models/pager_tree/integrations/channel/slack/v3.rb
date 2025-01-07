@@ -111,6 +111,16 @@ module PagerTree::Integrations
                 title: "Destinations",
                 value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
                 short: "false"
+              },
+              {
+                title: "Actions",
+                value: [
+                  "<#{Rails.application.routes.url_helpers.try(:alert_url, _alert, script_name: "/#{_alert.account_id}")}|View>",
+                  ["open", "dropped"].include?(_alert.status) ? "<#{Rails.application.routes.url_helpers.try(:acknowledge_alert_url, _alert, script_name: "/#{_alert.account_id}")}|Acknowledge>" : nil,
+                  ["open"].include?(_alert.status) ? "<#{Rails.application.routes.url_helpers.try(:reject_alert_url, _alert, script_name: "/#{_alert.account_id}")}|Reject>" : nil,
+                  ["acknowledged"].include?(_alert.status) ? "<#{Rails.application.routes.url_helpers.try(:resolve_alert_url, _alert, script_name: "/#{_alert.account_id}")}|Resolve>" : nil
+                ].compact.join(" | "),
+                short: "false"
               }
             ]
           }
