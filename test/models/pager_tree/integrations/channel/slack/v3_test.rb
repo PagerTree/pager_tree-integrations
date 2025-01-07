@@ -88,6 +88,14 @@ module PagerTree::Integrations
                 title: "Destinations",
                 value: @alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
                 short: "false"
+              },
+              {
+                title: "Actions",
+                value: [
+                  "<|View>",
+                  "<|Resolve>"
+                ].join(" | "),
+                short: "false"
               }
             ]
           }
