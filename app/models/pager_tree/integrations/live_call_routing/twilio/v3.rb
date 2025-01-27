@@ -4,6 +4,7 @@ module PagerTree::Integrations
       {key: :account_sid, type: :string, default: nil},
       {key: :api_key, type: :string, default: nil},
       {key: :api_secret, type: :string, default: nil},
+      {key: :api_region, type: :string, default: "ashburn.us1"},
       {key: :force_input, type: :boolean, default: false},
       {key: :record, type: :boolean, default: false},
       {key: :record_email, type: :string, default: ""},
@@ -11,6 +12,8 @@ module PagerTree::Integrations
       {key: :dial_pause, type: :integer}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
+
+    API_REGIONS = ["ashburn.us1", "dublin.ie1", "sydney.au1"]
 
     has_one_attached :option_connect_now_media
     has_one_attached :option_music_media
@@ -22,6 +25,7 @@ module PagerTree::Integrations
     validates :option_account_sid, presence: true
     validates :option_api_key, presence: true
     validates :option_api_secret, presence: true
+    validates :option_api_region, inclusion: {in: API_REGIONS}
     validates :option_force_input, inclusion: {in: [true, false]}
     validates :option_record, inclusion: {in: [true, false]}
     validate :validate_record_emails
@@ -30,6 +34,7 @@ module PagerTree::Integrations
       self.option_account_sid ||= nil
       self.option_api_key ||= nil
       self.option_api_secret ||= nil
+      self.option_api_region ||= "ashburn.us1"
       self.option_force_input ||= false
       self.option_record ||= false
       self.option_record_email ||= ""
@@ -393,8 +398,12 @@ module PagerTree::Integrations
       ]
     end
 
+    def _api_region
+      API_REGIONS.include?(option_api_region) ? option_api_region : "ashburn.us1"
+    end
+    
     def _client
-      @_client ||= ::Twilio::REST::Client.new(self.option_api_key, self.option_api_secret, self.option_account_sid)
+      @_client ||= ::Twilio::REST::Client.new(self.option_api_key, self.option_api_secret, self.option_account_sid, _api_region)
     end
 
     def _call

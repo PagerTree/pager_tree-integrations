@@ -1,4 +1,4 @@
-<div class="sm:col-span-2">
+<div class="sm:col-span-1">
   <dt class="text-sm font-medium text-gray-500">
     <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_account_sid") %>
   </dt>
@@ -6,6 +6,26 @@
     <div class="flex items-center gap-2">
       <p class="text-sm truncate">
         <%= integration.option_account_sid %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_api_region") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= 
+          case integration.option_api_region 
+          when "dublin.ie1" then "IE1 (Dublin)"
+          when "sydney.au1" then "AU1 (Sydeny)"
+          else
+            "US1 (Ashburn)"
+          end
+        %>
       </p>
     </div>
   </dd>
