@@ -24,6 +24,12 @@
   </div>
 
   <div class="form-group group">
+    <%= form.label :option_api_region %>
+    <%= form.select :option_api_region, [["US1 (Ashburn)", "ashburn.us1"], ["IE1 (Dublin)", "dublin.ie1"], ["AU1 (Sydney)", "sydney.au1"]], {}, class:'form-control' %>
+    <p class="form-hint"><%== t(".option_api_region_hint_html") %></p>
+  </div>
+
+  <div class="form-group group">
     <%= form.label :option_welcome_media %>
     <%= form.file_field :option_welcome_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
     <p class="form-hint"><%== t(".option_welcome_media_hint_html") %></p>
