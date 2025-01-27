@@ -401,7 +401,7 @@ module PagerTree::Integrations
     def _api_region
       API_REGIONS.include?(option_api_region) ? option_api_region : "ashburn.us1"
     end
-    
+
     def _client
       @_client ||= ::Twilio::REST::Client.new(self.option_api_key, self.option_api_secret, self.option_account_sid, _api_region)
     end
