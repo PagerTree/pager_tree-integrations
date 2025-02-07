@@ -176,7 +176,7 @@ en:
       "pager_tree/integrations/datadog/v3":
         option_support_retriggered_event: "Retriggered Event"
       "pager_tree/integrations/echoes_hq/v3":
-        option_api_key: "API Key"
+        option_api_key: "Echoes HQ API Key"
       "pager_tree/integrations/email/v3":
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"

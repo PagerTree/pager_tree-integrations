@@ -1,7 +1,10 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-  <div class="form-group">
+  <div class="form-group group" data-controller="password-visibility">
     <%= form.label :option_api_key %>
-    <%= form.text_field :option_api_key, class: "form-control" %>
-    <p class="form-hint"><%== t(".option_api_key_hint_html") %></p>
+    <%= form.password_field :option_api_key, value: form.object.option_api_key, class: "form-control", data: { password_visibility_target: "input"} %>
+    <div class="flex justify-between">
+      <p class="form-hint"><%== t(".option_api_key_hint_html") %></p>
+      <%= render partial: "shared/password_visibility_button" %>
+    </div>
   </div>
 </div>
