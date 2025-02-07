@@ -40,6 +40,10 @@ en:
         v3:
           form_options:
             option_support_retriggered_event_hint_html: "Create a new alert when the 'Re-Triggered' event is sent by Datadog"
+      echoes_hq:
+        v3:
+          form_options:
+            option_api_key_hint_html: "EchoesHQ <a href='https://docs.echoeshq.com/api-authentication#ZB9nc' target='_blank'>API Key</a>"
       email:
         v3:
           form_options:
@@ -171,6 +175,8 @@ en:
         option_webhook_secret: "Webhook Secret"
       "pager_tree/integrations/datadog/v3":
         option_support_retriggered_event: "Retriggered Event"
+      "pager_tree/integrations/echoes_hq/v3":
+        option_api_key: "API Key"
       "pager_tree/integrations/email/v3":
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"
