@@ -37,6 +37,11 @@ dead_mans_snitch_v3:
   type: "PagerTree::Integrations::DeadMansSnitch::V3"
   # options: no_options
 
+echoes_hq_v3:
+  type: "PagerTree::Integrations::EchoesHq::V3"
+  options:
+    api_key: "abc123"
+
 elast_alert_v3:
   type: "PagerTree::Integrations::ElastAlert::V3"
   # options: no_options
