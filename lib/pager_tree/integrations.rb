@@ -12,7 +12,10 @@ module PagerTree
     @@integration_parent_class = "ApplicationRecord"
 
     mattr_accessor :outgoing_webhook_delivery_factory_class
-    @@outgoing_webhook_delivery_factory_class = "::OutgoingWebhookDeliv"
+    @@outgoing_webhook_delivery_factory_class = "PagerTree::Integrations::OutgoingWebhookDelivery::HookRelay"
+
+    mattr_accessor :outgoing_webhook_delivery_table_name
+    @@outgoing_webhook_delivery_table_name = "pager_tree_integrations_outgoing_webhook_deliveries"
 
     mattr_accessor :integration_email_v3_domain
     @@integration_email_v3_domain = "alerts.pagertree.com"
