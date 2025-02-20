@@ -1,5 +1,5 @@
 module PagerTree::Integrations
-  class OutgoingWebhookDelivery < PagerTree::Integrations.outgoing_webhook_delivery_parent_class.constantize
+  class OutgoingWebhookDelivery < ApplicationRecord
     self.table_name = PagerTree::Integrations.outgoing_webhook_delivery_table_name
 
     serialize :data, JSON
@@ -16,7 +16,8 @@ module PagerTree::Integrations
     enum status: {queued: 0, sent: 1, success: 2, failure: 3, retrying: 4, cancelled: 5, stored: 6, insufficent_funds: 7}
 
     def self.factory(**params)
-      PagerTree::Integrations.outgoing_webhook_delivery_factory_class.constantize.new(**params)
+      klass = PagerTree::Integrations.outgoing_webhook_delivery_factory_class
+      (klass.is_a?(Proc) ? klass.call : klass.to_s).constantize.new(**params)
     end
   end
 end

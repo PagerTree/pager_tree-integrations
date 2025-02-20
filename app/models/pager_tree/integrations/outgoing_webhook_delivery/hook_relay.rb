@@ -4,6 +4,10 @@ module PagerTree::Integrations
 
     define_model_callbacks :deliver
 
+    def self.factory(**params)
+      new(**params)
+    end
+
     def self.hook_relay_account_id
       find_value_by_name(:hook_relay, :account_id)
     end

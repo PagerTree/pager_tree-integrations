@@ -11,9 +11,6 @@ module PagerTree
     mattr_accessor :integration_parent_class
     @@integration_parent_class = "ApplicationRecord"
 
-    mattr_accessor :outgoing_webhook_delivery_parent_class
-    @@outgoing_webhook_delivery_parent_class = "ApplicationRecord"
-
     mattr_accessor :outgoing_webhook_delivery_factory_class
     @@outgoing_webhook_delivery_factory_class = "PagerTree::Integrations::OutgoingWebhookDelivery::HookRelay"
 
