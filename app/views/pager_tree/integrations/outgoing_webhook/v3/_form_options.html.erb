@@ -17,6 +17,12 @@
     <p class="form-hint"><%== t(".option_password_hint_html") %></p>
   </div>
 
+  <div class="form-group group">
+    <%= form.label :option_proxy_url %>
+    <%= form.text_field :option_proxy_url, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_proxy_url_hint_html") %></p>
+  </div>
+
   <% 
     opts = [
       :alert_created,
