@@ -1,9 +1,28 @@
 module PagerTree::Integrations
   class SolarWinds::V3 < Integration
-    OPTIONS = []
+    OPTIONS = [
+      {key: :alert_acknowledged, type: :boolean, default: false},
+      {key: :server_url, type: :string, default: nil},
+      {key: :server_username, type: :string, default: nil},
+      {key: :server_password, type: :string, default: nil},
+      {key: :proxy_url, type: :string, default: nil},
+      {key: :extra_headers, type: :string, default: nil}
+    ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
+    validates :option_alert_acknowledged, inclusion: {in: [true, false]}
+    validates :option_server_username, presence: true, if: -> { option_alert_acknowledged == true }
+    validates :option_server_password, presence: true, if: -> { option_alert_acknowledged == true }
+    validates :option_server_url, presence: true, url: {no_local: true}, if: -> { option_alert_acknowledged == true }
+    # validates :option_proxy_url, allow_blank: true, url: {no_local: true}
+
     after_initialize do
+      self.option_alert_acknowledged ||= false
+      self.option_server_url ||= nil
+      self.option_server_username ||= nil
+      self.option_server_password ||= nil
+      self.option_proxy_url ||= nil
+      self.option_extra_headers ||= nil
     end
 
     def adapter_supports_incoming?
@@ -11,11 +30,77 @@ module PagerTree::Integrations
     end
 
     def adapter_supports_outgoing?
-      false
+      true
+    end
+
+    def adapter_show_outgoing_webhook_delivery?
+      true
     end
 
     def adapter_incoming_can_defer?
       true
+    end
+
+    def adapter_outgoing_interest?(event_name)
+      try("option_#{event_name}") || false
+    end
+
+    def adapter_process_outgoing
+      try("adapter_process_outgoing_#{adapter_outgoing_event.event_name}")
+      true
+    end
+
+    def adapter_process_outgoing_alert_acknowledged
+      begin
+        ack_url = adapter_outgoing_event.alert&.source_log&.message&.dig("params", "AcknowledgeUrl")
+        ack_uri = URI.parse(ack_url)
+        server_uri = URI.parse(self.option_server_url)
+        object_id = Rack::Utils.parse_query(ack_uri.query).dig("ObjID")
+        url = "#{server_uri.origin}/SolarWinds/InformationService/v3/Json/Invoke/Orion.AlertActive/Acknowledge"
+        body = {
+          alertObjectIds: [object_id],
+          notes: "Acknowledged by #{adapter_outgoing_event.alert&.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.user&.name}",
+        }
+
+        opts = {}
+        auth = {}
+
+        if self.option_server_username.present? && self.option_server_password.present?
+          auth = {
+            username: self.option_server_username,
+            password: self.option_server_password
+          }
+        end
+
+        if self.option_extra_headers.present?
+          opts[:headers] = self.option_extra_headers.split(";").map { |x| x.split(":") }.to_h
+        end
+
+        begin
+          if self.option_proxy_url.present?
+            uri = URI.parse(self.option_proxy_url)
+            opts[:http_proxy_addr] = uri.host
+            opts[:http_proxy_port] = uri.port if uri.port
+            opts[:http_proxyuser] = uri.user if uri.user
+            opts[:http_proxypass] = uri.password if uri.password
+          end
+        rescue URI::InvalidURIError
+          # Ignore invalid proxy URL
+        end
+
+        outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
+          resource: self,
+          url: url,
+          body: body,
+          options: opts,
+          auth: auth
+        )
+        outgoing_webhook_delivery.save!
+        outgoing_webhook_delivery.deliver_later
+
+        outgoing_webhook_delivery
+      rescue
+      end
     end
 
     def adapter_thirdparty_id
