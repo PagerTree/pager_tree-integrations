@@ -51,6 +51,7 @@ module PagerTree::Integrations
       assert_enqueued_jobs 1
 
       assert_equal @integration.option_webhook_url, outgoing_webhook_delivery.url
+      assert_nil outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
       assert_equal expected_payload.as_json, outgoing_webhook_delivery.body.as_json
     end
@@ -70,6 +71,28 @@ module PagerTree::Integrations
 
       assert_enqueued_jobs 1
       assert_equal Base64.strict_encode64("#{@integration.option_username}:#{@integration.option_password}"), outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
+    end
+
+    test "proxy_url works" do
+      @integration.option_proxy_url = "http://username:password@proxy.com:3128"
+
+      assert_no_performed_jobs
+
+      data = {
+        event_name: :alert_created
+      }
+
+      @integration.adapter_outgoing_event = OutgoingEvent.new(**data)
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      uri = URI.parse(@integration.option_proxy_url)
+
+      assert_enqueued_jobs 1
+      assert_equal uri.host, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyaddr")
+      assert_equal uri.port, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyport")
+      assert_equal uri.user, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyuser")
+      assert_equal uri.password, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxypass")
+      assert_nil outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
     end
   end
 end

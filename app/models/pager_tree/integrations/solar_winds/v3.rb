@@ -47,7 +47,6 @@ module PagerTree::Integrations
 
     def adapter_process_outgoing
       try("adapter_process_outgoing_#{adapter_outgoing_event.event_name}")
-      true
     end
 
     def adapter_process_outgoing_alert_acknowledged
@@ -78,8 +77,8 @@ module PagerTree::Integrations
       begin
         if self.option_proxy_url.present?
           uri = URI.parse(self.option_proxy_url)
-          opts[:http_proxy_addr] = uri.host
-          opts[:http_proxy_port] = uri.port if uri.port
+          opts[:http_proxyaddr] = uri.host
+          opts[:http_proxyport] = uri.port if uri.port
           opts[:http_proxyuser] = uri.user if uri.user
           opts[:http_proxypass] = uri.password if uri.password
         end

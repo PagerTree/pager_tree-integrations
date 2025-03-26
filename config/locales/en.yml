@@ -125,7 +125,7 @@ en:
             option_webhook_url_hint_html: "URL to POST to"
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
-            option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:8080)"
+            option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
       sentry:
         v3:
