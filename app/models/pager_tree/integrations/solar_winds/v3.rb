@@ -50,6 +50,8 @@ module PagerTree::Integrations
     end
 
     def adapter_process_outgoing_alert_acknowledged
+      return unless adapter_outgoing_event.alert.source == self
+
       ack_url = adapter_outgoing_event.alert&.source_log&.message&.dig("params", "AcknowledgeUrl")
       ack_uri = URI.parse(ack_url)
       server_uri = URI.parse(self.option_server_url)

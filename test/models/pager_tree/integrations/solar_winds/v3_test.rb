@@ -140,6 +140,8 @@ module PagerTree::Integrations
         }]
       }
 
+      data[:alert].source = @integration
+
       @integration.adapter_outgoing_event = OutgoingEvent.new(**data)
       outgoing_webhook_delivery = @integration.adapter_process_outgoing
 
