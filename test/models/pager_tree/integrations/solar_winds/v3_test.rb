@@ -105,6 +105,7 @@ module PagerTree::Integrations
       @integration.option_server_username = "username"
       @integration.option_server_password = "password"
       @integration.option_proxy_url = "http://proxyuser:proxypass@proxy.com:3128"
+      @integration.option_extra_headers = "X-ABC-AUTH:123"
 
       assert_no_performed_jobs
 
@@ -148,6 +149,7 @@ module PagerTree::Integrations
       assert_equal "#{server_uri.origin}/SolarWinds/InformationService/v3/Json/Invoke/Orion.AlertActive/Acknowledge", outgoing_webhook_delivery.url
       assert_equal "Acknowledged by ", outgoing_webhook_delivery.body.dig("notes")
       assert_equal Base64.strict_encode64("#{@integration.option_server_username}:#{@integration.option_server_password}"), outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
+      assert_equal "123", outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "X-ABC-AUTH")
 
       proxy_uri = URI.parse(@integration.option_proxy_url)
       assert_equal proxy_uri.host, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyaddr")
