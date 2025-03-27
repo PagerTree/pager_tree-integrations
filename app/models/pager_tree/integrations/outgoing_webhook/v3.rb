@@ -4,6 +4,7 @@ module PagerTree::Integrations
       {key: :webhook_url, type: :string, default: nil},
       {key: :username, type: :string, default: nil},
       {key: :password, type: :string, default: nil},
+      {key: :proxy_url, type: :string, default: nil},
       {key: :alert_created, type: :boolean, default: false},
       {key: :alert_open, type: :boolean, default: false},
       {key: :alert_acknowledged, type: :boolean, default: false},
@@ -21,6 +22,7 @@ module PagerTree::Integrations
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     validates :option_webhook_url, presence: true, url: {no_local: true}
+    validates :option_proxy_url, allow_blank: true, url: {no_local: true}
     validates :option_alert_created, inclusion: {in: [true, false]}
     validates :option_alert_open, inclusion: {in: [true, false]}
     validates :option_alert_acknowledged, inclusion: {in: [true, false]}
@@ -135,11 +137,26 @@ module PagerTree::Integrations
       url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || option_webhook_url
       body.merge!(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
 
+      # Handle proxy settings if provided
+      opts = {}
+      begin
+        if option_proxy_url.present?
+          uri = URI.parse(option_proxy_url)
+          opts[:http_proxyaddr] = uri.host
+          opts[:http_proxyport] = uri.port
+          opts[:http_proxyuser] = uri.user
+          opts[:http_proxypass] = uri.password
+        end
+      rescue URI::InvalidURIError => e
+        logs.create(message: "Error parsing proxy URL, ignoring. Error: #{e.message}")
+      end
+
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
         resource: self,
         url: url,
         auth: {username: option_username, password: option_password},
-        body: body
+        body: body,
+        options: opts
       )
       outgoing_webhook_delivery.save!
       outgoing_webhook_delivery.deliver_later

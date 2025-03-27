@@ -1,0 +1,66 @@
+<div class="sm:col-span-1">
+  <dt class="text-sm font-medium text-gray-500">
+    <%= t("activerecord.attributes.pager_tree/integrations/solar_winds/v3.option_alert_acknowledged") %>
+  </dt>
+  <dd class="mt-1 text-sm text-gray-900">
+    <div class="flex items-center gap-2">
+      <p class="text-sm truncate">
+        <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_alert_acknowledged } %>
+      </p>
+    </div>
+  </dd>
+</div>
+
+<% if integration.option_alert_acknowledged %>
+  <div class="sm:col-span-2">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/solar_winds/v3.option_server_url") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <p class="text-sm truncate">
+          <%= integration.option_server_url %>
+        </p>
+      </div>
+    </dd>
+  </div>
+
+  <div class="sm:col-span-1">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/solar_winds/v3.option_server_username") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <p class="text-sm truncate">
+          <%= mask integration.option_server_username %>
+        </p>
+      </div>
+    </dd>
+  </div>
+
+  <div class="sm:col-span-1">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/solar_winds/v3.option_server_password") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <p class="text-sm truncate">
+          <%= mask integration.option_server_password %>
+        </p>
+      </div>
+    </dd>
+  </div>
+
+  <div class="sm:col-span-2">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/solar_winds/v3.option_proxy_url") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <p class="text-sm truncate">
+          <%= integration.option_proxy_url %>
+        </p>
+      </div>
+    </dd>
+  </div>
+<% end %>

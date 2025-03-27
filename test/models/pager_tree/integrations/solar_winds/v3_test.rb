@@ -3,6 +3,7 @@ require "test_helper"
 module PagerTree::Integrations
   class SolarWinds::V3Test < ActiveSupport::TestCase
     include Integrateable
+    include ActiveJob::TestHelper
 
     setup do
       @integration = pager_tree_integrations_integrations(:solar_winds_v3)
@@ -30,10 +31,10 @@ module PagerTree::Integrations
     test "sanity" do
       assert @integration.adapter_supports_incoming?
       assert @integration.adapter_incoming_can_defer?
-      assert_not @integration.adapter_supports_outgoing?
+      assert @integration.adapter_supports_outgoing?
       assert @integration.adapter_show_alerts?
       assert @integration.adapter_show_logs?
-      assert_not @integration.adapter_show_outgoing_webhook_delivery?
+      assert @integration.adapter_show_outgoing_webhook_delivery?
     end
 
     test "adapter_actions" do
@@ -68,6 +69,95 @@ module PagerTree::Integrations
       )
 
       assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+    end
+
+    test "outgoing_interest" do
+      assert_not @integration.adapter_outgoing_interest?(:alert_created)
+      assert_not @integration.adapter_outgoing_interest?(:foo)
+      assert_not @integration.adapter_outgoing_interest?(:alert_acknowledged)
+
+      @integration.option_alert_acknowledged = true
+      assert @integration.adapter_outgoing_interest?(:alert_acknowledged)
+    end
+
+    test "outgoing_options_validation" do
+      assert_equal false, @integration.option_alert_acknowledged
+      assert @integration.valid?
+
+      @integration.option_alert_acknowledged = true
+      assert_not @integration.valid?
+
+      @integration.option_server_url = "https://example.com:17774"
+      assert_not @integration.valid?
+
+      @integration.option_server_username = "username"
+      assert_not @integration.valid?
+
+      @integration.option_server_password = "password"
+      assert @integration.valid?
+
+      @integration.option_proxy_url = "http://proxyuser:proxypass@proxy.com:3128"
+      assert @integration.valid?
+    end
+
+    test "can_process_outgoing" do
+      @integration.option_server_url = "https://example.com:17774"
+      @integration.option_server_username = "username"
+      @integration.option_server_password = "password"
+      @integration.option_proxy_url = "http://proxyuser:proxypass@proxy.com:3128"
+      @integration.option_extra_headers = "X-ABC-AUTH:123"
+
+      assert_no_performed_jobs
+
+      data = {
+        event_name: :alert_acknowledged,
+        alert: JSON.parse({
+          foo: "bar",
+          source_log: {
+            message: {
+              params: {
+                ActionType: "Create",
+                NodeName: "ABC123.example.com",
+                AlertID: "123",
+                AlertMessage: "CPU was triggered.",
+                AlertDescription: "",
+                AlertDetailsUrl: "https://example.com/Orion/View.aspx?NetObject=AAT:24565",
+                AcknowledgeUrl: "https://example.com/Orion/Netperfmon/AckAlert.aspx?ObjID=24565",
+                AlertTriggerCount: "1449",
+                AlertTriggerTime: "Friday, March 21, 2025 8:57 AM",
+                Severity: "Critical"
+              }
+            }
+          }
+        }.to_json, object_class: OpenStruct),
+        changes: [{
+          before: {
+            foo: "baz"
+          },
+          after: {
+            foo: "bar"
+          }
+        }]
+      }
+
+      data[:alert].source = @integration
+
+      @integration.adapter_outgoing_event = OutgoingEvent.new(**data)
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+
+      server_uri = URI.parse(@integration.option_server_url)
+      assert_equal "#{server_uri.origin}/SolarWinds/InformationService/v3/Json/Invoke/Orion.AlertActive/Acknowledge", outgoing_webhook_delivery.url
+      assert_equal "Acknowledged by ", outgoing_webhook_delivery.body.dig("notes")
+      assert_equal Base64.strict_encode64("#{@integration.option_server_username}:#{@integration.option_server_password}"), outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "Authorization")
+      assert_equal "123", outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("headers", "X-ABC-AUTH")
+
+      proxy_uri = URI.parse(@integration.option_proxy_url)
+      assert_equal proxy_uri.host, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyaddr")
+      assert_equal proxy_uri.port, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyport")
+      assert_equal proxy_uri.user, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxyuser")
+      assert_equal proxy_uri.password, outgoing_webhook_delivery.httparty_opts.with_indifferent_access.dig("http_proxypass")
     end
   end
 end

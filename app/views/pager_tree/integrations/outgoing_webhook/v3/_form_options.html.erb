@@ -11,10 +11,18 @@
     <p class="form-hint"><%== t(".option_username_hint_html") %></p>
   </div>
 
+  <div class="form-group group" data-controller="password-visibility">
+    <%= form.password_field :option_password, value: form.object.option_password, class: "form-control", data: { password_visibility_target: "input"} %>
+    <div class="flex justify-between">
+      <p class="form-hint"><%== t("option_password_hint_html") %></p>
+      <%= render partial: "shared/password_visibility_button" %>
+    </div>
+  </div>
+
   <div class="form-group group">
-    <%= form.label :option_password %>
-    <%= form.text_field :option_password, class: "form-control" %>
-    <p class="form-hint"><%== t(".option_password_hint_html") %></p>
+    <%= form.label :option_proxy_url %>
+    <%= form.text_field :option_proxy_url, class: "form-control" %>
+    <p class="form-hint"><%== t(".option_proxy_url_hint_html") %></p>
   </div>
 
   <% 

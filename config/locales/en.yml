@@ -125,6 +125,7 @@ en:
             option_webhook_url_hint_html: "URL to POST to"
             option_username_hint_html: "Basic auth username (optional)"
             option_password_hint_html: "Basic auth password (optional)"
+            option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
       sentry:
         v3:
@@ -139,6 +140,15 @@ en:
           v3:
             form_options:
               option_token_hint_html: "The token can be used to authenticate requests from Slack servers (optional)"
+      solar_winds:
+        v3:
+          form_options:
+            option_alert_acknowledged_hint_html: "Acknowledge the alert in SolarWinds when the alert is acknowledged in PagerTree. (PagerTree => SolarWinds)"
+            option_server_url_hint_html: "SolarWinds Server URL (ex: https://sw.example.com:17774)"
+            option_server_username_hint_html: "SolarWinds Server Username (needs to be account that has Alert access)"
+            option_server_password_hint_html: "SolarWinds Server Password"
+            option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
+            option_extra_headers_hint_html: "Extra headers to include in the request (optional). Format: semicolon separated key value pairs (ex: key1:value1;key2:value2)"
       webhook:
         v3:
           form_options:
@@ -210,6 +220,10 @@ en:
         option_webhook_url: "URL"
         option_username: "Username"
         option_password: "Password"
+        option_proxy_url: "Proxy URL"
+        option_proxy_port: "Proxy Port"
+        option_proxy_username: "Proxy Username"
+        option_proxy_password: "Proxy Password"
         option_template: "JSON Template"
         option_send_linked: "Send Linked"
       "pager_tree/integrations/live_call_routing/twilio/v3":
@@ -239,6 +253,13 @@ en:
         option_token: "Slack Token"
       "pager_tree/integrations/server_guard24/v3":
         option_resolve_warn: "Resolve on Warning"
+      "pager_tree/integrations/solar_winds/v3":
+        option_alert_acknowledged: "Acknowledge in SolarWinds?"
+        option_server_url: "SolarWinds URL"
+        option_server_username: "SolarWinds Username"
+        option_server_password: "SolarWinds Password"
+        option_proxy_url: "Proxy URL"
+        option_extra_headers: "Extra Headers"
       "pager_tree/integrations/webhook/v3":
         option_token: "PagerTree Token"
         option_capture_additional_data: "Capture Additional Data"
