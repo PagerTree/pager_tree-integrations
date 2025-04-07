@@ -137,26 +137,12 @@ module PagerTree::Integrations
       url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || option_webhook_url
       body.merge!(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
 
-      # Handle proxy settings if provided
-      opts = {}
-      begin
-        if option_proxy_url.present?
-          uri = URI.parse(option_proxy_url)
-          opts[:http_proxyaddr] = uri.host
-          opts[:http_proxyport] = uri.port
-          opts[:http_proxyuser] = uri.user
-          opts[:http_proxypass] = uri.password
-        end
-      rescue URI::InvalidURIError => e
-        logs.create(message: "Error parsing proxy URL, ignoring. Error: #{e.message}")
-      end
-
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
         resource: self,
         url: url,
         auth: {username: option_username, password: option_password},
         body: body,
-        options: opts
+        proxy_url: option_proxy_url.presence
       )
       outgoing_webhook_delivery.save!
       outgoing_webhook_delivery.deliver_later
