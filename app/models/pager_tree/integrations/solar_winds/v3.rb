@@ -5,8 +5,7 @@ module PagerTree::Integrations
       {key: :server_url, type: :string, default: nil},
       {key: :server_username, type: :string, default: nil},
       {key: :server_password, type: :string, default: nil},
-      {key: :proxy_url, type: :string, default: nil},
-      {key: :extra_headers, type: :string, default: nil}
+      {key: :proxy_url, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -14,7 +13,6 @@ module PagerTree::Integrations
     validates :option_server_username, presence: true, if: -> { option_alert_acknowledged == true }
     validates :option_server_password, presence: true, if: -> { option_alert_acknowledged == true }
     validates :option_server_url, presence: true, url: {no_local: true}, if: -> { option_alert_acknowledged == true }
-    # validates :option_proxy_url, allow_blank: true, url: {no_local: true}
 
     after_initialize do
       self.option_alert_acknowledged ||= false
@@ -22,7 +20,6 @@ module PagerTree::Integrations
       self.option_server_username ||= nil
       self.option_server_password ||= nil
       self.option_proxy_url ||= nil
-      self.option_extra_headers ||= nil
     end
 
     def adapter_supports_incoming?
@@ -62,7 +59,6 @@ module PagerTree::Integrations
         notes: "Acknowledged by #{adapter_outgoing_event.alert&.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.user&.name}"
       }
 
-      opts = {}
       auth = {}
 
       if self.option_server_username.present? && self.option_server_password.present?
@@ -72,28 +68,12 @@ module PagerTree::Integrations
         }
       end
 
-      if self.option_extra_headers.present?
-        opts[:headers] = self.option_extra_headers.split(";").map { |x| x.split(":") }.to_h
-      end
-
-      begin
-        if self.option_proxy_url.present?
-          uri = URI.parse(self.option_proxy_url)
-          opts[:http_proxyaddr] = uri.host
-          opts[:http_proxyport] = uri.port if uri.port
-          opts[:http_proxyuser] = uri.user if uri.user
-          opts[:http_proxypass] = uri.password if uri.password
-        end
-      rescue URI::InvalidURIError
-        # Ignore invalid proxy URL
-      end
-
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(
         resource: self,
         url: url,
         body: body,
-        options: opts,
-        auth: auth
+        auth: auth,
+        proxy_url: option_proxy_url.presence
       )
       outgoing_webhook_delivery.save!
       outgoing_webhook_delivery.deliver_later

@@ -12,9 +12,10 @@
   </div>
 
   <div class="form-group group" data-controller="password-visibility">
+    <%= form.label :option_password %>
     <%= form.password_field :option_password, value: form.object.option_password, class: "form-control", data: { password_visibility_target: "input"} %>
     <div class="flex justify-between">
-      <p class="form-hint"><%== t("option_password_hint_html") %></p>
+      <p class="form-hint"><%== t(".option_password_hint_html") %></p>
       <%= render partial: "shared/password_visibility_button" %>
     </div>
   </div>

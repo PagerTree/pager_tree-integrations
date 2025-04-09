@@ -5,7 +5,7 @@ module PagerTree::Integrations
     serialize :data, JSON
     encrypts :data
 
-    store_accessor :data, *[:url, :body, :auth, :options].map(&:to_s)
+    store_accessor :data, *[:url, :body, :auth, :proxy_url, :options].map(&:to_s)
 
     HTTP_OPTIONS = {
       headers: {"Content-Type" => "application/json"},
