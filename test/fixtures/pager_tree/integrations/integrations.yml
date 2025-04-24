@@ -205,6 +205,10 @@ uptime_kuma_v3:
   type: "PagerTree::Integrations::UptimeKuma::V3"
   # options: no_options
 
+uptime_observer_v3:
+  type: "PagerTree::Integrations::UptimeObserver::V3"
+  # options: no_options
+
 uptime_robot_v3:
   type: "PagerTree::Integrations::UptimeRobot::V3"
   # options: no_options
