@@ -93,6 +93,7 @@ en:
               option_record_hint_html: "Record a voicemail when no one acknowledges the call"
               option_record_emails_list_hint_html: "List of email addresses to notify when a voicemail has been recorded"
               option_banned_phones_list_hint_html: "List of phone numbers that are banned from calling the integration"
+              option_max_wait_time_hint_html: "The maximum amount of time (in seconds) that the caller will wait before transferring the call to the voicemail. If set to nil, it will wait indefinitely."
           v3_mailer:
             call_recording:
               subject: "🎧 Alert #%{tiny_id} - New voicemail from %{from}"
@@ -240,6 +241,7 @@ en:
         option_record: "Voicemail"
         option_record_emails_list: "Voicemail Emails"
         option_banned_phones_list: "Banned Phones"
+        option_max_wait_time: "Max Wait Time (seconds)"
       "pager_tree/integrations/logic_monitor/v3":
         option_access_id: "Logic Monitor Access ID"
         option_access_key: "Logic Monitor Access Key"

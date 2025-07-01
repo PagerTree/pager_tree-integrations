@@ -9,7 +9,8 @@ module PagerTree::Integrations
       {key: :record, type: :boolean, default: false},
       {key: :record_email, type: :string, default: ""},
       {key: :banned_phone, type: :string, default: ""},
-      {key: :dial_pause, type: :integer}
+      {key: :dial_pause, type: :integer},
+      {key: :max_wait_time, type: :integer, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -28,6 +29,7 @@ module PagerTree::Integrations
     validates :option_api_region, inclusion: {in: API_REGIONS}
     validates :option_force_input, inclusion: {in: [true, false]}
     validates :option_record, inclusion: {in: [true, false]}
+    validates :option_max_wait_time, numericality: {greater_than_or_equal_to: 30, less_than_or_equal_to: 3600}, allow_nil: true
     validate :validate_record_emails
 
     after_initialize do
@@ -263,6 +265,12 @@ module PagerTree::Integrations
         # kick off the alert workflow
         adapter_alert.route_later
         adapter_alert.logs.create!(message: "Successfully enqueued alert team workflow.")
+
+        if option_max_wait_time.present?
+          # set the max wait time for the queue
+          PagerTree::Integrations::LiveCallRouting::Twilio::V3::MaxWaitTimeJob.set(wait: option_max_wait_time.seconds).perform_later(id, adapter_alert.id)
+          adapter_alert.logs.create!(message: "Max wait time set to #{option_max_wait_time} seconds.")
+        end
       else
         adapter_alert.meta["live_call_repeat_count"] ||= 0
         adapter_alert.meta["live_call_repeat_count"] += 1
@@ -323,7 +331,7 @@ module PagerTree::Integrations
         adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: recording_url).to_h)
         adapter_alert.save!
 
-        adapter_alert.logs.create!(message: "Caller left a <a href='#{recording_url}' target='_blank'>voicemail</a>.")
+        adapter_alert.logs.create!(message: "Caller left a voicemail.")
 
         if option_record_emails.any?
           emails = option_record_emails.map do |x|
@@ -340,14 +348,17 @@ module PagerTree::Integrations
             end
           end.flatten.compact_blank.uniq
 
+          adapter_alert.logs.create!(message: "Sending voicemail recording to #{emails.size} emails.")
           emails.each do |email|
             LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
           end
         end
       elsif option_record
+        adapter_alert.logs.create!(message: "No one is available to answer this call. Requesting voicemail recording.")
         _twiml.play(url: option_no_answer_media_url)
         _twiml.record(max_length: 60)
       else
+        adapter_alert.logs.create!(message: "No one is available to answer this call. Hangup on caller.")
         _twiml.say(message: "No one is available to answer this call. Goodbye.", **SPEAK_OPTIONS)
         _twiml.hangup
       end
@@ -376,6 +387,14 @@ module PagerTree::Integrations
       elsif event == "alert_dropped"
         _on_drop
       end
+    end
+
+    def max_wait_time_reached!(alert_id)
+      # Handle max wait time reached logic
+      self.adapter_alert = alerts.find(alert_id)
+      return unless adapter_alert&.status_open?
+
+      _on_max_wait_time_reached
     end
 
     private
@@ -469,9 +488,11 @@ module PagerTree::Integrations
         adapter_alert.logs.create!(message: "Transferring the call failed. #{account_user.user.name} has no phone number on file.")
       end
     rescue ::Twilio::REST::RestError => e
-      # 21220 - Unable to update record. Call is not in-progress. Cannot redirect.
-      if e.code != 21220
-        adapter_alert.logs.create!(message: "Transferring the call failed. #{e.message}")
+      if e.code == 21220
+        # 21220 - Unable to update record. Call is not in-progress. Cannot redirect.
+        adapter_alert.logs.create!(message: "[on_acknowledge] Transferring the call failed. The caller has already hung up.")
+      else
+        adapter_alert.logs.create!(message: "[on_acknowledge] Transferring the call failed. #{e.message}")
       end
     end
 
@@ -481,7 +502,21 @@ module PagerTree::Integrations
       _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: adapter_alert.thirdparty_id))
       adapter_alert.logs.create!(message: "Transferring the call succeeded.")
     rescue ::Twilio::REST::RestError => e
-      adapter_alert.logs.create!(message: "Transferring the call failed. #{e.message}")
+      if e.code == 21220
+        # 21220 - Unable to update record. Call is not in-progress. Cannot redirect
+        adapter_alert.logs.create!(message: "[on_drop] Transferring the call failed. The caller has already hung up.")
+      else
+        adapter_alert.logs.create!(message: "[on_drop] Transferring the call failed. #{e.message}")
+      end
+    end
+
+    def _on_max_wait_time_reached
+      # log that we are going to transfer
+      adapter_alert.logs.create!(message: "The max wait time was reached. Attempting to transfer the caller (via max wait time, to voicemail or hangup)...")
+      _call.update(url: PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: adapter_alert.thirdparty_id))
+      adapter_alert.logs.create!(message: "Transferring the caller (via max wait time, to voicemail or hangup) succeeded.")
+    rescue ::Twilio::REST::RestError => e
+      adapter_alert.logs.create!(message: "Transferring the caller (via max wait time, to voicemail or hangup) failed. #{e.message}")
     end
 
     def queue_destroy
