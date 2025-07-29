@@ -131,7 +131,7 @@ en:
       sentry:
         v3:
           form_options:
-            option_client_secret_hint_html: "The client secret can be used to authenticate requests from Sentry servers (optional)"
+            option_client_secret_hint_html: "Optional: The client secret can be used to authenticate requests from Sentry servers (only needed when 'internal integration' is being used)"
       server_guard24:
         v3:
           form_options:
