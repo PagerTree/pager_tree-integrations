@@ -37,6 +37,10 @@ dead_mans_snitch_v3:
   type: "PagerTree::Integrations::DeadMansSnitch::V3"
   # options: no_options
 
+dynatrace_v3:
+  type: "PagerTree::Integrations::Dynatrace::V3"
+  # options: no_options
+
 echoes_hq_v3:
   type: "PagerTree::Integrations::EchoesHq::V3"
   options:
