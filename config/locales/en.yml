@@ -153,7 +153,11 @@ en:
         v3:
           form_options:
             option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
-            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"       
+            option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"
+      zabbix:
+        v3:
+          form_options:
+            option_map_urgency_hint_html: "Map Zabbix event severity to PagerTree urgency"
       # SCAFFOLD_INTEGRATION
         
   
@@ -263,4 +267,6 @@ en:
       "pager_tree/integrations/webhook/v3":
         option_token: "PagerTree Token"
         option_capture_additional_data: "Capture Additional Data"
+      "pager_tree/integrations/zabbix/v3":
+        option_map_urgency: "Map Urgency"
       # SCAFFOLD_ACTIVE_RECORD
