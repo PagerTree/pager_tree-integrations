@@ -161,6 +161,10 @@ pulsetic_v3:
   type: "PagerTree::Integrations::Pulsetic::V3"
   # options: no_options
 
+scom_v3:
+  type: "PagerTree::Integrations::Scom::V3"
+  # options: no_options
+
 sentry_v3:
   type: "PagerTree::Integrations::Sentry::V3"
   # options: no_options
