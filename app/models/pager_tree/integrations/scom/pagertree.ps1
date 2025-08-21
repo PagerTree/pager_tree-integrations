@@ -93,7 +93,7 @@ try {
     }
 } 
 catch {
-    if ($enableLogging){Add-PagerTreeIntegrationLogEntry -logLevel "ERROR" -logMessage "PagerTree intergration script has failed to retrieved SCOM alert: Exception Type='$($_.Exception.GetType().FullName)',Exception Message='$($_.Exception.Message)'"}
+    if ($enableLogging){Add-PagerTreeIntegrationLogEntry -logLevel "ERROR" -logMessage "PagerTree integration script has failed to retrieve SCOM alert: Exception Type='$($_.Exception.GetType().FullName)',Exception Message='$($_.Exception.Message)'"}
     write-output $IntegrationLogEntry | Out-File $logfile  -Append
     exit
 }
