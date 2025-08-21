@@ -33,7 +33,7 @@ function Add-PagerTreeIntegrationLogEntry {
 
 
 
-if ($enableLogging){if (-not (Test-Path -LiteralPath  $logfile -PathType Leaf)){Write-Output "`"TimeStamp`",`"LogLevel`",`"SCOMAlertId`",`"LogMessage`"" | Out-File $logfile -Append};Add-PagerTreeIntegrationLogEntry  -logLevel "INFO" -logMessage "PagerTree intergration script has started  for alertId $($alertID)"}
+if ($enableLogging){if (-not (Test-Path -LiteralPath  $logfile -PathType Leaf)){Write-Output "`"TimeStamp`",`"LogLevel`",`"SCOMAlertId`",`"LogMessage`"" | Out-File $logfile -Append};Add-PagerTreeIntegrationLogEntry  -logLevel "INFO" -logMessage "PagerTree integration script has started  for alertId $($alertID)"}
  
 
 
