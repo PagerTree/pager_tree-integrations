@@ -8,21 +8,21 @@ module PagerTree::Integrations
       @integration = pager_tree_integrations_integrations(:scom_v3)
 
       @create_request = {
-        "owner": "np",
-        "lastModified": "12/24/2015 11:47:16 AM",
-        "resolutionState": "New",
-        "timeRaised": "12/24/2015 11:47:16 AM",
-        "resolutionStateLastModified": "np",
-        "workflowId": "{7eba60fd-b179-69a7-3897-47b6753601f2}",
-        "category": "Custom",
-        "alertId": "{2ba87d56-a7af-4b42-bdcc-eb18486bd8cd}",
-        "alertName": "Alert for event 999",
-        "priority": "1",
-        "severity": "2",
-        "createdByMonitor": "false",
-        "repeatCount": "0",
-        "alertDescription": "np",
-        "managedEntitySource": "WIN-RQTU8UB5TU5.pagertreecom.com"
+        owner: "np",
+        lastModified: "12/24/2015 11:47:16 AM",
+        resolutionState: "New",
+        timeRaised: "12/24/2015 11:47:16 AM",
+        resolutionStateLastModified: "np",
+        workflowId: "{7eba60fd-b179-69a7-3897-47b6753601f2}",
+        category: "Custom",
+        alertId: "{2ba87d56-a7af-4b42-bdcc-eb18486bd8cd}",
+        alertName: "Alert for event 999",
+        priority: "1",
+        severity: "2",
+        createdByMonitor: "false",
+        repeatCount: "0",
+        alertDescription: "np",
+        managedEntitySource: "WIN-RQTU8UB5TU5.pagertreecom.com"
       }.with_indifferent_access
 
       @resolve_request = @create_request.deep_dup
