@@ -7,7 +7,6 @@ module PagerTree::Integrations
     setup do
       @integration = pager_tree_integrations_integrations(:zabbix_v3)
 
-      # TODO: Write some requests to test the integration
       @create_request = {
         event_id: "23",
         event_source: "0",
