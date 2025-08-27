@@ -55,7 +55,7 @@ module PagerTree::Integrations
     end
 
     def _description
-      adapter_incoming_request_params.dig("description")
+      ["<pre>", adapter_incoming_request_params.dig("description"), "</pre>"].join
     end
 
     def _urgency
