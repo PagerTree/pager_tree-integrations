@@ -109,7 +109,12 @@ module PagerTree::Integrations
               },
               {
                 title: "Destinations",
-                value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
+                value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ").presence || "-",
+                short: "false"
+              },
+              {
+                title: "Acknowledged By",
+                value: _alert.alert_responders&.map { |r| r.account_user.name }&.join(", ").presence || "-",
                 short: "false"
               },
               {
