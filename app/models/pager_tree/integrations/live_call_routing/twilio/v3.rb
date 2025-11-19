@@ -20,6 +20,7 @@ module PagerTree::Integrations
     has_one_attached :option_music_media
     has_one_attached :option_no_answer_media
     has_one_attached :option_no_answer_thank_you_media
+    has_one_attached :option_no_answer_no_record_media
     has_one_attached :option_please_wait_media
     has_one_attached :option_welcome_media
 
@@ -66,6 +67,10 @@ module PagerTree::Integrations
 
     def option_no_answer_thank_you_media_url
       option_no_answer_thank_you_media.present? ? option_no_answer_thank_you_media.url : URI.join(Rails.application.routes.url_helpers.root_url, "audios/thanks-for-message.mp3").to_s
+    end
+
+    def option_no_answer_no_record_media_url
+      option_no_answer_no_record_media.present? ? option_no_answer_no_record_media.url : nil
     end
 
     def option_record_emails=(x)
@@ -358,8 +363,13 @@ module PagerTree::Integrations
         _twiml.play(url: option_no_answer_media_url)
         _twiml.record(max_length: 60)
       else
-        adapter_alert.logs.create!(message: "No one is available to answer this call. Hangup on caller.")
-        _twiml.say(message: "No one is available to answer this call. Goodbye.", **SPEAK_OPTIONS)
+        if option_no_answer_no_record_media_url.present?
+          adapter_alert.logs.create!(message: "No one is available to answer this call. Play media. Hangup on caller.")
+          _twiml.play(url: option_no_answer_no_record_media_url)
+        else
+          adapter_alert.logs.create!(message: "No one is available to answer this call. Say message. Hangup on caller.")
+          _twiml.say(message: "No one is available to answer this call. Goodbye.", **SPEAK_OPTIONS)
+        end
         _twiml.hangup
       end
 

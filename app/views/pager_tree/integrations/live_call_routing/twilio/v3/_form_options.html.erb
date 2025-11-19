@@ -66,6 +66,12 @@
   </div>
 
   <div class="form-group group">
+    <%= form.label :option_no_answer_no_record_media %>
+    <%= form.file_field :option_no_answer_no_record_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
+    <p class="form-hint"><%== t(".option_no_answer_no_record_media_hint_html") %></p>
+  </div>
+
+  <div class="form-group group">
     <%= form.check_box :option_force_input, class: "form-checkbox" %>
     <%= form.label :option_force_input, class: "inline-block" %>
     <p class="form-hint md:inline-block"><%== t(".option_force_input_hint_html") %></p>
