@@ -197,6 +197,12 @@ status_cake_v3:
   type: "PagerTree::Integrations::StatusCake::V3"
   # options: no_options
 
+status_gator_v3:
+  type: "PagerTree::Integrations::StatusGator::V3"
+  options:
+    create_on_warn: false
+    create_on_maintenance: false
+
 twilio_incoming_sms_v3:
   type: "PagerTree::Integrations::Twilio::IncomingSms::V3"
   # options: no_options

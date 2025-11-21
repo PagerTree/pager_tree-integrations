@@ -150,6 +150,11 @@ en:
             option_server_username_hint_html: "SolarWinds Server Username (needs to be account that has Alert access)"
             option_server_password_hint_html: "SolarWinds Server Password"
             option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
+      status_gator:
+        v3:
+          form_options:
+            option_create_on_warn_hint_html: "Create an alert when the status is WARN"
+            option_create_on_maintenance_hint_html: "Create an alert when the status is MAINTENANCE"
       webhook:
         v3:
           form_options:
@@ -266,6 +271,9 @@ en:
         option_server_username: "SolarWinds Username"
         option_server_password: "SolarWinds Password"
         option_proxy_url: "Proxy URL"
+      "pager_tree/integrations/status_gator/v3":
+        option_create_on_warn: "WARN create?"
+        option_create_on_maintenance: "MAINTENANCE create?"
       "pager_tree/integrations/webhook/v3":
         option_token: "PagerTree Token"
         option_capture_additional_data: "Capture Additional Data"
