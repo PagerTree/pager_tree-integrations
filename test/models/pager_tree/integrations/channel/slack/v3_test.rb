@@ -30,6 +30,13 @@ module PagerTree::Integrations
               name: "Team Bobcats"
             }
           }
+        ],
+        alert_responders: [
+          {
+            account_user: {
+              name: "Jane Doe"
+            }
+          }
         ]
       }.to_json, object_class: OpenStruct)
 
@@ -86,7 +93,12 @@ module PagerTree::Integrations
               },
               {
                 title: "Destinations",
-                value: @alert.alert_destinations&.map { |d| d.destination.name }&.join(", "),
+                value: @alert.alert_destinations&.map { |d| d.destination.name }&.join(", ").presence || "-",
+                short: "false"
+              },
+              {
+                title: "Acknowledged By",
+                value: @alert.alert_responders&.map { |r| r.account_user.name }&.join(", ").presence || "-",
                 short: "false"
               },
               {
