@@ -115,5 +115,77 @@ module PagerTree::Integrations
       assert @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"pagertree-token" => ""}}))
       assert_not @integration.adapter_should_block_incoming?(OpenStruct.new({headers: {"pagertree-token" => "abc123"}}))
     end
+
+    test "wrapper_key" do
+      @wrapped_create_request = {
+        jkl: @create_request
+      }.with_indifferent_access
+
+      @wrapped_acknowledge_request = {
+        jkl: @acknowledge_request
+      }.with_indifferent_access
+
+      @wrapped_resolve_request = {
+        jkl: @resolve_request
+      }.with_indifferent_access
+
+      @wrapped_other_request = {
+        jkl: @other_request
+      }.with_indifferent_access
+
+      @integration.option_wrapper_key = "jkl"
+
+      @integration.adapter_incoming_request_params = @wrapped_create_request
+      assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_acknowledge_request
+      assert_equal :acknowledge, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_resolve_request
+      assert_equal :resolve, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_other_request
+      assert_equal :other, @integration.adapter_action
+    end
+
+    test "wrapper_key_jmespath" do
+      @wrapped_create_request = {
+        abc: {
+          jkl: @create_request
+        }
+      }.with_indifferent_access
+
+      @wrapped_acknowledge_request = {
+        abc: {
+          jkl: @acknowledge_request
+        }
+      }.with_indifferent_access
+
+      @wrapped_resolve_request = {
+        abc: {
+          jkl: @resolve_request
+        }
+      }.with_indifferent_access
+
+      @wrapped_other_request = {
+        abc: {
+          jkl: @other_request
+        }
+      }.with_indifferent_access
+
+      @integration.option_wrapper_key = "abc.jkl"
+
+      @integration.adapter_incoming_request_params = @wrapped_create_request
+      assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_acknowledge_request
+      assert_equal :acknowledge, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_resolve_request
+      assert_equal :resolve, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @wrapped_other_request
+      assert_equal :other, @integration.adapter_action
+    end
   end
 end
