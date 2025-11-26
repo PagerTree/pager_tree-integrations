@@ -187,5 +187,19 @@ module PagerTree::Integrations
       @integration.adapter_incoming_request_params = @wrapped_other_request
       assert_equal :other, @integration.adapter_action
     end
+
+    test "wrapper_key_invalid_path" do
+      @integration.option_wrapper_key = "nonexistent.path"
+      @integration.adapter_incoming_request_params = @create_request
+      # Should gracefully handle missing path
+      assert_equal :create, @integration.adapter_action
+    end
+
+    test "wrapper_key_non_hash_value" do
+      @integration.option_wrapper_key = "array_key"
+      @integration.adapter_incoming_request_params = {array_key: ["not", "a", "hash"]}.with_indifferent_access
+      # Should fall back to original params or handle gracefully
+      assert_equal :other, @integration.adapter_action
+    end
   end
 end

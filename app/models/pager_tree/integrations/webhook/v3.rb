@@ -119,10 +119,16 @@ module PagerTree::Integrations
     end
 
     def _adapter_incoming_request_params
-      params = adapter_incoming_request_params
+      params = adapter_incoming_request_params || {}
       if option_wrapper_key.present?
-        wrapped = JMESPath.search(option_wrapper_key, params)
-        params = wrapped if wrapped.is_a?(Hash)
+        begin
+          wrapped = JMESPath.search(option_wrapper_key, params)
+          params = wrapped if wrapped.is_a?(Hash)
+        rescue JMESPath::Errors::Error
+          # Log the error or fall back to original params
+          adapter_source_log&.sublog("Invalid JMESPath expression in wrapper_key: #{option_wrapper_key}")
+          Rails.logger.warn("Integration #{id} Invalid JMESPath expression in wrapper_key: #{option_wrapper_key}")
+        end
       end
       params.transform_keys(&:downcase)
     end
