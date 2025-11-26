@@ -1,14 +1,18 @@
+require "jmespath"
+
 module PagerTree::Integrations
   class Webhook::V3 < Integration
     OPTIONS = [
       {key: :token, type: :string, default: nil},
-      {key: :capture_additional_data, type: :boolean, default: false}
+      {key: :capture_additional_data, type: :boolean, default: false},
+      {key: :wrapper_key, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
     after_initialize do
       self.option_token ||= nil
       self.option_capture_additional_data ||= false
+      self.option_wrapper_key ||= nil
     end
 
     def adapter_should_block_incoming?(request)
@@ -115,7 +119,18 @@ module PagerTree::Integrations
     end
 
     def _adapter_incoming_request_params
-      adapter_incoming_request_params.transform_keys(&:downcase)
+      params = adapter_incoming_request_params || {}
+      if option_wrapper_key.present?
+        begin
+          wrapped = JMESPath.search(option_wrapper_key, params)
+          params = wrapped if wrapped.is_a?(Hash)
+        rescue JMESPath::Errors::Error
+          # Log the error or fall back to original params
+          adapter_source_log&.sublog("Invalid JMESPath expression in wrapper_key: #{option_wrapper_key}")
+          Rails.logger.warn("Integration #{id} Invalid JMESPath expression in wrapper_key: #{option_wrapper_key}")
+        end
+      end
+      params.transform_keys(&:downcase)
     end
   end
 end

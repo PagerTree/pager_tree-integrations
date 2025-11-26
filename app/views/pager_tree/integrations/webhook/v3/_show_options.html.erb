@@ -24,3 +24,18 @@
     </div>
   </dd>
 </div>
+
+<% if integration.option_wrapper_key.present? %>
+  <div class="sm:col-span-2">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_wrapper_key") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <p class="text-sm truncate">
+          <%= integration.option_wrapper_key %>
+        </p>
+      </div>
+    </dd>
+  </div>
+<% end %>
