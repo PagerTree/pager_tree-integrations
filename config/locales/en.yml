@@ -36,6 +36,10 @@ en:
         v3:
           form_options:
             option_webhook_secret_hint_html: "Cloudflare Webhook Secret"
+      crowdstrike:
+        v3:
+          form_options:
+            option_hmac_secret_hint_html: "HMAC Secret to validate incoming requests from CrowdStrike"
       datadog:
         v3:
           form_options:
@@ -194,6 +198,8 @@ en:
         option_time_zone: "Display Time Zone"
       "pager_tree/integrations/cloudflare/v3":
         option_webhook_secret: "Webhook Secret"
+      "pager_tree/integrations/crowdstrike/v3":
+        option_hmac_secret: "HMAC Secret"
       "pager_tree/integrations/datadog/v3":
         option_support_retriggered_event: "Retriggered Event"
       "pager_tree/integrations/echoes_hq/v3":
