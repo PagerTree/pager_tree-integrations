@@ -3,10 +3,10 @@ module PagerTree::Integrations
     extend ::PagerTree::Integrations::Env
 
     OPTIONS = [
-      {key: :custom_definition, type: :string, default: nil},
+      {key: :custom_definition, type: :string, default: nil}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
-    
+
     validates :option_custom_definition, presence: true
 
     def self.custom_webhook_v3_service_url
@@ -60,7 +60,6 @@ module PagerTree::Integrations
     end
 
     private
-    
 
     def _custom_response
       @_custom_response ||= begin
@@ -78,7 +77,7 @@ module PagerTree::Integrations
             log: log_hash,
             config: option_custom_definition
           }.to_json,
-          headers: {'Content-Type' => 'application/json'},
+          headers: {"Content-Type" => "application/json"},
           timeout: 2
         )
 

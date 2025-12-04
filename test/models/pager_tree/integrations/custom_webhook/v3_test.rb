@@ -126,7 +126,6 @@ module PagerTree::Integrations
       end
     end
 
-
     test "adapter_thirdparty_id" do
       VCR.use_cassette("custom_webhook_v3_adapter_thirdparty_id") do
         @integration.adapter_incoming_request_params = @create_request
