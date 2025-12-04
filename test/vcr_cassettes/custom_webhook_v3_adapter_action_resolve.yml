@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<INTEGRATION_CUSTOM_WEBHOOK_V3_SERVICE_URL>"
+    body:
+      encoding: UTF-8
+      string: '{"log":{"url":"https://integration.url/int_123","method":"post","headers":{"User-Agent":"UptimeRobot/1.0","Content-Type":"application/json"},"data":{"monitorID":"12345","alertTypeFriendlyName":"Up","monitorFriendlyName":"My
+        Website","alertDetails":"Connection timeout","monitorURL":"https://example.com","urgency":"high","alertDateTime":1733126400},"remote_ip":"127.0.0.1"},"config":"---\nrules:\n  -
+        match:\n      log.data.alertTypeFriendlyName: { $regex: \"^down$\", $options:
+        \"i\" }\n    actions:\n      - type: create\n        title: \"{{log.data.monitorFriendlyName}}
+        is DOWN\"\n        description: \"{{log.data.monitorFriendlyName}} is DOWN
+        because {{log.data.alertDetails}}\"\n        urgency: \"{{log.data.urgency}}\"\n        dedup_keys:
+        \"xyz\"\n        incident: \"true\"\n        incident_severity: \"SEV-2\"\n        incident_message:
+        \"Please join the bridge\"\n        tags:\n        - monitor\n        - website\n        meta:\n          key1:
+        value1\n          key2: value2\n        thirdparty_id: \"{{log.data.monitorID}}\"\n        additional_data:\n          -
+        format: link\n            label: Monitor URL\n            value: \"{{log.data.monitorURL}}\"\n          -
+        format: datetime\n            label: Triggered At\n            value: \"{{log.data.alertDateTime}}\"\n  \n  -
+        match:\n      log.data.alertTypeFriendlyName: { $regex: \"^pending$\", $options:
+        \"i\" }\n    actions:\n      - type: acknowledge\n\n  - match:\n      log.data.alertTypeFriendlyName:
+        { $regex: \"^up$\", $options: \"i\" }\n    actions:\n      - type: resolve\n        thirdparty_id:
+        \"{{log.data.monitorID}}\"\n  \n  - match:\n      log.data.alertTypeFriendlyName:
+        \"Paused\"\n    actions:\n      - type: ignore\n"}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"51-8M7almSHkFxbSJ4rfby4exEWahM"
+      Date:
+      - Thu, 04 Dec 2025 01:15:08 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Server:
+      - Fly/340afcba (2025-12-03)
+      Via:
+      - 1.1 fly.io, 1.1 fly.io
+      Fly-Request-Id:
+      - 01KBKETRNEK34SSXKSNC7GQCGK-lax
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":[{"type":"resolve","thirdparty_id":"12345"}],"status":"query
+        matched"}'
+  recorded_at: Thu, 04 Dec 2025 01:15:07 GMT
+recorded_with: VCR 6.0.0

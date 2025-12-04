@@ -36,6 +36,10 @@ en:
         v3:
           form_options:
             option_webhook_secret_hint_html: "Cloudflare Webhook Secret"
+      custom_webhook:
+        v3:
+          form_options:
+            option_custom_definition_hint_html: "YAML definition for the custom webhook. <a href='https://pagertree.com/docs/integration-guides/custom_webhook' target='_blank'>See docs 🔗.</a>"
       datadog:
         v3:
           form_options:
@@ -192,6 +196,8 @@ en:
         option_thread_same_alert: "Thread Same Alert"
       "pager_tree/integrations/channel/microsoft_teams/v3":
         option_time_zone: "Display Time Zone"
+      "pager_tree/integration/custom_webhook/v3":
+        option_custom_definition: "YAML Definition"
       "pager_tree/integrations/cloudflare/v3":
         option_webhook_secret: "Webhook Secret"
       "pager_tree/integrations/datadog/v3":

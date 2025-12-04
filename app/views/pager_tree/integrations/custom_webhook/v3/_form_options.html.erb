@@ -1,0 +1,8 @@
+<div class="grid grid-cols-1 gap-4">
+  <%= tag.div class: "form-group group", data: {controller: "code-editor", code_editor_language_value: "yaml", code_editor_read_only_value: false } do %>
+    <%= form.label :option_custom_definition %>
+    <%= form.hidden_field :option_custom_definition, class: "form-control", data: {code_editor_target: "form"} %>
+    <%= tag.div class: "h-96", data: {code_editor_target: "editor"} do %><%= form.object.option_custom_definition %><% end %>
+    <p class="form-hint"><%== t(".option_custom_definition_hint_html") %></p>
+  <% end %>
+</div>
