@@ -96,13 +96,19 @@ module PagerTree::Integrations
 
         unless response.success?
           if response.parsed_response.dig("error").present?
-            adapter_source_log&.sublog("Custom Webhook Service Error: #{response.parsed_response.dig("error")}")
+            adapter_source_log&.sublog({
+              message: "Custom Webhook Service Error:",
+              parsed_response: response.parsed_response
+            })
             adapter_source_log&.save
           end
           raise "Custom Webhook Service HTTP error: #{response.code} - #{response.message} - #{response.body}"
         end
 
-        adapter_source_log&.sublog("Custom Webhook Service Response: #{response.parsed_response}")
+        adapter_source_log&.sublog({
+          message: "Custom Webhook Service Response:",
+          parsed_response: response.parsed_response
+        })
         adapter_source_log&.save
 
         response.parsed_response
