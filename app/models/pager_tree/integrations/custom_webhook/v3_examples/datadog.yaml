@@ -1,7 +1,7 @@
 ---
 rules:
   - match:
-      log.data.alert_type: "error"
+      log.data.event_type: "trigger"
       log.data.priority: "high"
     actions:
       - type: create

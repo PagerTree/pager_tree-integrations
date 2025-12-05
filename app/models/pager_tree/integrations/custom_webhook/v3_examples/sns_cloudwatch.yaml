@@ -4,12 +4,12 @@ preprocess:
 rules:
   - match:
       log.data.Type: "Notification"
-      log.data.data.NewStateValue: "ALARM"
+      log.data.Message.NewStateValue: "ALARM"
     actions:
       - type: create
         title: "{{sanitize log.data.Subject}}"
-        description: "{{log.data.data.NewStateReason}}"
-        thirdparty_id: "{{log.data.data.AlarmArn}}"
+        description: "{{log.data.Message.NewStateReason}}"
+        thirdparty_id: "{{log.data.Message.AlarmArn}}"
         additional_data:
           - format: text
             label: Event Category
@@ -38,10 +38,10 @@ rules:
 
   - match:
       log.data.Type: "Notification"
-      log.data.data.NewStateValue: "OK"
+      log.data.Message.NewStateValue: "OK"
     actions:
       - type: resolve
-        thirdparty_id: "{{log.data.data.AlarmArn}}"
+        thirdparty_id: "{{log.data.Message.AlarmArn}}"
 default:
   actions:
     - type: ignore

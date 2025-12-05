@@ -20,7 +20,6 @@ rules:
     actions:
       - type: resolve
         thirdparty_id: "{{log.data.monitorID}}"
-        message: "{{log.data.monitorFriendlyName}} is back UP"
 
 default:
   actions:
