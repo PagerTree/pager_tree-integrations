@@ -59,24 +59,34 @@ module PagerTree::Integrations
       )
     end
 
+    def custom_response_processed_log_data
+      _custom_response_processed_log_data || {}
+    end
+
     private
 
     def _custom_response
+      return {} unless adapter_incoming_deferred_request.present?
+
       @_custom_response ||= begin
         log_hash = {
+          remote_ip: adapter_incoming_deferred_request.remote_ip,
           url: adapter_incoming_deferred_request.url,
           method: adapter_incoming_deferred_request.method,
           headers: adapter_incoming_deferred_request.headers,
-          data: adapter_incoming_deferred_request.body,
-          remote_ip: adapter_incoming_deferred_request.remote_ip
+          data: adapter_incoming_deferred_request.params.presence || adapter_incoming_deferred_request.body,
+          params: adapter_incoming_deferred_request.params,
+          body: adapter_incoming_deferred_request.body
+        }
+
+        body_hash = {
+          log: log_hash,
+          config: JSON.parse(PagerTree::Integrations::FormatConverters::YamlJsonConverter.convert_to_json(option_custom_definition))
         }
 
         response = HTTParty.post(
           self.class.custom_webhook_v3_service_url,
-          body: {
-            log: log_hash,
-            config: option_custom_definition
-          }.to_json,
+          body: body_hash.to_json,
           headers: {"Content-Type" => "application/json"},
           timeout: 2
         )
@@ -86,16 +96,28 @@ module PagerTree::Integrations
             adapter_source_log&.sublog("Custom Webhook Service Error: #{response.parsed_response.dig("error")}")
             adapter_source_log&.save
           end
-          raise "HTTP error: #{response.code} - #{response.message} - #{response.body}"
+          raise "Custom Webhook Service HTTP error: #{response.code} - #{response.message} - #{response.body}"
         end
 
         adapter_source_log&.sublog("Custom Webhook Service Response: #{response.parsed_response}")
         adapter_source_log&.save
 
         response.parsed_response
+      rescue JSON::ParserError => e
+        Rails.logger.error("Custom Webhook YAML to JSON conversion error: #{e.message}")
+        adapter_source_log&.sublog("Custom Webhook YAML to JSON conversion error: #{e.message}")
+        adapter_source_log&.save
+        raise "Invalid YAML configuration: #{e.message}"
       rescue HTTParty::Error, SocketError, Net::OpenTimeout, Net::ReadTimeout => e
-        Rails.logger.error("CustomWebhook service error: #{e.message}")
-        raise "Failed to call custom webhook service: #{e.message}"
+        Rails.logger.error("Custom Webhook Service error: #{e.message}")
+        adapter_source_log&.sublog("Custom Webhook Service error: #{e.message}")
+        adapter_source_log&.save
+        raise "Custom Webhook Service error #{e.message}"
+      rescue => e
+        Rails.logger.error("Unexpected error in Custom Webhook: #{e.message}")
+        adapter_source_log&.sublog("Unexpected error in Custom Webhook: #{e.message}")
+        adapter_source_log&.save
+        raise e
       end
     end
 
@@ -107,20 +129,25 @@ module PagerTree::Integrations
       @_custom_response_result ||= _custom_response.dig("results")&.first || {}
     end
 
+    def _custom_response_processed_log_data
+      @_custom_response_processed_log_data ||= _custom_response.dig("processedLogData")
+    end
+
     def _title
-      custom_response_result.dig("title")
+      custom_response_result.dig("title")&.to_s&.presence || "Untitled Alert"
     end
 
     def _description
-      custom_response_result.dig("description")
+      custom_response_result.dig("description")&.to_s || ""
     end
 
     def _urgency
-      custom_response_result.dig("urgency")
+      custom_response_result.dig("urgency")&.to_s&.presence
     end
 
     def _dedup_keys
       keys = custom_response_result.dig("dedup_keys")
+      keys = keys.split(",") if keys.is_a?(String)
       Array(keys).compact_blank.map(&:to_s).uniq
     end
 
@@ -129,24 +156,42 @@ module PagerTree::Integrations
     end
 
     def _incident_severity
-      custom_response_result.dig("incident_severity")
+      custom_response_result.dig("incident_severity")&.to_s&.presence
     end
 
     def _incident_message
-      custom_response_result.dig("incident_message")
+      custom_response_result.dig("incident_message")&.to_s&.presence
     end
 
     def _tags
       tags = custom_response_result.dig("tags")
+      tags = tags.split(",") if tags.is_a?(String)
       Array(tags).compact_blank.map(&:to_s).uniq
     end
 
     def _meta
-      custom_response_result.dig("meta") || {}
+      meta = custom_response_result.dig("meta")
+      meta.is_a?(Hash) ? meta : {}
     end
 
     def _additional_datums
-      custom_response_result.dig("additional_data") || []
+      @_additional_datums ||= begin
+        items = custom_response_result.dig("additional_data") || []
+        items = [items] unless items.is_a?(Array)
+
+        items.each_with_object([]) do |ad, result|
+          next unless ad.is_a?(Hash)
+
+          format = ad["format"].to_s
+          next unless PagerTree::Integrations::AdditionalDatum::FORMATS.include?(format)
+
+          result << AdditionalDatum.new(
+            format: format,
+            label: ad["label"].to_s.presence || "Untitled",
+            value: ad["value"]
+          )
+        end
+      end
     end
   end
 end

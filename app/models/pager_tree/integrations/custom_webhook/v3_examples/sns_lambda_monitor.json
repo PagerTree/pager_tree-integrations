@@ -1,0 +1,31 @@
+{
+  "client": null,
+  "client_url": null,
+  "contexts": null,
+  "description": "LAMBDA FUNCTIONS WITH RECENT ERRORS:\n\n• example-lambda-function (us-east-1)\n  Last execution: 2025-11-13\n  Errors (last 7 runs): 3\n  Most recent error: 2025-11-13\n\nDashboard: https://example.com/dashboard\nGenerated: 2025-11-14 08:07 UTC",
+  "event_type": "trigger",
+  "incident_key": "generic-incident-key",
+  "service_key": "generic-service-key",
+  "details": {
+    "Message": "LAMBDA FUNCTIONS WITH RECENT ERRORS:\n\n• example-lambda-function (us-east-1)\n  Last execution: 2025-11-13\n  Errors (last 7 runs): 3\n  Most recent error: 2025-11-13\n\nDashboard: https://example.com/dashboard\nGenerated: 2025-11-14 08:07 UTC",
+    "MessageAttributes": {
+      "severity": {
+        "Type": "String",
+        "Value": "error"
+      },
+      "source": {
+        "Type": "String",
+        "Value": "lambda-monitoring"
+      }
+    },
+    "MessageId": "generic-message-id",
+    "Signature": "generic-signature",
+    "SignatureVersion": "1",
+    "SigningCertURL": "https://sns.us-east-1.amazonaws.com/SimpleNotificationService-generic.pem",
+    "Subject": "AWS Lambda Functions Failing: 1 function with recent errors detected",
+    "Timestamp": "2025-11-14T08:07:35.435Z",
+    "TopicArn": "arn:aws:sns:us-east-1:generic-account:sns-generic-topic",
+    "Type": "Notification",
+    "UnsubscribeURL": "https://sns.us-east-1.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-east-1:generic-account:sns-generic-topic:generic-sub-arn"
+  }
+}

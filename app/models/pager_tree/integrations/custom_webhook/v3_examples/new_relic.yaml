@@ -1,0 +1,32 @@
+---
+rules:
+  - match:
+      log.data.currentState: "open"
+      log.data.severity: "CRITICAL"
+    actions:
+      - type: create
+        title: "{{log.data.accumulations.policyName.[0]}} - {{log.data.accumulations.conditionName.[0]}}"
+        description: "{{log.data.annotations.description}} - Details: {{log.data.details}}"
+        thirdparty_id: "{{log.data.incidentId}}"
+        urgency: "high"
+        additional_data:
+          - format: link
+            label: Incident URL
+            value: "{{log.data.incidentUrl}}"
+          - format: link
+            label: Policy URL
+            value: "{{log.data.policyUrl}}"
+          - format: text
+            label: Targets
+            value: "{{log.data.targets.[0].name}} ({{log.data.targets.[0].type}})"
+
+  - match:
+      log.data.currentState: "closed"
+    actions:
+      - type: resolve
+        thirdparty_id: "{{log.data.incidentId}}"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled New Relic alert"

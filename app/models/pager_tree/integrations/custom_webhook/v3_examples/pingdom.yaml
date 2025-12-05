@@ -1,0 +1,23 @@
+---
+rules:
+  - match:
+      log.data.details.check_name: { $regex: "example.com check HTTP" }
+      log.data.event_type: "trigger"
+    actions:
+      - type: create
+        title: "Pingdom Alert: {{log.data.description}}"
+        description: "{{log.data.details.long_description}} for {{log.data.details.full_url}}"
+        thirdparty_id: "{{log.data.details.check_id}}"
+        tags: "{{log.data.details.tags}}"
+        additional_data:
+          - format: text
+            label: Hostname
+            value: "{{log.data.details.hostname}}"
+          - format: link
+            label: View in Pingdom
+            value: "https://my.pingdom.com/newchecks/checks"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled Pingdom alert"

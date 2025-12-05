@@ -1,0 +1,25 @@
+{
+  "dashboardId": 1,
+  "evalMatches": [
+    {
+      "value": 100,
+      "metric": "High value",
+      "tags": null
+    },
+    {
+      "value": 8,
+      "metric": "Lower value",
+      "tags": null
+    }
+  ],
+  "imageUrl": "https://example.com/image/generic.png",
+  "message": "Someone is testing the alert notification within Grafana.",
+  "orgId": 1,
+  "panelId": 2,
+  "ruleId": 1,
+  "ruleName": "Panel Title alert",
+  "ruleUrl": "https://example.com/d/generic-dashboard/alerting/generic-rule/edit",
+  "state": "alerting",
+  "tags": {},
+  "title": "[Alerting] Panel Title alert"
+}
