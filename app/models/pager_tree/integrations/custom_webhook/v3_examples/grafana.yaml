@@ -1,0 +1,33 @@
+---
+rules:
+  - match:
+      log.data.state: "alerting"
+    actions:
+      - type: create
+        title: "{{log.data.title}}"
+        description: "{{log.data.message}}"
+        thirdparty_id: "{{log.data.ruleId}}"
+        additional_data:
+          - format: text
+            label: Dashboard ID
+            value: "{{log.data.dashboardId}}"
+          - format: link
+            label: Rule URL
+            value: "{{log.data.ruleUrl}}"
+          - format: img
+            label: Alert Image
+            value: "{{log.data.imageUrl}}"
+          - format: text
+            label: Eval Matches
+            value: "{{log.data.evalMatches.[0].metric}}: {{log.data.evalMatches.[0].value}}"
+
+  - match:
+      log.data.state: "ok"
+    actions:
+      - type: resolve
+        thirdparty_id: "{{log.data.ruleId}}"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled Grafana alert"

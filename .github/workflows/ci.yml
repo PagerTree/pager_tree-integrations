@@ -53,6 +53,7 @@ jobs:
           HOOK_RELAY_API_KEY: "${{secrets.HOOK_RELAY_API_KEY}}"
           HOOK_RELAY_ACCOUNT_ID: "${{secrets.HOOK_RELAY_ACCOUNT_ID}}"
           HOOK_RELAY_HOOK_ID: "${{secrets.HOOK_RELAY_HOOK_ID}}"
+          INTEGRATION_CUSTOM_WEBHOOK_V3_SERVICE_URL: "${{secrets.INTEGRATION_CUSTOM_WEBHOOK_V3_SERVICE_URL}}"
         run: |
           bin/rails db:test:prepare
           bin/rails test

@@ -1,0 +1,27 @@
+---
+rules:
+  - match:
+      log.data.alertTypeFriendlyName: { $regex: "^down$", $options: "i" }
+    actions:
+      - type: create
+        title: "{{log.data.monitorFriendlyName}} is DOWN"
+        description: "{{log.data.monitorFriendlyName}} is DOWN because {{log.data.alertDetails}}"
+        thirdparty_id: "{{log.data.monitorID}}"
+        additional_data:
+          - format: link
+            label: Monitor URL
+            value: "{{log.data.monitorURL}}"
+          - format: datetime
+            label: Triggered At
+            value: "{{unix-timezone log.data.alertDateTime 'UTC' 'YYYY-MM-DD HH:mm:ss'}}"
+
+  - match:
+      log.data.alertTypeFriendlyName: { $regex: "^up$", $options: "i" }
+    actions:
+      - type: resolve
+        thirdparty_id: "{{log.data.monitorID}}"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled UptimeRobot alert type: {{log.data.alertTypeFriendlyName}}"

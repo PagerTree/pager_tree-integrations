@@ -1,0 +1,9 @@
+{
+    "monitorID": "12345",
+    "alertTypeFriendlyName": "Down",
+    "monitorFriendlyName": "My Website",
+    "alertDetails": "Connection timeout",
+    "monitorURL": "https://example.com",
+    "urgency": "high",
+    "alertDateTime": 1733126400
+}

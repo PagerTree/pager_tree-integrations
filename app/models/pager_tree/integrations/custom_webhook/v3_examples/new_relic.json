@@ -1,0 +1,40 @@
+{
+  "accumulations": {
+    "policyName": [
+      "Example Policy"
+    ],
+    "conditionName": [
+      "High Error Rate"
+    ]
+  },
+  "annotations": {
+    "description": "Error rate > 5% for 5 minutes",
+    "reason": "Threshold exceeded"
+  },
+  "closedViolations": [],
+  "currentState": "open",
+  "details": "Error rate is 7.2%",
+  "eventType": "INCIDENT",
+  "incidentId": "generic-incident-id",
+  "incidentUrl": "https://example.com/alerts/generic-id",
+  "openViolations": [
+    {
+      "createdAt": 1733126400000,
+      "label": "High Error Rate",
+      "violationId": "generic-violation-id"
+    }
+  ],
+  "owner": "alerts@example.com",
+  "policyUrl": "https://example.com/policies/generic-policy",
+  "severity": "CRITICAL",
+  "targets": [
+    {
+      "id": "generic-entity-id",
+      "name": "Example App",
+      "type": "Application",
+      "link": "https://example.com/entities/generic-entity"
+    }
+  ],
+  "timestamp": 1733126400000,
+  "version": 3
+}

@@ -1,0 +1,12 @@
+{
+  "Type": "Notification",
+  "MessageId": "[REDACTED]",
+  "TopicArn": "arn:aws:sns:us-west-2:[ACCOUNT_ID]:[TOPIC_NAME]",
+  "Subject": "ALARM: \"[ALARM_NAME]\" in US West (Oregon)",
+  "Message": "{\"AlarmName\":\"[ALARM_NAME]\",\"AlarmDescription\":null,\"AWSAccountId\":\"[ACCOUNT_ID]\",\"AlarmConfigurationUpdatedTimestamp\":\"2025-12-05T18:57:39.128+0000\",\"NewStateValue\":\"OK\",\"NewStateReason\":\"Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [Breaching].\",\"StateChangeTime\":\"2025-12-05T18:59:34.547+0000\",\"Region\":\"US West (Oregon)\",\"AlarmArn\":\"arn:aws:cloudwatch:us-west-2:[ACCOUNT_ID]:alarm:[ALARM_NAME]\",\"OldStateValue\":\"OK\",\"OKActions\":[\"arn:aws:sns:us-west-2:[ACCOUNT_ID]:[TOPIC_NAME]\"],\"AlarmActions\":[\"arn:aws:sns:us-west-2:[ACCOUNT_ID]:[TOPIC_NAME]\"],\"InsufficientDataActions\":[],\"Trigger\":{\"MetricName\":\"CallCount\",\"Namespace\":\"AWS/Usage\",\"StatisticType\":\"Statistic\",\"Statistic\":\"AVERAGE\",\"Unit\":null,\"Dimensions\":[{\"value\":\"API\",\"name\":\"Type\"},{\"value\":\"SendLast24Hours\",\"name\":\"Resource\"},{\"value\":\"SES\",\"name\":\"Service\"},{\"value\":\"None\",\"name\":\"Class\"}],\"Period\":60,\"EvaluationPeriods\":1,\"DatapointsToAlarm\":1,\"ComparisonOperator\":\"GreaterThanThreshold\",\"Threshold\":1.0,\"TreatMissingData\":\"breaching\",\"EvaluateLowSampleCountPercentile\":\"\"}}",
+  "Timestamp": "2025-12-05T18:59:34.596Z",
+  "SignatureVersion": "1",
+  "Signature": "[REDACTED]",
+  "SigningCertURL": "https://sns.us-west-2.amazonaws.com/SimpleNotificationService-[REDACTED].pem",
+  "UnsubscribeURL": "https://sns.us-west-2.amazonaws.com/?Action=Unsubscribe&SubscriptionArn=arn:aws:sns:us-west-2:[ACCOUNT_ID]:[TOPIC_NAME]:[SUBSCRIPTION_ID]"
+}
