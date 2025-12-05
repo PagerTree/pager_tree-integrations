@@ -1,0 +1,48 @@
+---
+preprocess:
+  - type: parse_sns
+rules:
+  - match:
+      log.data.Type: "Notification"
+      log.data.data.NewStateValue: "ALARM"
+    actions:
+      - type: create
+        title: "{{sanitize log.data.Subject}}"
+        description: "{{log.data.data.NewStateReason}}"
+        thirdparty_id: "{{log.data.data.AlarmArn}}"
+        additional_data:
+          - format: text
+            label: Event Category
+            value: "scheduledChange"
+          - format: text
+            label: Affected Resources
+            value: "example-service|example-backend"
+          - format: link
+            label: Fargate Platform Docs
+            value: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/platform-fargate.html"
+          - format: link
+            label: Task Maintenance Docs
+            value: "https://docs.aws.amazon.com/AmazonECS/latest/userguide/task-maintenance.html"
+          - format: link
+            label: Service Definition Params
+            value: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service_definition_parameters.html#sd-deploymentconfiguration"
+          - format: link
+            label: Fargate Notifications Blog
+            value: "https://aws.amazon.com/blogs/containers/improving-operational-visibility-with-aws-fargate-task-retirement-notifications/"
+          - format: link
+            label: Create Deployment CLI
+            value: "https://docs.aws.amazon.com/cli/latest/reference/deploy/create-deployment.html"
+          - format: link
+            label: AWS Support
+            value: "https://aws.amazon.com/support"
+
+  - match:
+      log.data.Type: "Notification"
+      log.data.data.NewStateValue: "OK"
+    actions:
+      - type: resolve
+        thirdparty_id: "{{log.data.data.AlarmArn}}"
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled AWS Health Event"
