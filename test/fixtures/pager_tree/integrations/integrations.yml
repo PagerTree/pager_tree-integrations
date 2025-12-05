@@ -27,7 +27,7 @@ cloudflare_v3:
 
 custom_webhook_v3:
   type: "PagerTree::Integrations::CustomWebhook::V3"
-  # optionss: no_options
+  # options: no_options
 
 cronitor_v3:
   type: "PagerTree::Integrations::Cronitor::V3"
