@@ -2,6 +2,9 @@ module PagerTree::Integrations
   class CustomWebhook::V3 < Integration
     extend ::PagerTree::Integrations::Env
 
+    # the source log (if created) - Its what shows on the integration page (different from deferred request)
+    attribute :adapter_source_log
+
     OPTIONS = [
       {key: :custom_definition, type: :string, default: nil}
     ]
