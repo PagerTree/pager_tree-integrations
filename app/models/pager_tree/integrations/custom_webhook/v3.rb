@@ -89,6 +89,9 @@ module PagerTree::Integrations
           raise "HTTP error: #{response.code} - #{response.message} - #{response.body}"
         end
 
+        adapter_source_log&.sublog("Custom Webhook Service Response: #{response.parsed_response}")
+        adapter_source_log&.save
+
         response.parsed_response
       rescue HTTParty::Error, SocketError, Net::OpenTimeout, Net::ReadTimeout => e
         Rails.logger.error("CustomWebhook service error: #{e.message}")
@@ -101,7 +104,7 @@ module PagerTree::Integrations
     end
 
     def custom_response_result
-      @_custom_response_result ||= _custom_response.dig("results")&.first
+      @_custom_response_result ||= _custom_response.dig("results")&.first || {}
     end
 
     def _title

@@ -33,3 +33,5 @@ module PagerTree
     @@integration_sentry_v3_client_secret = ""
   end
 end
+
+require_relative "integrations/format_converters/yaml_json_converter"
