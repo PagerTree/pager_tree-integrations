@@ -39,7 +39,7 @@ en:
       custom_webhook:
         v3:
           form_options:
-            option_custom_definition_hint_html: "YAML definition for the custom webhook. <a href='https://pagertree.com/docs/integration-guides/custom_webhook' target='_blank'>See docs 🔗.</a>"
+            option_custom_definition_hint_html: "YAML definition for the custom webhook. <a href='https://pagertree.com/docs/integration-guides/custom-webhook' target='_blank'>See docs 🔗.</a>"
       datadog:
         v3:
           form_options:
