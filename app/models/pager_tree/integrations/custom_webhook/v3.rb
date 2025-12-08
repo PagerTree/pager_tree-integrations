@@ -121,7 +121,7 @@ module PagerTree::Integrations
         Rails.logger.error("Custom Webhook Service error: #{e.message}")
         adapter_source_log&.sublog("Custom Webhook Service error: #{e.message}")
         adapter_source_log&.save
-        raise "Custom Webhook Service error #{e.message}"
+        raise "Custom Webhook Service error: #{e.message}"
       rescue => e
         Rails.logger.error("Unexpected error in Custom Webhook: #{e.message}")
         adapter_source_log&.sublog("Unexpected error in Custom Webhook: #{e.message}")
