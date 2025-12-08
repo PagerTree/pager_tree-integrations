@@ -1,0 +1,30 @@
+---
+rules:
+  - match:
+      log.data.event_type: "trigger"
+      log.data.priority: "high"
+    actions:
+      - type: create
+        title: "{{log.data.title}}"
+        description: "{{log.data.text}}"
+        thirdparty_id: "{{log.data.id}}"
+        urgency: "high"
+        tags: "{{log.data.tags}}"
+        additional_data:
+          - format: text
+            label: Host
+            value: "{{log.data.host}}"
+          - format: text
+            label: Source
+            value: "{{log.data.source}}"
+
+  - match:
+      log.data.event_type: "resolve"
+    actions:
+      - type: resolve
+        thirdparty_id: "{{log.data.id}}"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled Datadog alert"

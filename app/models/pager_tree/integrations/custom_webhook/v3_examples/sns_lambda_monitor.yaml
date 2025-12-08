@@ -1,0 +1,24 @@
+---
+preprocess:
+  - type: parse_sns
+rules:
+  - match:
+      log.data.details.MessageAttributes.severity.Value: "error"
+      log.data.details.MessageAttributes.source.Value: "lambda-monitoring"
+    actions:
+      - type: create
+        title: "{{log.data.details.Subject}}"
+        description: "{{log.data.details.Message}}"
+        thirdparty_id: "{{log.data.details.MessageId}}"
+        additional_data:
+          - format: link
+            label: Dashboard
+            value: "https://example.com/dashboard"
+          - format: text
+            label: Generated
+            value: "2025-11-14 08:07 UTC"
+
+default:
+  actions:
+    - type: ignore
+      reason: "Unhandled SNS notification type"

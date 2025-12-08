@@ -1,0 +1,12 @@
+{
+  "id": "generic-alert-id",
+  "title": "High CPU Usage",
+  "text": "CPU usage exceeded 90% for more than 5 minutes",
+  "priority": "high",
+  "tags": ["env:prod", "service:web"],
+  "host": "example-host",
+  "alert_type": "error",
+  "aggregation_key": "cpu-alert",
+  "source": "datadog",
+  "event_type": "trigger"
+}

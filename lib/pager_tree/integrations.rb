@@ -17,6 +17,9 @@ module PagerTree
     mattr_accessor :outgoing_webhook_delivery_table_name
     @@outgoing_webhook_delivery_table_name = "pager_tree_integrations_outgoing_webhook_deliveries"
 
+    mattr_accessor :integration_custom_webhook_v3_service_url
+    @@integration_custom_webhook_v3_service_url = ""
+
     mattr_accessor :integration_email_v3_domain
     @@integration_email_v3_domain = "alerts.pagertree.com"
 
@@ -30,3 +33,5 @@ module PagerTree
     @@integration_sentry_v3_client_secret = ""
   end
 end
+
+require_relative "integrations/format_converters/yaml_json_converter"

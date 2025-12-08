@@ -25,6 +25,10 @@ cloudflare_v3:
   options:
     webhook_secret: "abc123"
 
+custom_webhook_v3:
+  type: "PagerTree::Integrations::CustomWebhook::V3"
+  # options: no_options
+
 cronitor_v3:
   type: "PagerTree::Integrations::Cronitor::V3"
   # options: no_options

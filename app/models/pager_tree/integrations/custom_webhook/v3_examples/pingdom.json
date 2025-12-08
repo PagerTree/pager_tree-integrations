@@ -1,0 +1,30 @@
+{
+  "client": null,
+  "client_url": null,
+  "contexts": [
+    {
+      "href": "https://my.pingdom.com/newchecks/checks",
+      "text": "View in Pingdom",
+      "type": "link"
+    }
+  ],
+  "description": "Redirection error",
+  "event_type": "trigger",
+  "incident_key": "generic-incident-key",
+  "service_key": "generic-service-key",
+  "details": {
+    "check_id": "generic-check-id",
+    "check_name": "example.com check HTTP",
+    "full_url": "https://example.com/",
+    "header": "User-Agent:Pingdom.com_bot_version_1.4[](http://www.pingdom.com/)",
+    "hostname": "example.com",
+    "long_description": "Could not find redirect location",
+    "tags": [
+      "environment:prod",
+      "generic:monitoring",
+      "owner:devops",
+      "http"
+    ],
+    "url": "/"
+  }
+}
