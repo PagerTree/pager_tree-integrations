@@ -127,7 +127,7 @@ module PagerTree::Integrations
             commentable_type: adapter_outgoing_event.comment.commentable_type,
             commentable_id: adapter_outgoing_event.comment.commentable_id,
             parent_id: adapter_outgoing_event.comment.parent_id,
-            acccount_user_id: adapter_outgoing_event.comment.account_user_id,
+            account_user_id: adapter_outgoing_event.comment.account_user_id,
             account_user: {
               id: adapter_outgoing_event.comment.account_user.id,
               prefix_id: adapter_outgoing_event.comment.account_user.prefix_id,
