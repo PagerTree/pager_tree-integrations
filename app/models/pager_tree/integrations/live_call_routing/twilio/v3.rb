@@ -7,6 +7,7 @@ module PagerTree::Integrations
       {key: :api_region, type: :string, default: "ashburn.us1"},
       {key: :force_input, type: :boolean, default: false},
       {key: :record, type: :boolean, default: false},
+      {key: :send_straight_to_voicemail, type: :boolean, default: false},
       {key: :record_email, type: :string, default: ""},
       {key: :banned_phone, type: :string, default: ""},
       {key: :dial_pause, type: :integer},
@@ -30,6 +31,7 @@ module PagerTree::Integrations
     validates :option_api_region, inclusion: {in: API_REGIONS}
     validates :option_force_input, inclusion: {in: [true, false]}
     validates :option_record, inclusion: {in: [true, false]}
+    validates :option_send_straight_to_voicemail, inclusion: {in: [true, false]}
     validates :option_max_wait_time, numericality: {greater_than_or_equal_to: 30, less_than_or_equal_to: 3600}, allow_nil: true
     validate :validate_record_emails
 
@@ -40,6 +42,7 @@ module PagerTree::Integrations
       self.option_api_region ||= "ashburn.us1"
       self.option_force_input ||= false
       self.option_record ||= false
+      self.option_send_straight_to_voicemail ||= false
       self.option_record_email ||= ""
       self.option_banned_phone ||= ""
     end
@@ -189,6 +192,21 @@ module PagerTree::Integrations
 
         return adapter_controller&.render(xml: _twiml.to_xml)
       end
+
+      if adapter_alert.meta["live_call_status_callback_set"] != true
+        # give us status updates on the call, so we can clean up if they hang up before leaving a message
+        _call.update(
+          status_callback: PagerTree::Integrations::Engine.routes.url_helpers.call_status_live_call_routing_twilio_v3_url(id, thirdparty_id: _thirdparty_id),
+          status_callback_method: "POST",
+          url: adapter_controller&.url_for || endpoint
+        )
+
+        adapter_alert.meta["live_call_status_callback_set"] = true
+        adapter_alert.save!
+
+        return adapter_controller&.render(xml: _twiml.to_xml)
+      end
+
       # if this was attached to a router
       if !adapter_alert.meta["live_call_router_team_prefix_ids"].present? && routers.size > 0 && account.subscription_feature_routers?
         adapter_alert.logs.create!(message: "Routed to router. Attempting to get a list of teams...")
@@ -235,6 +253,12 @@ module PagerTree::Integrations
         return adapter_controller&.render(xml: _twiml.to_xml)
       end
 
+      if option_record && option_send_straight_to_voicemail && adapter_alert.meta["live_call_send_straight_to_voicemail"].nil?
+        # flag this call to send straight to voicemail
+        adapter_alert.meta["live_call_send_straight_to_voicemail"] = true
+        adapter_alert.save!
+      end
+
       if !adapter_alert.meta["live_call_welcome"] && option_welcome_media.present?
         adapter_alert.logs.create!(message: "Play welcome media to caller.")
         _twiml.play(url: option_welcome_media.url)
@@ -244,6 +268,17 @@ module PagerTree::Integrations
 
       if selected_team
         adapter_alert.logs.create!(message: "Caller selected team '#{selected_team.name}'.") if _teams_size > 1 || option_force_input
+
+        if adapter_alert.meta["live_call_send_straight_to_voicemail"] == true
+          adapter_alert.destination_teams = [selected_team]
+          adapter_alert.save!
+
+          adapter_alert.logs.create!(message: "Send caller straight to voicemail (integration option).")
+
+          _twiml.redirect(PagerTree::Integrations::Engine.routes.url_helpers.dropped_live_call_routing_twilio_v3_url(id, thirdparty_id: _thirdparty_id), method: "POST")
+
+          return adapter_controller&.render(xml: _twiml.to_xml)
+        end
 
         adapter_alert.logs.create!(message: "Play please wait media to caller.")
         _twiml.play(url: option_please_wait_media_url)
@@ -358,11 +393,20 @@ module PagerTree::Integrations
             LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
           end
         end
+
+        if adapter_alert.meta["live_call_send_straight_to_voicemail"] == true
+          adapter_alert.logs.create!(message: "Call was sent straight to voicemail and caller left a message. Routing the alert.")
+
+          # kick off the alert workflow
+          adapter_alert.route_later
+          adapter_alert.logs.create!(message: "Successfully enqueued alert team workflow.")
+        end
       elsif option_record
         adapter_alert.logs.create!(message: "No one is available to answer this call. Requesting voicemail recording.")
         _twiml.play(url: option_no_answer_media_url)
         _twiml.record(max_length: 60)
       else
+        # A friendly goodbye (when the integration has been configured to not record)
         if option_no_answer_no_record_media_url.present?
           adapter_alert.logs.create!(message: "No one is available to answer this call. Play media. Hangup on caller.")
           _twiml.play(url: option_no_answer_no_record_media_url)
@@ -383,15 +427,33 @@ module PagerTree::Integrations
       if queue_result == "hangup"
         self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
         adapter_alert.logs.create!(message: "Caller hungup while waiting in queue.")
-        adapter_alert.resolve!(self)
+        adapter_alert.resolve!(self, force: true)
         queue_destroy
       end
 
       adapter_source_log&.save!
     end
 
+    def adapter_process_call_status_deferred
+      call_status = adapter_incoming_request_params.dig("CallStatus")
+      adapter_source_log&.sublog("Processing call status #{call_status}")
+
+      if ["completed"].include?(call_status)
+        self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
+
+        if adapter_alert.present? && adapter_alert.meta["live_call_send_straight_to_voicemail"] == true && !adapter_alert.additional_data.any? { |x| x["label"] == "Voicemail" }
+          adapter_alert.logs.create!(message: "Caller hung up without leaving a message. Marking alert as resolved.")
+          adapter_alert.resolve!(self, force: true)
+        elsif adapter_alert.present? && adapter_alert.meta["live_call_send_straight_to_voicemail"] != true && !adapter_alert.meta["live_call_queue_sid"].present?
+          adapter_alert.logs.create!(message: "Caller hungup before being put in a queue. Marking alert as resolved.")
+          adapter_alert.resolve!(self, force: true)
+        end
+      end
+    end
+
     def adapter_process_outgoing
       return unless adapter_alert.source_id == id
+      return if adapter_alert.meta["live_call_send_straight_to_voicemail"] == true
 
       event = adapter_outgoing_event.event_name.to_s
       if event == "alert_acknowledged"
