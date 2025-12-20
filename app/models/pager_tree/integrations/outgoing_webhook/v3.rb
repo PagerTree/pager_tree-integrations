@@ -15,6 +15,9 @@ module PagerTree::Integrations
       {key: :alert_handoff, type: :boolean, default: false},
       {key: :event_reminder_going_on_call, type: :boolean, default: false},
       {key: :event_reminder_going_off_call, type: :boolean, default: false},
+      {key: :comment_created, type: :boolean, default: false},
+      {key: :comment_updated, type: :boolean, default: false},
+      {key: :comment_destroyed, type: :boolean, default: false},
       {key: :template, type: :string, default: nil},
       {key: :send_linked, type: :boolean, default: false},
       {key: :outgoing_rules, type: :string, default: nil}
@@ -33,6 +36,9 @@ module PagerTree::Integrations
     validates :option_alert_handoff, inclusion: {in: [true, false]}
     validates :option_event_reminder_going_on_call, inclusion: {in: [true, false]}
     validates :option_event_reminder_going_off_call, inclusion: {in: [true, false]}
+    validates :option_comment_created, inclusion: {in: [true, false]}
+    validates :option_comment_updated, inclusion: {in: [true, false]}
+    validates :option_comment_destroyed, inclusion: {in: [true, false]}
     validates :option_send_linked, inclusion: {in: [true, false]}
 
     after_initialize do
@@ -46,6 +52,9 @@ module PagerTree::Integrations
       self.option_alert_handoff ||= false
       self.option_event_reminder_going_on_call ||= false
       self.option_event_reminder_going_off_call ||= false
+      self.option_comment_created ||= false
+      self.option_comment_updated ||= false
+      self.option_comment_destroyed ||= false
       self.option_send_linked ||= false
       self.option_template ||= ""
       self.option_outgoing_rules ||= ""
@@ -104,6 +113,36 @@ module PagerTree::Integrations
         body = {}
         body[:type] = event_type
         body[:data] = case event_type
+        when "comment.destroyed"
+          {
+            account_id: adapter_outgoing_event.account_id,
+            id: adapter_outgoing_event.item_id
+          }
+        when "comment.created", "comment.updated"
+          {
+            account_id: adapter_outgoing_event.comment.account_id,
+            id: adapter_outgoing_event.comment.id,
+            prefix_id: adapter_outgoing_event.comment.prefix_id,
+            meta: adapter_outgoing_event.comment.meta,
+            commentable_type: adapter_outgoing_event.comment.commentable_type,
+            commentable_id: adapter_outgoing_event.comment.commentable_id,
+            parent_id: adapter_outgoing_event.comment.parent_id,
+            account_user_id: adapter_outgoing_event.comment.account_user_id,
+            account_user: {
+              id: adapter_outgoing_event.comment.account_user.id,
+              prefix_id: adapter_outgoing_event.comment.account_user.prefix_id,
+              user: {
+                id: adapter_outgoing_event.comment.account_user.user.id,
+                prefix_id: adapter_outgoing_event.comment.account_user.user.prefix_id,
+                name: adapter_outgoing_event.comment.account_user.user.name,
+                email: adapter_outgoing_event.comment.account_user.user.email
+              }
+            },
+            created_by_name: adapter_outgoing_event.comment.created_by_name,
+            updated_at: adapter_outgoing_event.comment.updated_at,
+            created_at: adapter_outgoing_event.comment.created_at,
+            body: adapter_outgoing_event.comment.body.to_plain_text
+          }
         when "event_reminder.going_on_call", "event_reminder.going_off_call"
           {
             id: adapter_outgoing_event.event_reminder.id,

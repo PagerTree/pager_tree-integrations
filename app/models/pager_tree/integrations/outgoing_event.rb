@@ -5,6 +5,8 @@ module PagerTree::Integrations
     extend ActiveModel::Callbacks
 
     attr_accessor :event_name
+    attr_accessor :account_id
+    attr_accessor :item_id
     attr_accessor :item
     attr_accessor :changes
     attr_accessor :outgoing_rules_data
@@ -25,6 +27,8 @@ module PagerTree::Integrations
 
     after_initialize do
       self.event_name ||= nil
+      self.account_id ||= nil
+      self.item_id ||= nil
       self.item ||= nil
       self.changes ||= nil
       self.outgoing_rules_data ||= {}

@@ -138,7 +138,7 @@ module PagerTree::Integrations
     end
 
     def adapter_outgoing_interest?(event_name)
-      ["alert_acknowledged", "alert_dropped"].include?(event_name) && adapter_alert.source_id == id
+      ["alert_acknowledged", "alert_dropped"].include?(event_name)
     end
 
     def adapter_incoming_can_defer?
@@ -391,6 +391,8 @@ module PagerTree::Integrations
     end
 
     def adapter_process_outgoing
+      return unless adapter_alert.source_id == id
+
       event = adapter_outgoing_event.event_name.to_s
       if event == "alert_acknowledged"
         _on_acknowledge
