@@ -5,6 +5,7 @@ PagerTree::Integrations::Engine.routes.draw do
         member do
           get :music
           post :queue_status
+          post :call_status
           post :dropped
         end
       end
