@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.7](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.6...v1.1.7) (2025-12-20)
+
+
+### Features
+
+* Twilio Live Call Routing max wait time ([#135](https://github.com/PagerTree/pager_tree-integrations/issues/135)) ([b6bc619](https://github.com/PagerTree/pager_tree-integrations/commit/b6bc61987b6ffe033eb03f8cddada00b46146445))
+
+
+### Bug Fixes
+
+* Adding back the acknowledge action for integrations ([e37155f](https://github.com/PagerTree/pager_tree-integrations/commit/e37155f138afe833fd8a97130f183c755e7260c6))
+* elastalert send 200 even for soft blocks ([4548a54](https://github.com/PagerTree/pager_tree-integrations/commit/4548a5489d6a8fd43019d4a5744710fdd4981ec8))
+
 ## [1.1.6](https://github.com/PagerTree/pager_tree-integrations/compare/v1.1.5...v1.1.6) (2022-10-05)
 
 
