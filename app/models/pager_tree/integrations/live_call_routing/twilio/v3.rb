@@ -194,15 +194,27 @@ module PagerTree::Integrations
       end
 
       if adapter_alert.meta["live_call_status_callback_set"] != true
-        # give us status updates on the call, so we can clean up if they hang up before leaving a message
-        _call.update(
-          status_callback: PagerTree::Integrations::Engine.routes.url_helpers.call_status_live_call_routing_twilio_v3_url(id, thirdparty_id: _thirdparty_id),
-          status_callback_method: "POST",
-          url: adapter_controller&.url_for || endpoint
-        )
+        begin
+          # give us status updates on the call, so we can clean up if they hang up before leaving a message
+          _call.update(
+            status_callback: PagerTree::Integrations::Engine.routes.url_helpers.call_status_live_call_routing_twilio_v3_url(id, thirdparty_id: _thirdparty_id),
+            status_callback_method: "POST",
+            url: adapter_controller&.url_for || endpoint
+          )
 
-        adapter_alert.meta["live_call_status_callback_set"] = true
-        adapter_alert.save!
+          adapter_alert.meta["live_call_status_callback_set"] = true
+          adapter_alert.save!
+        rescue ::Twilio::REST::RestError => e
+          if e.code == 21220
+            # 21220 - Unable to update record. Call is not in-progress. Cannot redirect.
+            adapter_alert.logs.create!(message: "Updating the call for status callbacks failed. The caller has already hung up.")
+          else
+            adapter_alert.logs.create!(message: "Updating the call for status callbacks failed. #{e.message}")
+          end
+
+          adapter_alert.logs.create!(message: "Marking alert as resolved due to call update failure.")
+          adapter_alert.resolve!(self, force: true)
+        end
 
         return adapter_controller&.render(xml: _twiml.to_xml)
       end
