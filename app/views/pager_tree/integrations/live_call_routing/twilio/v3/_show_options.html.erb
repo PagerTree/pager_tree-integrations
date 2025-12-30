@@ -138,6 +138,17 @@
   </dd>
 </div>
 
+<% if integration.option_record %>
+  <div class="sm:col-span-2">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_send_straight_to_voicemail") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_send_straight_to_voicemail } %>
+    </dd>
+  </div>
+<% end %>
+
 <div class="sm:col-span-2">
   <dt class="text-sm font-medium text-gray-500">
     <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_no_answer_media") %>
@@ -189,23 +200,25 @@
   </dd>
 </div>
 
-<div class="sm:col-span-2">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_record_emails_list") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <% integration.option_record_emails.each do |email| %>
-        <p class="text-sm truncate">
-          <%= link_to email, "mailto:#{email}" %>
+<% if integration.option_record %>
+  <div class="sm:col-span-2">
+    <dt class="text-sm font-medium text-gray-500">
+      <%= t("activerecord.attributes.pager_tree/integrations/live_call_routing/twilio/v3.option_record_emails_list") %>
+    </dt>
+    <dd class="mt-1 text-sm text-gray-900">
+      <div class="flex items-center gap-2">
+        <% integration.option_record_emails.each do |email| %>
+          <p class="text-sm truncate">
+            <%= link_to email, "mailto:#{email}" %>
+          </p>
+        <% end %>
+        <p class="hidden only:flex text-sm truncate">
+          (<%= t("pager_tree.integrations.common.none") %>)
         </p>
-      <% end %>
-      <p class="hidden only:flex text-sm truncate">
-        (<%= t("pager_tree.integrations.common.none") %>)
-      </p>
-    </div>
-  </dd>
-</div>
+      </div>
+    </dd>
+  </div>
+<% end %>
 
 <div class="sm:col-span-2">
   <dt class="text-sm font-medium text-gray-500">

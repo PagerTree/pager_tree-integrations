@@ -1,4 +1,9 @@
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<%
+  x_data = {
+    option_record: form.object.option_record,
+  }
+%>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4" x-data=<%= x_data.to_json.html_safe %>>
   <div class="form-group group">
     <%= form.label :option_account_sid %>
     <%= form.text_field :option_account_sid, class: "form-control" %>
@@ -78,12 +83,18 @@
   </div>
 
   <div class="form-group group">
-    <%= form.check_box :option_record, class: "form-checkbox" %>
+    <%= form.check_box :option_record, class: "form-checkbox", "x-model": "option_record" %>
     <%= form.label :option_record, class: "inline-block" %>
     <p class="form-hint md:inline-block"><%== t(".option_record_hint_html") %></p>
   </div>
 
-  <div class="form-group group" data-controller="tagify">
+  <div class="form-group group" x-show="option_record" x-cloak x-transition>
+    <%= form.check_box :option_send_straight_to_voicemail, class: "form-checkbox" %>
+    <%= form.label :option_send_straight_to_voicemail, class: "inline-block" %>
+    <p class="form-hint md:inline-block"><%== t(".option_send_straight_to_voicemail_hint_html") %></p>
+  </div>
+
+  <div class="form-group group" data-controller="tagify" x-show="option_record" x-cloak x-transition>
     <%= form.label :option_record_emails_list %>
     <%= form.text_field :option_record_emails_list, class: "form-control", data: { tagify_target: "input" } %>
     <p class="form-hint"><%== t(".option_record_emails_list_hint_html") %></p>
