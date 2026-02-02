@@ -7,7 +7,8 @@ module PagerTree::Integrations
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
       {key: :outgoing_rules, type: :string, default: nil},
-      {key: :time_zone, type: :string, default: nil}
+      {key: :time_zone, type: :string, default: nil},
+      {key: :compact_message, type: :boolean, default: false}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -22,6 +23,7 @@ module PagerTree::Integrations
       self.option_alert_dropped ||= false
       self.option_outgoing_rules ||= ""
       self.option_time_zone ||= "UTC"
+      self.option_compact_message ||= false
     end
 
     def adapter_supports_incoming?
@@ -78,6 +80,12 @@ module PagerTree::Integrations
     end
 
     def _blocks
+      body = if option_compact_message
+        _compact_body
+      else
+        _full_body
+      end
+
       {
         type: "message",
         attachments: [
@@ -86,91 +94,7 @@ module PagerTree::Integrations
             contentUrl: nil,
             content: {
               type: "AdaptiveCard",
-              body: [
-                {
-                  type: "Container",
-                  backgroundImage: _color,
-                  items: [
-                    {
-                      type: "TextBlock",
-                      size: "Large",
-                      weight: "Bolder",
-                      text: _title
-                    },
-                    {
-                      type: "ColumnSet",
-                      columns: [
-                        {
-                          type: "Column",
-                          items: [
-                            {
-                              type: "TextBlock",
-                              weight: "Bolder",
-                              text: _title,
-                              wrap: true
-                            },
-                            {
-                              type: "TextBlock",
-                              spacing: "None",
-                              text: "Created #{_alert.created_at.in_time_zone(option_time_zone).iso8601}",
-                              wrap: true
-                            }
-                          ],
-                          width: "stretch"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  type: "Container",
-                  items: [
-                    {
-                      type: "FactSet",
-                      facts: [
-                        {
-                          title: "Status:",
-                          value: _alert.status&.upcase
-                        }, {
-                          title: "Urgency:",
-                          value: _alert.urgency&.upcase
-                        }, {
-                          title: "Source:",
-                          value: _alert.source&.name
-                        }, {
-                          title: "Destinations:",
-                          value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
-                        }, {
-                          title: "User:",
-                          value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
-                        }
-                      ],
-                      spacing: "None"
-                    }
-                  ],
-                  spacing: "Medium"
-                },
-                {
-                  type: "Container",
-                  items: [
-                    {
-                      type: "TextBlock",
-                      text: _alert.description&.try(:to_plain_text),
-                      wrap: true,
-                      separator: true,
-                      maxLines: 24
-                    },
-                    {
-                      type: "FactSet",
-                      facts: _alert.additional_data&.map { |ad| {title: ad["label"], value: Array(ad["value"]).join(", ")} } || [],
-                      spacing: "Medium",
-                      separator: true
-                    }
-                  ],
-                  spacing: "Medium",
-                  separator: true
-                }
-              ],
+              body: body,
               actions: [
                 {
                   type: "Action.OpenUrl",
@@ -185,6 +109,125 @@ module PagerTree::Integrations
           }
         ]
       }
+    end
+
+    def _compact_body
+      [
+        {
+          type: "Container",
+          backgroundImage: _color,
+          items: [
+            {
+              type: "TextBlock",
+              size: "Large",
+              weight: "Bolder",
+              text: _title
+            },
+            {
+              type: "FactSet",
+              facts: [
+                {
+                  title: "Status:",
+                  value: _alert.status&.upcase
+                },
+                {
+                  title: "User:",
+                  value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
+                }
+              ],
+              spacing: "Medium"
+            }
+          ]
+        }
+      ]
+    end
+
+    def _full_body
+      [
+        {
+          type: "Container",
+          backgroundImage: _color,
+          items: [
+            {
+              type: "TextBlock",
+              size: "Large",
+              weight: "Bolder",
+              text: _title
+            },
+            {
+              type: "ColumnSet",
+              columns: [
+                {
+                  type: "Column",
+                  items: [
+                    {
+                      type: "TextBlock",
+                      weight: "Bolder",
+                      text: _title,
+                      wrap: true
+                    },
+                    {
+                      type: "TextBlock",
+                      spacing: "None",
+                      text: "Created #{_alert.created_at.in_time_zone(option_time_zone).iso8601}",
+                      wrap: true
+                    }
+                  ],
+                  width: "stretch"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          type: "Container",
+          items: [
+            {
+              type: "FactSet",
+              facts: [
+                {
+                  title: "Status:",
+                  value: _alert.status&.upcase
+                }, {
+                  title: "Urgency:",
+                  value: _alert.urgency&.upcase
+                }, {
+                  title: "Source:",
+                  value: _alert.source&.name
+                }, {
+                  title: "Destinations:",
+                  value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
+                }, {
+                  title: "User:",
+                  value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
+                }
+              ],
+              spacing: "None"
+            }
+          ],
+          spacing: "Medium"
+        },
+        {
+          type: "Container",
+          items: [
+            {
+              type: "TextBlock",
+              text: _alert.description&.try(:to_plain_text),
+              wrap: true,
+              separator: true,
+              maxLines: 24
+            },
+            {
+              type: "FactSet",
+              facts: _alert.additional_data&.map { |ad| {title: ad["label"], value: Array(ad["value"]).join(", ")} } || [],
+              spacing: "Medium",
+              separator: true
+            }
+          ],
+          spacing: "Medium",
+          separator: true
+        }
+      ]
     end
 
     def _title
