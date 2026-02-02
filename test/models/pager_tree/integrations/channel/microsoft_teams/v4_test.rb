@@ -210,5 +210,41 @@ module PagerTree::Integrations
 
       assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
     end
+
+    test "compact_message mode shows only alert, status, and user" do
+      assert_no_performed_jobs
+
+      @integration.option_compact_message = true
+      @integration.adapter_outgoing_event = OutgoingEvent.new(**@data)
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+
+      body = JSON.parse(outgoing_webhook_delivery.body)
+      card_body = body["attachments"][0]["content"]["body"]
+
+      # Should have only one container (the colored one with title, status, and user)
+      assert_equal 1, card_body.length
+
+      # Check the container has the correct structure
+      container = card_body[0]
+      assert_equal "Container", container["type"]
+      assert_equal "https://pagertree.com/assets/img/icon/yellow-square.png", container["backgroundImage"]
+
+      # Check items in the colored container
+      items = container["items"]
+      assert_equal 2, items.length
+
+      # First item should be the title
+      assert_equal "TextBlock", items[0]["type"]
+      assert_equal "Alert ##{@alert.tiny_id} #{@alert.title}", items[0]["text"]
+
+      # Second item should be the facts (status and user only)
+      assert_equal "FactSet", items[1]["type"]
+      facts = items[1]["facts"]
+      assert_equal 2, facts.length
+      assert_equal "Status:", facts[0]["title"]
+      assert_equal "User:", facts[1]["title"]
+    end
   end
 end
