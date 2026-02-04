@@ -220,7 +220,7 @@ module PagerTree::Integrations
 
       assert_enqueued_jobs 1
 
-      body = JSON.parse(outgoing_webhook_delivery.body)
+      body = outgoing_webhook_delivery.body.as_json
       card_body = body["attachments"][0]["content"]["body"]
 
       # Should have only one container (the colored one with title, status, and user)

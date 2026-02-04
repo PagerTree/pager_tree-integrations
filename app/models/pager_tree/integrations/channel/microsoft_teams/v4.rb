@@ -135,7 +135,7 @@ module PagerTree::Integrations
                   value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
                 }
               ],
-              spacing: "Medium"
+              spacing: "ExtraSmall"
             }
           ]
         }

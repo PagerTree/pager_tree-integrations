@@ -160,7 +160,7 @@ module PagerTree::Integrations
 
       assert_enqueued_jobs 1
 
-      body = JSON.parse(outgoing_webhook_delivery.body)
+      body = outgoing_webhook_delivery.body.as_json
 
       # Should have compact facts with only status and user
       facts = body["sections"][0]["facts"]
