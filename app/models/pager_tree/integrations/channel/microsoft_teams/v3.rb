@@ -7,7 +7,8 @@ module PagerTree::Integrations
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
       {key: :outgoing_rules, type: :string, default: nil},
-      {key: :time_zone, type: :string, default: nil}
+      {key: :time_zone, type: :string, default: nil},
+      {key: :compact_message, type: :boolean, default: false}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -22,6 +23,7 @@ module PagerTree::Integrations
       self.option_alert_dropped ||= false
       self.option_outgoing_rules ||= ""
       self.option_time_zone ||= "UTC"
+      self.option_compact_message ||= false
     end
 
     def converts_to
@@ -82,6 +84,12 @@ module PagerTree::Integrations
     end
 
     def _blocks
+      facts = if option_compact_message
+        _compact_facts
+      else
+        _full_facts
+      end
+
       {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
@@ -89,33 +97,8 @@ module PagerTree::Integrations
         summary: _title,
         sections: [{
           activityTitle: _title,
-          activitySubtitle: _alert.description&.try(:to_plain_text),
-          facts: [
-            {
-              name: "Status",
-              value: _alert.status.upcase
-            },
-            {
-              name: "Urgency",
-              value: _alert.urgency.upcase
-            },
-            {
-              name: "Created",
-              value: _alert.created_at.in_time_zone(option_time_zone).iso8601
-            },
-            {
-              name: "Source",
-              value: _alert.source&.name
-            },
-            {
-              name: "Destinations",
-              value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
-            },
-            {
-              name: "User",
-              value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
-            }
-          ],
+          activitySubtitle: option_compact_message ? nil : _alert.description&.try(:to_plain_text),
+          facts: facts,
           markdown: true
         }],
         potentialAction: [
@@ -129,6 +112,48 @@ module PagerTree::Integrations
           }
         ]
       }
+    end
+
+    def _compact_facts
+      [
+        {
+          name: "Status",
+          value: _alert.status.upcase
+        },
+        {
+          name: "User",
+          value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
+        }
+      ]
+    end
+
+    def _full_facts
+      [
+        {
+          name: "Status",
+          value: _alert.status.upcase
+        },
+        {
+          name: "Urgency",
+          value: _alert.urgency.upcase
+        },
+        {
+          name: "Created",
+          value: _alert.created_at.in_time_zone(option_time_zone).iso8601
+        },
+        {
+          name: "Source",
+          value: _alert.source&.name
+        },
+        {
+          name: "Destinations",
+          value: _alert.alert_destinations&.map { |d| d.destination.name }&.join(", ")
+        },
+        {
+          name: "User",
+          value: _alert.alert_responders&.where(role: :incident_commander)&.includes(account_user: :user)&.first&.account_user&.name
+        }
+      ]
     end
 
     def _title

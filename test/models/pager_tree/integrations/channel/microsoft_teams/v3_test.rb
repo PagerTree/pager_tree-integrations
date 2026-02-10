@@ -150,5 +150,26 @@ module PagerTree::Integrations
 
       assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
     end
+
+    test "compact_message mode shows only alert, status, and user" do
+      assert_no_performed_jobs
+
+      @integration.option_compact_message = true
+      @integration.adapter_outgoing_event = OutgoingEvent.new(**@data)
+      outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+      assert_enqueued_jobs 1
+
+      body = outgoing_webhook_delivery.body.as_json
+
+      # Should have compact facts with only status and user
+      facts = body["sections"][0]["facts"]
+      assert_equal 2, facts.length
+      assert_equal "Status", facts[0]["name"]
+      assert_equal "User", facts[1]["name"]
+
+      # activitySubtitle should be nil in compact mode
+      assert_nil body["sections"][0]["activitySubtitle"]
+    end
   end
 end
