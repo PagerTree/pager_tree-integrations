@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<INTEGRATION_CUSTOM_WEBHOOK_V3_SERVICE_URL>"
+    body:
+      encoding: UTF-8
+      string: '{"log":{"subject":"Server is DOWN right now","body":"Full downtime
+        details here...","from":["alerts@server.com"],"to":["inbox@pagertree.com"]},"config":{"rules":[{"match":{"log.subject":{"$regex":"down","$options":"i"}},"actions":[{"type":"create","title":"{{log.subject}}","description":"{{log.body}}","urgency":"high","thirdparty_id":"email-test-123","incident":"true","incident_severity":"SEV-1","incident_message":"Check
+        the email thread","tags":["email","alert"],"meta":{"source":"email"},"additional_data":[{"format":"email","label":"From","value":"{{log.from}}"}]}]},{"match":{"log.subject":{"$regex":"pending","$options":"i"}},"actions":[{"type":"acknowledge","thirdparty_id":"email-test-123"}]},{"match":{"log.subject":{"$regex":"up","$options":"i"}},"actions":[{"type":"resolve","thirdparty_id":"email-test-123"}]},{"match":{"log.subject":"Paused"},"actions":[{"type":"ignore"}]}]}}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"1b2-DWiqlspc76kS9yLS/fUvzB7y0SQ"
+      Date:
+      - Wed, 18 Feb 2026 18:04:07 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Transfer-Encoding:
+      - chunked
+      Server:
+      - Fly/84caf4a9 (2026-02-18)
+      Via:
+      - 1.1 fly.io, 1.1 fly.io
+      Fly-Request-Id:
+      - 01KHRYRX09AQH4M9AYD1M32GM0-lax
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":[{"type":"create","title":"Server is DOWN right now","description":"Full
+        downtime details here...","urgency":"high","thirdparty_id":"email-test-123","incident":"true","incident_severity":"SEV-1","incident_message":"Check
+        the email thread","tags":["email","alert"],"meta":{"source":"email"},"additional_data":[{"format":"email","label":"From","value":"alerts@server.com"}]}],"status":"query
+        matched","processedLogData":null}'
+  recorded_at: Wed, 18 Feb 2026 18:04:06 GMT
+recorded_with: VCR 6.0.0

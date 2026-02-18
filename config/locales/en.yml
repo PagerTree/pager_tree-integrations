@@ -58,6 +58,8 @@ en:
             option_allow_spam_hint_html: "Allow emails marked as SPAM to create alerts"
             option_dedup_threads_hint_html: "Ignore emails from same thread (ex: Prevents new alerts for replys on emails (aka: RE:RE:RE...))"
             option_sanitize_level_hint_html: "Email HTML Sanitization level. relaxed_2 can remove style tags from Microsoft Outlook. See <a href='https://github.com/rgrove/sanitize#configuration' target='_blank'>santize gem documentation</a> for details."
+            option_custom_definition_enabled_hint_html: "Enable custom email parsing rules defined in the YAML definition"
+            option_custom_definition_hint_html: "YAML definition for custom email parsing rules. <a href='https://pagertree.com/docs/integration-guides/email#custom-parsing-rules' target='_blank'>See docs 🔗.</a>"
       form:
         v3:
           form_options:
@@ -217,6 +219,8 @@ en:
         option_allow_spam: "Allow Spam"
         option_dedup_threads: "Dedup Threads"
         option_sanitize_level: "Sanitize Level"
+        option_custom_definition_enabled: "Enable Custom Definition"
+        option_custom_definition: "YAML Custom Definition"
       "pager_tree/integrations/form/v3":
         option_form_title: "Form Title"
         option_form_header: "Form Header"

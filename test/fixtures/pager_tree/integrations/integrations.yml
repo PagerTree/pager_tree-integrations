@@ -54,6 +54,10 @@ elast_alert_v3:
   type: "PagerTree::Integrations::ElastAlert::V3"
   # options: no_options
 
+email_v3:
+  type: "PagerTree::Integrations::Email::V3"
+  # options: no_options
+
 form_v3:
   type: "PagerTree::Integrations::Form::V3"
   options:
