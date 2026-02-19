@@ -20,6 +20,7 @@ module PagerTree::Integrations
     validates :option_allow_spam, inclusion: {in: [true, false]}
     validates :option_dedup_threads, inclusion: {in: [true, false]}
     validates :option_sanitize_level, inclusion: {in: SANITIZE_LEVELS}
+    validates :option_custom_definition, presence: true, if: ->(record) { record.option_custom_definition_enabled == true }
 
     def self.custom_webhook_v3_service_url
       ::PagerTree::Integrations.integration_custom_webhook_v3_service_url.presence ||
