@@ -9,8 +9,8 @@ rules:
     title: "{{log.subject}}"
     description: "{{log.body}}"
     # Works for:
-    # nmx_event_url=https://...
-    # nmx_event_url=<a href="https://...">
+    # event_url=https://...
+    # event_url=<a href="https://...">
     thirdparty_id: >-
       {{{itemAt (regexMatch log.body 'event_url=(?:<a\s+href=")?(https?://[^"\r\n>]+)') 1}}}
 
