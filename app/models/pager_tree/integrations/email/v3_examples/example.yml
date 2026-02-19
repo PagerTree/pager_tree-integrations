@@ -7,7 +7,7 @@ rules:
   actions:
   - type: "create"
     title: "{{log.subject}}"
-    description: "{{log.body}}"
+    description: "{{{log.body}}}"
     # Works for:
     # event_url=https://...
     # event_url=<a href="https://...">
