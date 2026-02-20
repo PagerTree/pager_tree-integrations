@@ -1,0 +1,24 @@
+---
+rules:
+- match:
+    log.body:
+      "$regex": "event_type=Automatic"
+      "$options": "i"
+  actions:
+  - type: "create"
+    title: "{{log.subject}}"
+    description: "{{{log.body}}}"
+    # Works for:
+    # event_url=https://...
+    # event_url=<a href="https://...">
+    thirdparty_id: >-
+      {{{itemAt (regexMatch log.body 'event_url=(?:<a\s+href=")?(https?://[^"\r\n>]+)') 1}}}
+
+- match:
+    log.body:
+      "$regex": "event_type=Manual"
+      "$options": "i"
+  actions:
+  - type: "resolve"
+    thirdparty_id: >-
+      {{{itemAt (regexMatch log.body 'event_url=(?:<a\s+href=")?(https?://[^"\r\n>]+)') 1}}}

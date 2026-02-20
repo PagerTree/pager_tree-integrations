@@ -1,9 +1,16 @@
 module PagerTree::Integrations
   class Email::V3 < Integration
+    extend ::PagerTree::Integrations::Env
+
+    # the source log (if created) - Its what shows on the integration page (different from deferred request)
+    attribute :adapter_source_log
+
     OPTIONS = [
       {key: :allow_spam, type: :boolean, default: false},
       {key: :dedup_threads, type: :boolean, default: true},
-      {key: :sanitize_level, type: :string, default: "relaxed"}
+      {key: :sanitize_level, type: :string, default: "relaxed"},
+      {key: :custom_definition, type: :string, default: nil},
+      {key: :custom_definition_enabled, type: :boolean, default: false}
     ]
 
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
@@ -13,11 +20,18 @@ module PagerTree::Integrations
     validates :option_allow_spam, inclusion: {in: [true, false]}
     validates :option_dedup_threads, inclusion: {in: [true, false]}
     validates :option_sanitize_level, inclusion: {in: SANITIZE_LEVELS}
+    validates :option_custom_definition, presence: true, if: ->(record) { record.option_custom_definition_enabled == true }
+
+    def self.custom_webhook_v3_service_url
+      ::PagerTree::Integrations.integration_custom_webhook_v3_service_url.presence ||
+        find_value_by_name("integration_custom_webhook_v3", "service_url")
+    end
 
     after_initialize do
       self.option_allow_spam = false if option_allow_spam.nil?
       self.option_dedup_threads = true if option_dedup_threads.nil?
       self.option_sanitize_level = "relaxed" if option_sanitize_level.nil?
+      self.option_custom_definition_enabled = false if option_custom_definition_enabled.nil?
     end
 
     # SPECIAL: override integration endpoint
@@ -45,6 +59,10 @@ module PagerTree::Integrations
       end
     end
 
+    def custom_definition?
+      option_custom_definition_enabled && option_custom_definition.present?
+    end
+
     def adapter_should_block?
       return false if option_allow_spam == true
 
@@ -66,22 +84,119 @@ module PagerTree::Integrations
     end
 
     def adapter_action
-      :create
+      if custom_definition?
+        case custom_response_result.dig("type")&.downcase
+        when "create"
+          :create
+        when "acknowledge"
+          :acknowledge
+        when "resolve"
+          :resolve
+        else
+          :other
+        end
+      else
+        :create
+      end
     end
 
     def adapter_process_create
-      Alert.new(
-        title: _title,
-        description: _description,
-        urgency: urgency,
-        thirdparty_id: _thirdparty_id,
-        dedup_keys: _dedup_keys,
-        additional_data: _additional_datums,
-        attachments: _attachments
-      )
+      if custom_definition?
+        Alert.new(
+          title: _title,
+          description: _description,
+          urgency: _urgency,
+          thirdparty_id: _thirdparty_id,
+          dedup_keys: _dedup_keys,
+          incident: _incident,
+          incident_severity: _incident_severity,
+          incident_message: _incident_message,
+          tags: _tags,
+          meta: _meta,
+          additional_data: _additional_datums,
+          attachments: _attachments
+        )
+      else
+        Alert.new(
+          title: _title,
+          description: _description,
+          urgency: urgency,
+          thirdparty_id: _thirdparty_id,
+          dedup_keys: _dedup_keys,
+          additional_data: _additional_datums,
+          attachments: _attachments
+        )
+      end
     end
 
     private
+
+    def _custom_response
+      return @_custom_response ||= {} unless custom_definition?
+
+      @_custom_response ||= begin
+        log_hash = {
+          subject: _mail.subject,
+          body: _body,
+          from: _mail.from,
+          to: _mail.to
+        }
+
+        body_hash = {
+          log: log_hash,
+          config: JSON.parse(PagerTree::Integrations::FormatConverters::YamlJsonConverter.convert_to_json(option_custom_definition))
+        }
+
+        response = HTTParty.post(
+          self.class.custom_webhook_v3_service_url,
+          body: body_hash.to_json,
+          headers: {"Content-Type" => "application/json"},
+          timeout: 2
+        )
+
+        unless response.success?
+          if response.parsed_response.dig("error").present?
+            adapter_source_log&.sublog({
+              message: "Custom Webhook Service Error:",
+              parsed_response: response.parsed_response
+            })
+            adapter_source_log&.save
+          end
+          raise "Custom Webhook Service HTTP error: #{response.code} - #{response.message} - #{response.body}"
+        end
+
+        adapter_source_log&.sublog({
+          message: "Custom Webhook Service Response:",
+          parsed_response: response.parsed_response
+        })
+        adapter_source_log&.save
+
+        response.parsed_response
+      rescue JSON::ParserError => e
+        Rails.logger.error("Custom Webhook YAML to JSON conversion error: #{e.message}")
+        adapter_source_log&.sublog("Custom Webhook YAML to JSON conversion error: #{e.message}")
+        adapter_source_log&.save
+        raise "Invalid YAML configuration: #{e.message}"
+      rescue HTTParty::Error, SocketError, Net::OpenTimeout, Net::ReadTimeout => e
+        Rails.logger.error("Custom Webhook Service error: #{e.message}")
+        adapter_source_log&.sublog("Custom Webhook Service error: #{e.message}")
+        adapter_source_log&.save
+        raise "Custom Webhook Service error: #{e.message}"
+      rescue => e
+        Rails.logger.error("Unexpected error in Custom Webhook: #{e.message}")
+        adapter_source_log&.sublog("Unexpected error in Custom Webhook: #{e.message}")
+        adapter_source_log&.save
+        raise e
+      end
+    end
+
+    def _custom_response_status
+      @_custom_response_status ||= _custom_response.dig("status")
+    end
+
+    def custom_response_result
+      @_custom_response_result ||= _custom_response.dig("results")&.first || {}
+    end
 
     def _mail
       @_mail ||= adapter_incoming_request_params.dig("mail")
@@ -92,27 +207,76 @@ module PagerTree::Integrations
     end
 
     def _thirdparty_id
+      if custom_definition?
+        @_thirdparty_id ||= custom_response_result.dig("thirdparty_id").to_s.presence
+      end
+
       @_thirdparty_id ||= _mail.message_id || SecureRandom.uuid
     end
 
     def _dedup_keys
-      keys = []
+      return @_dedup_keys if @_dedup_keys
+
+      @_dedup_keys ||= []
 
       if option_dedup_threads
-        keys.concat(Array(_thirdparty_id))
-        keys.concat(Array(_mail.references))
+        @_dedup_keys.concat(Array(_thirdparty_id))
+        @_dedup_keys.concat(Array(_mail.references))
+      end
+
+      if custom_definition?
+        @_dedup_keys.concat(Array(custom_response_result.dig("dedup_keys")))
       end
 
       # only dedup the references per integration. Customer like sending one email to multiple integration inboxes
-      keys.compact_blank.uniq.map { |x| "#{prefix_id}_#{x}" }
+      @_dedup_keys = @_dedup_keys.compact_blank.uniq.map { |x| "#{prefix_id}_#{x}" }
     end
 
     def _title
-      _mail.subject
+      if custom_definition?
+        @_title ||= custom_response_result.dig("title")&.to_s&.presence
+      end
+
+      @_title ||= _mail.subject.to_s.presence || "Incoming Email - Untitled Alert"
     end
 
     def _description
-      _body
+      if custom_definition?
+        @_description ||= custom_response_result.dig("description")&.to_s&.presence
+      end
+
+      @_description ||= _body.to_s
+    end
+
+    def _urgency
+      if custom_definition?
+        @_urgency ||= custom_response_result.dig("urgency")&.to_s&.presence
+      end
+
+      @_urgency ||= urgency
+    end
+
+    def _incident
+      @_incident ||= ActiveModel::Type::Boolean.new.cast(custom_response_result.dig("incident"))
+    end
+
+    def _incident_severity
+      custom_response_result.dig("incident_severity")&.to_s&.presence
+    end
+
+    def _incident_message
+      custom_response_result.dig("incident_message")&.to_s&.presence
+    end
+
+    def _tags
+      tags = custom_response_result.dig("tags")
+      tags = tags.split(",") if tags.is_a?(String)
+      Array(tags).compact_blank.map(&:to_s).uniq
+    end
+
+    def _meta
+      meta = custom_response_result.dig("meta")
+      meta.is_a?(Hash) ? meta : {}
     end
 
     def _body
@@ -134,7 +298,9 @@ module PagerTree::Integrations
           end
         end
 
-        @_body = ::Sanitize.fragment(document, _sanitize_config)
+        @_body = custom_definition? ?
+          (document.at_css("body")&.inner_html || document.to_html) :
+          ::Sanitize.fragment(document, _sanitize_config)
       elsif _mail.multipart? && _mail.text_part
         @_body = _mail_body_part_to_utf8(_mail.text_part)
       else
@@ -198,7 +364,29 @@ module PagerTree::Integrations
 
     # TODO: Implement any additional data that should be shown in the alert with high priority (be picky as to 'very important' information)
     def _additional_datums
-      [
+      return @_additional_datums if @_additional_datums
+
+      if custom_definition?
+        @_additional_datums ||= begin
+          items = custom_response_result.dig("additional_data") || []
+          items = [items] unless items.is_a?(Array)
+
+          items.each_with_object([]) do |ad, result|
+            next unless ad.is_a?(Hash)
+
+            format = ad["format"].to_s
+            next unless PagerTree::Integrations::AdditionalDatum::FORMATS.include?(format)
+
+            result << AdditionalDatum.new(
+              format: format,
+              label: ad["label"].to_s.presence || "Untitled",
+              value: ad["value"]
+            )
+          end
+        end
+      end
+
+      @_additional_datums ||= [
         AdditionalDatum.new(format: "email", label: "From", value: _mail.from),
         AdditionalDatum.new(format: "email", label: "To", value: _mail.to),
         AdditionalDatum.new(format: "email", label: "CCs", value: _mail.cc)
