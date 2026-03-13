@@ -83,7 +83,7 @@ module PagerTree::Integrations
               },
               {
                 title: "Created",
-                value: "<!date^#{@alert.created_at.utc.to_i}^{date_num} {time_secs}|#{@alert.created_at.utc.to_i}>",
+                value: @alert.created_at.utc.iso8601.to_s,
                 short: "true"
               },
               {

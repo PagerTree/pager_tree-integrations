@@ -68,6 +68,10 @@ module PagerTree::Integrations
       outgoing_webhook_delivery
     end
 
+    def _alert_created_at_timestamp_formatted
+      "<!date^#{_alert.created_at.utc.to_i}^{date_num} {time_secs}|#{_alert.created_at.utc.to_i}>"
+    end
+
     private
 
     def _alert
@@ -99,7 +103,7 @@ module PagerTree::Integrations
               },
               {
                 title: "Created",
-                value: "<!date^#{_alert.created_at.utc.to_i}^{date_num} {time_secs}|#{_alert.created_at.utc.to_i}>",
+                value: _alert_created_at_timestamp_formatted,
                 short: "true"
               },
               {
