@@ -16,7 +16,7 @@ group :development, :test do
   gem "vcr", "~> 6.0"
 end
 
-gem "pg", "~> 1.3"
+gem "pg", "~> 1.4"
 
 # integration dependencies
 gem "aws-sdk-sns", "~> 1.53"
