@@ -117,35 +117,67 @@ module PagerTree::Integrations
     # END basic show functions
 
     def adapter_response_rate_limit
-      adapter_controller&.head(:too_many_requests)
+      adapter_controller&.head(adapter_response_rate_limit_code)
+    end
+
+    def adapter_response_rate_limit_code
+      :too_many_requests
     end
 
     def adapter_response_disabled
-      adapter_controller&.head(:method_not_allowed)
+      adapter_controller&.head(adapter_response_disabled_code)
+    end
+
+    def adapter_response_disabled_code
+      :method_not_allowed
     end
 
     def adapter_response_inactive_subscription
-      adapter_controller&.head(:payment_required)
+      adapter_controller&.head(adapter_response_inactive_subscription_code)
+    end
+
+    def adapter_response_inactive_subscription_code
+      :payment_required
     end
 
     def adapter_response_upgrade
-      adapter_controller&.head(:payment_required)
+      adapter_controller&.head(adapter_response_upgrade_code)
+    end
+
+    def adapter_response_upgrade_code
+      :payment_required
     end
 
     def adapter_response_maintenance_mode
-      adapter_controller&.head(:ok)
+      adapter_controller&.head(adapter_response_maintenance_mode_code)
+    end
+
+    def adapter_response_maintenance_mode_code
+      :ok
     end
 
     def adapter_response_blocked
-      adapter_controller&.head(:forbidden)
+      adapter_controller&.head(adapter_response_blocked_code)
+    end
+
+    def adapter_response_blocked_code
+      :forbidden
     end
 
     def adapter_response_deferred
-      adapter_controller&.head(:ok)
+      adapter_controller&.head(adapter_response_deferred_code)
+    end
+
+    def adapter_response_deferred_code
+      :ok
     end
 
     def adapter_response_incoming
-      adapter_controller&.head(:ok)
+      adapter_controller&.head(adapter_response_incoming_code)
+    end
+
+    def adapter_response_incoming_code
+      :ok
     end
 
     def cast_types

@@ -50,15 +50,27 @@ module PagerTree::Integrations
     end
 
     def adapter_response_inactive_subscription
-      adapter_controller&.render(status: :payment_required, json: {code: Rack::Utils.status_code(:payment_required), errors: ["Customer must subscribe service plan to use this integration"]})
+      adapter_controller&.render(status: adapter_response_inactive_subscription_code, json: {code: Rack::Utils.status_code(adapter_response_inactive_subscription_code), errors: ["Customer must subscribe service plan to use this integration"]})
+    end
+
+    def adapter_response_inactive_subscription_code
+      :payment_required
     end
 
     def adapter_response_upgrade
-      adapter_controller&.render(status: :payment_required, json: {code: Rack::Utils.status_code(:payment_required), errors: ["Customer must upgrade service plan to use this integration"]})
+      adapter_controller&.render(status: adapter_response_upgrade_code, json: {code: Rack::Utils.status_code(adapter_response_upgrade_code), errors: ["Customer must upgrade service plan to use this integration"]})
+    end
+
+    def adapter_response_upgrade_code
+      :payment_required
     end
 
     def adapter_response_maintenance_mode
-      adapter_controller&.render(status: :service_unavailable, json: {code: Rack::Utils.status_code(:service_unavailable), errors: ["Integration currently in maintenance mode"]})
+      adapter_controller&.render(status: adapter_response_maintenance_mode_code, json: {code: Rack::Utils.status_code(adapter_response_maintenance_mode_code), errors: ["Integration currently in maintenance mode"]})
+    end
+
+    def adapter_response_maintenance_mode_code
+      :service_unavailable
     end
 
     def adapter_thirdparty_id
