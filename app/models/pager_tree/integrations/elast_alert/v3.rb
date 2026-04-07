@@ -45,24 +45,24 @@ module PagerTree::Integrations
     # elastalert will raise an error for any 4xx or 5xx response and then retry for a default of 2 days
     # https://github.com/Yelp/elastalert/blob/master/elastalert/alerts.py#L1496
     # we don't want to get spammy with retries, so we'll just return a 200
-    def adapter_response_rate_limit
-      adapter_controller&.head(:ok)
+    def adapter_response_rate_limit_code
+      :ok
     end
 
-    def adapter_response_disabled
-      adapter_controller&.head(:ok)
+    def adapter_response_disabled_code
+      :ok
     end
 
-    def adapter_response_inactive_subscription
-      adapter_controller&.head(:ok)
+    def adapter_response_inactive_subscription_code
+      :ok
     end
 
-    def adapter_response_upgrade
-      adapter_controller&.head(:ok)
+    def adapter_response_upgrade_code
+      :ok
     end
 
-    def adapter_response_blocked
-      adapter_controller&.head(:ok)
+    def adapter_response_blocked_code
+      :ok
     end
 
     private
