@@ -19,7 +19,7 @@ end
 gem "pg", "~> 1.3"
 
 # integration dependencies
-gem "aws-sdk-sns", "~> 1.53"
+gem "aws-sdk-sns", "~> 1.60"
 gem "deferred_request", "~> 1.0.4"
 gem "httparty", "~> 0.20.0"
 gem "jmespath", "~> 1.0"
