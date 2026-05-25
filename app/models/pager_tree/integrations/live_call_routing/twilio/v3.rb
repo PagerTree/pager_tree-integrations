@@ -11,7 +11,8 @@ module PagerTree::Integrations
       {key: :record_email, type: :string, default: ""},
       {key: :banned_phone, type: :string, default: ""},
       {key: :dial_pause, type: :integer},
-      {key: :max_wait_time, type: :integer, default: nil}
+      {key: :max_wait_time, type: :integer, default: nil},
+      {key: :skip_resolve_on_hangup, type: :boolean, default: false}
     ]
     store_accessor :options, *OPTIONS.map { |x| x[:key] }.map(&:to_s), prefix: "option"
 
@@ -32,6 +33,7 @@ module PagerTree::Integrations
     validates :option_force_input, inclusion: {in: [true, false]}
     validates :option_record, inclusion: {in: [true, false]}
     validates :option_send_straight_to_voicemail, inclusion: {in: [true, false]}
+    validates :option_skip_resolve_on_hangup, inclusion: {in: [true, false]}
     validates :option_max_wait_time, numericality: {greater_than_or_equal_to: 30, less_than_or_equal_to: 3600}, allow_nil: true
     validate :validate_record_emails
 
@@ -45,6 +47,7 @@ module PagerTree::Integrations
       self.option_send_straight_to_voicemail ||= false
       self.option_record_email ||= ""
       self.option_banned_phone ||= ""
+      self.option_skip_resolve_on_hangup ||= false
     end
 
     SPEAK_OPTIONS = {
@@ -439,7 +442,7 @@ module PagerTree::Integrations
       if queue_result == "hangup"
         self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
         adapter_alert.logs.create!(message: "Caller hungup while waiting in queue.")
-        adapter_alert.resolve!(self, force: true)
+        adapter_alert.resolve!(self, force: true) unless option_skip_resolve_on_hangup
         queue_destroy
       end
 
@@ -454,8 +457,12 @@ module PagerTree::Integrations
         self.adapter_alert = alerts.find_by(thirdparty_id: _thirdparty_id)
 
         if adapter_alert.present? && adapter_alert.meta["live_call_send_straight_to_voicemail"] == true && !adapter_alert.additional_data.any? { |x| x["label"] == "Voicemail" }
-          adapter_alert.logs.create!(message: "Caller hung up without leaving a message. Marking alert as resolved.")
-          adapter_alert.resolve!(self, force: true)
+          if option_skip_resolve_on_hangup
+            adapter_alert.logs.create!(message: "Caller hung up without leaving a message.")
+          else
+            adapter_alert.logs.create!(message: "Caller hung up without leaving a message. Marking alert as resolved.")
+            adapter_alert.resolve!(self, force: true)
+          end
         elsif adapter_alert.present? && adapter_alert.meta["live_call_send_straight_to_voicemail"] != true && !adapter_alert.meta["live_call_queue_sid"].present?
           adapter_alert.logs.create!(message: "Caller hungup before being put in a queue. Marking alert as resolved.")
           adapter_alert.resolve!(self, force: true)
