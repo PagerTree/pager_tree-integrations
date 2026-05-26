@@ -112,4 +112,10 @@
     <p class="form-hint"><%== t(".option_max_wait_time_hint_html") %></p>
   </div>
 
+  <div class="form-group group">
+    <%= form.check_box :option_skip_resolve_on_hangup, class: "form-checkbox" %>
+    <%= form.label :option_skip_resolve_on_hangup, class: "inline-block" %>
+    <p class="form-hint md:inline-block"><%== t(".option_skip_resolve_on_hangup_hint_html") %></p>
+  </div>
+
 </div>
