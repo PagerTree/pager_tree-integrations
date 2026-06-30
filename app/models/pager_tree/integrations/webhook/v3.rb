@@ -16,7 +16,7 @@ module PagerTree::Integrations
     end
 
     def adapter_should_block_incoming?(request)
-      self.option_token.present? && (request.headers["pagertree-token"] != self.option_token)
+      option_token.present? && (request.headers["pagertree-token"] != option_token)
     end
 
     def adapter_supports_incoming?
@@ -103,7 +103,7 @@ module PagerTree::Integrations
     end
 
     def _additional_datums
-      if self.option_capture_additional_data == true
+      if option_capture_additional_data == true
         _adapter_incoming_request_params.except(
           "id", "title", "description", "urgency", "tags", "meta", "event_type", "pagertree_integration_id", "dedup_keys"
         ).map do |key, value|

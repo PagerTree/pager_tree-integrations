@@ -135,7 +135,7 @@ module PagerTree::Integrations
         OpenSSL::HMAC.hexdigest(
           "SHA256",
           option_access_key,
-          (http_verb.upcase + timestamp_ms.to_s + data_string + resource_path)
+          http_verb.upcase + timestamp_ms.to_s + data_string + resource_path
         )
       )
       headers = {

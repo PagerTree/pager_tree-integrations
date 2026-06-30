@@ -20,7 +20,7 @@ module PagerTree::Integrations
 
     def adapter_thirdparty_id
       id = adapter_incoming_request_params.dig("monitor", "id")
-      typ = _alert_type == "certificate_expires_soon" ? "certificate" : "monitor"
+      typ = (_alert_type == "certificate_expires_soon") ? "certificate" : "monitor"
       "#{id}_#{typ}"
     end
 

@@ -10,7 +10,7 @@ module PagerTree::Integrations
     end
 
     def adapter_should_block_incoming?(request)
-      self.option_authentication_token.present? && (request.headers["Authorization"] != "Bearer #{self.option_authentication_token}")
+      option_authentication_token.present? && (request.headers["Authorization"] != "Bearer #{option_authentication_token}")
     end
 
     def adapter_supports_incoming?

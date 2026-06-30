@@ -32,7 +32,7 @@ module PagerTree::Integrations
 
       if check_result == "CRITICAL"
         :create
-      elsif check_result == "OK" || (check_result == "WARNING" && self.option_resolve_warn == true)
+      elsif check_result == "OK" || (check_result == "WARNING" && option_resolve_warn == true)
         :resolve
       else
         :other

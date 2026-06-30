@@ -73,25 +73,23 @@ module PagerTree::Integrations
     end
 
     def get_echoes_hq_incident
-      result = nil
+      nil
       response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents/#{echoes_hq_incident_id}"
       response = HTTParty.get(url, headers: echoes_hq_headers, timeout: 3)
-      result = response.code == 200 ? response.parsed_response : nil
+      (response.code == 200) ? response.parsed_response : nil
     rescue
-      result = nil
+      nil
     ensure
       logs.create(level: :info, format: :json, message: {
         message: "GET EchoesHQ Incident for PagerTree alert ##{@pager_tree_alert.tiny_id}",
         url: url,
         response: response
       })
-
-      result
     end
 
     def create_echoes_hq_incident
-      result = nil
+      nil
       response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents"
       body = {
@@ -104,9 +102,9 @@ module PagerTree::Integrations
       }
 
       response = HTTParty.post(url, body: body.to_json, headers: echoes_hq_headers, timeout: 3)
-      result = response.code == 200 ? response.parsed_response : nil
+      (response.code == 200) ? response.parsed_response : nil
     rescue
-      result = nil
+      nil
     ensure
       logs.create(level: :info, format: :json, message: {
         message: "CREATE EchoesHQ Incident for PagerTree alert ##{@pager_tree_alert.tiny_id}",
@@ -114,12 +112,10 @@ module PagerTree::Integrations
         body: body,
         reponse: response
       })
-
-      result
     end
 
     def update_echoes_hq_incident
-      result = nil
+      nil
       response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents/#{echoes_hq_incident_id}"
       body = {
@@ -128,9 +124,9 @@ module PagerTree::Integrations
         resolved_at: @pager_tree_alert.resolved_at&.iso8601
       }
       response = HTTParty.put(url, body: body.to_json, headers: echoes_hq_headers, timeout: 3)
-      result = response.code == 200 ? response.parsed_response : nil
+      (response.code == 200) ? response.parsed_response : nil
     rescue
-      result = nil
+      nil
     ensure
       logs.create(level: :info, format: :json, message: {
         message: "UPDATE EchoesHQ Incident for PagerTree alert ##{@pager_tree_alert.tiny_id}",
@@ -138,8 +134,6 @@ module PagerTree::Integrations
         body: body,
         response: response
       })
-
-      result
     end
 
     def create_or_update_echoes_hq_incident

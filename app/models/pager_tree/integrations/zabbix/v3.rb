@@ -59,7 +59,7 @@ module PagerTree::Integrations
     end
 
     def _urgency
-      if self.option_map_urgency == true
+      if option_map_urgency == true
         case adapter_incoming_request_params.dig("event_nseverity")
         when "0" then "silent" # Not Classified
         when "1" then "low" # Information

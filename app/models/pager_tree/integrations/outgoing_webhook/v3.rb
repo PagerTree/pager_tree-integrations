@@ -99,9 +99,9 @@ module PagerTree::Integrations
       }.compact
 
       # Do the custom templating portion for outgoing hooks
-      if self.option_template.present?
+      if option_template.present?
         begin
-          body = JSON.parse(handlebars(self.option_template, handlebars_data))
+          body = JSON.parse(handlebars(option_template, handlebars_data))
         rescue JSON::ParserError => e
           logs.create(message: "Error parsing JSON, abort custom format for option template. Error: #{e.message}")
         rescue => e

@@ -11,7 +11,7 @@ module PagerTree::Integrations
       @uptime_request = {
         monitor_id: "ThisWillBeTheMonitorID32CharLong",
         monitor_name: "Test Monitor Label",
-        monitor_target: "http:\/\/this-is-a-test.com\/",
+        monitor_target: "http://this-is-a-test.com/",
         monitor_type: "website",
         monitor_category: "Test Category",
         monitor_status: "offline",

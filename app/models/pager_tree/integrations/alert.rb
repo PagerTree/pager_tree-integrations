@@ -47,12 +47,12 @@ module PagerTree::Integrations
     end
 
     def incident?
-      ActiveModel::Type::Boolean.new.cast(self.incident)
+      ActiveModel::Type::Boolean.new.cast(incident)
     end
 
     def push_additional_data(additional_datum)
       if additional_datum.valid?
-        self.additional_data.push(additional_data.to_json)
+        additional_data.push(additional_data.to_json)
         true
       else
         false

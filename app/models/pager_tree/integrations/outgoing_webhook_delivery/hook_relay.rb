@@ -78,7 +78,7 @@ module PagerTree::Integrations
         .deep_merge(hook_relay_options)
         .deep_merge(pagertree_options)
         .deep_merge(auth_options)
-        .deep_merge((options&.symbolize_keys || {}))
+        .deep_merge(options&.symbolize_keys || {})
     end
 
     def delivery

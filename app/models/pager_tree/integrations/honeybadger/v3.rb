@@ -11,7 +11,7 @@ module PagerTree::Integrations
     end
 
     def adapter_should_block_incoming?(request)
-      self.option_token.present? && (request.headers["honeybadger-token"] != self.option_token)
+      option_token.present? && (request.headers["honeybadger-token"] != option_token)
     end
 
     def adapter_supports_incoming?

@@ -23,7 +23,7 @@ module PagerTree::Integrations
     end
 
     def adapter_action
-      adapter_incoming_request_params.dig("level") == "OK" ? :resolve : :create
+      (adapter_incoming_request_params.dig("level") == "OK") ? :resolve : :create
     end
 
     def adapter_process_create

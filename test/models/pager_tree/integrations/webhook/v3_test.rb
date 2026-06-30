@@ -75,9 +75,9 @@ module PagerTree::Integrations
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
         dedup_keys: @create_request.dig(:dedup_keys),
-        incident: !!@create_request.dig(:Meta).dig(:incident),
-        incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
-        incident_message: @create_request.dig(:Meta).dig(:incident_message),
+        incident: !!@create_request.dig(:Meta, :incident),
+        incident_severity: @create_request.dig(:Meta, :incident_severity).upcase,
+        incident_message: @create_request.dig(:Meta, :incident_message),
         tags: @create_request.dig(:Tags).uniq,
         meta: @create_request.dig(:Meta).except(:incident, :incident_severity, :incident_message)
       )
@@ -96,9 +96,9 @@ module PagerTree::Integrations
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
         dedup_keys: @create_request.dig(:dedup_keys),
-        incident: !!@create_request.dig(:Meta).dig(:incident),
-        incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
-        incident_message: @create_request.dig(:Meta).dig(:incident_message),
+        incident: !!@create_request.dig(:Meta, :incident),
+        incident_severity: @create_request.dig(:Meta, :incident_severity).upcase,
+        incident_message: @create_request.dig(:Meta, :incident_message),
         tags: @create_request.dig(:Tags).uniq,
         meta: @create_request.dig(:Meta).except(:incident, :incident_severity, :incident_message),
         additional_data: [

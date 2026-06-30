@@ -84,7 +84,7 @@ module PagerTree::Integrations
     end
 
     def option_record_emails
-      self.option_record_email.split(",")
+      option_record_email.split(",")
     end
 
     def option_banned_phones=(x)
@@ -92,7 +92,7 @@ module PagerTree::Integrations
     end
 
     def option_banned_phones
-      self.option_banned_phone.split(",")
+      option_banned_phone.split(",")
     end
 
     def option_record_emails_list=(x)
@@ -497,7 +497,7 @@ module PagerTree::Integrations
     end
 
     def _title
-      "Incoming call from #{adapter_incoming_request_params.dig("From")&.split("")&.join(" ")}"
+      "Incoming call from #{adapter_incoming_request_params.dig("From")&.chars&.join(" ")}"
     end
 
     def _additional_datums
@@ -515,7 +515,7 @@ module PagerTree::Integrations
     end
 
     def _client
-      @_client ||= ::Twilio::REST::Client.new(self.option_api_key, self.option_api_secret, self.option_account_sid, _api_region)
+      @_client ||= ::Twilio::REST::Client.new(option_api_key, option_api_secret, option_account_sid, _api_region)
     end
 
     def _call

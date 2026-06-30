@@ -25,7 +25,7 @@
 #
 module PagerTree::Integrations::BooleanStoreAccessor
   def boolean_store_accessor(attr_name)
-    define_method "#{attr_name}=".to_sym do |value|
+    define_method :"#{attr_name}=" do |value|
       values = ["1", true]
       super(values.include?(value))
     end
@@ -35,7 +35,7 @@ module PagerTree::Integrations::BooleanStoreAccessor
       !values.include?(super())
     end
 
-    define_method "#{attr_name}?".to_sym do
+    define_method :"#{attr_name}?" do
       send(attr_name)
     end
   end
