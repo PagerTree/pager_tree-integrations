@@ -82,7 +82,7 @@ module PagerTree::Integrations
         meta: @create_request.dig(:Meta).except(:incident, :incident_severity, :incident_message)
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
 
       # TEST THE ADDITIONAL DATUM OPTION
       @integration.option_capture_additional_data = true
@@ -106,7 +106,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "blocking_incoming" do

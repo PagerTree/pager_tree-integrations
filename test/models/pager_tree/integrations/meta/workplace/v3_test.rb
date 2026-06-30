@@ -36,8 +36,6 @@ module PagerTree::Integrations
 
       @alert.created_at = @alert.created_at.to_datetime
       @alert.updated_at = @alert.updated_at.to_datetime
-
-      @expected_payload = nil
     end
 
     def expected_message_url(group_id, message)
@@ -91,7 +89,7 @@ module PagerTree::Integrations
 
       assert_equal expected_message_url(@integration.option_group_id, "[Alert ##{@alert.tiny_id}](#{Rails.application.routes.url_helpers.try(:alert_url, @alert, script_name: "/#{@alert.account_id}")}) #{@alert.title}"), outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_nil outgoing_webhook_delivery.body.as_json
     end
 
     test "can_process_outgoing_comment" do
@@ -115,7 +113,7 @@ module PagerTree::Integrations
 
       assert_equal expected_comment_url(@alert.meta["#{@integration.id}_meta_workplace_post_id"], "Resolved"), outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_nil outgoing_webhook_delivery.body.as_json
     end
   end
 end

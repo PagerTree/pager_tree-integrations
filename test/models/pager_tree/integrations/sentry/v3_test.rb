@@ -182,7 +182,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_event_alert" do
@@ -200,7 +200,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_issue" do
@@ -218,7 +218,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_metric_alert" do
@@ -236,7 +236,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_webhook" do
@@ -255,7 +255,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
   end
 end
