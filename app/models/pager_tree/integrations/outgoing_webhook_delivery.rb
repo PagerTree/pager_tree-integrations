@@ -2,7 +2,7 @@ module PagerTree::Integrations
   class OutgoingWebhookDelivery < ApplicationRecord
     self.table_name = PagerTree::Integrations.outgoing_webhook_delivery_table_name
 
-    serialize :data, JSON
+    serialize :data, coder: JSON
     encrypts :data
 
     store_accessor :data, *[:url, :body, :auth, :proxy_url, :options].map(&:to_s)

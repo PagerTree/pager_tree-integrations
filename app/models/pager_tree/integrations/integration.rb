@@ -2,7 +2,7 @@ module PagerTree::Integrations
   class Integration < PagerTree::Integrations.integration_parent_class.constantize
     extend PagerTree::Integrations::BooleanStoreAccessor
 
-    serialize :options, JSON
+    serialize :options, coder: JSON
     encrypts :options
 
     GENERIC_OPTIONS = [
