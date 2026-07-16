@@ -47,15 +47,15 @@ module PagerTree::Integrations
         if created_at&.after?(DateTime.parse("2023-09-01"))
           # new emails
           # int_abc123@domain.com
-          "#{v == 3 ? prefix_id : id}@#{domain}"
+          "#{(v == 3) ? prefix_id : id}@#{domain}"
         else
           # legacy emails
           # a+int_abc123@domain.com
-          "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
+          "#{inbox}#{postfix}+#{(v == 3) ? prefix_id : id}@#{domain}"
         end
       else
         # staging, test, development
-        "#{inbox}#{postfix}+#{v == 3 ? prefix_id : id}@#{domain}"
+        "#{inbox}#{postfix}+#{(v == 3) ? prefix_id : id}@#{domain}"
       end
     end
 

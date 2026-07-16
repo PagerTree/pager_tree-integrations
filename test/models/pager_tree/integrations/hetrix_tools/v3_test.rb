@@ -11,7 +11,7 @@ module PagerTree::Integrations
       @uptime_request = {
         monitor_id: "ThisWillBeTheMonitorID32CharLong",
         monitor_name: "Test Monitor Label",
-        monitor_target: "http:\/\/this-is-a-test.com\/",
+        monitor_target: "http://this-is-a-test.com/",
         monitor_type: "website",
         monitor_category: "Test Category",
         monitor_status: "offline",
@@ -159,7 +159,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_blacklist" do
@@ -176,7 +176,7 @@ module PagerTree::Integrations
 
       actual = @integration.adapter_process_create
       actual.thirdparty_id = nil
-      assert_equal true_alert.to_json, actual.to_json
+      assert_equal true_alert.as_json, actual.as_json
     end
 
     test "adapter_process_create_resource_usage" do
@@ -200,7 +200,7 @@ module PagerTree::Integrations
 
       actual = @integration.adapter_process_create
       actual.thirdparty_id = nil
-      assert_equal true_alert.to_json, actual.to_json
+      assert_equal true_alert.as_json, actual.as_json
     end
 
     test "blocking_incoming" do

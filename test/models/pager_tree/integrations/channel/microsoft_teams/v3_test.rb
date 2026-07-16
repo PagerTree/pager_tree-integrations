@@ -127,7 +127,7 @@ module PagerTree::Integrations
 
       assert_equal @integration.option_incoming_webhook_url, outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_equal @expected_payload.as_json, outgoing_webhook_delivery.body.as_json
     end
 
     test "respects outgoing rules data" do
@@ -148,7 +148,7 @@ module PagerTree::Integrations
 
       @expected_payload[:extra] = true
 
-      assert_equal @expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_equal @expected_payload.as_json, outgoing_webhook_delivery.body.as_json
     end
 
     test "compact_message mode shows only alert, status, and user" do

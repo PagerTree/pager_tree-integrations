@@ -361,7 +361,7 @@ module PagerTree::Integrations
         tags: Array(@create_fault_request.dig("fault", "tags")) + Array(@create_fault_request.dig("fault", "environment"))
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
 
       # TEST THE SITE REQUEST
       @integration.adapter_incoming_request_params = @create_site_request
@@ -380,7 +380,7 @@ module PagerTree::Integrations
         tags: []
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
 
       # TEST THE CHECK_IN REQUEST
       @integration.adapter_incoming_request_params = @create_check_in_request
@@ -399,7 +399,7 @@ module PagerTree::Integrations
         tags: []
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "blocking_incoming" do

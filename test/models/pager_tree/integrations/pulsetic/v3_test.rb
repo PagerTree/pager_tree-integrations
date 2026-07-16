@@ -71,7 +71,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "adapter_process_create_certificate" do
@@ -88,7 +88,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
   end
 end

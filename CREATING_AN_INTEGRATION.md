@@ -52,12 +52,9 @@ Input options to the user during create and update (think API keys, options, ect
 ```
 
 #### File Upload input option
+Requires `has_one_attached :option_attachment` (or `has_many_attached` for multiple files) on the model.
 ```html
-<div class="form-group">
-  <%= form.label :option_welcome_media %>
-  <%= form.file_field :option_welcome_media, accept: "audio/*", class: "file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" %>
-  <p class="form-hint"><%== t(".option_welcome_media_hint_html") %></p>
-</div>
+<%= render "shared/attachments_field", form: form, field: :option_attachment, accept: "audio/*", hint: t(".option_attachment_hint_html") %>
 ```
 
 #### Check Box input option

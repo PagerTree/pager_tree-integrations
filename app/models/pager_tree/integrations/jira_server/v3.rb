@@ -29,7 +29,7 @@ module PagerTree::Integrations
 
     def adapter_action
       event = adapter_incoming_request_params.dig("webhookEvent")
-      event == "jira:issue_created" || (self.option_issue_updated == true && event == "jira:issue_updated") ? :create : :other
+      (event == "jira:issue_created" || (option_issue_updated == true && event == "jira:issue_updated")) ? :create : :other
     end
 
     def adapter_process_create

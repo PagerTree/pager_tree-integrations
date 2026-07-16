@@ -54,7 +54,7 @@ module PagerTree::Integrations
     end
 
     def adapter_process_outgoing
-      url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || self.option_incoming_webhook_url
+      url = adapter_outgoing_event.outgoing_rules_data.dig("webhook_url") || option_incoming_webhook_url
       body = _blocks.merge(adapter_outgoing_event.outgoing_rules_data.except("webhook_url"))
 
       outgoing_webhook_delivery = OutgoingWebhookDelivery.factory(

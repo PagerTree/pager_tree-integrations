@@ -32,7 +32,7 @@ module PagerTree::Integrations
     def adapter_action
       case _webhoook_type
       when "website", "ping", "port", "heartbeat"
-        adapter_incoming_request_params.dig("is_ok") == 1 ? :resolve : :create
+        (adapter_incoming_request_params.dig("is_ok") == 1) ? :resolve : :create
       when "domain-expiry", "ssl-expiry"
         :create
       else

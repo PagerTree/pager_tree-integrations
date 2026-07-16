@@ -32,7 +32,7 @@ module PagerTree::Integrations
       when "Recovered"
         :resolve
       when "Re-Triggered"
-        self.option_support_retriggered_event == true ? :recreate : :other
+        (option_support_retriggered_event == true) ? :recreate : :other
       else
         :other
       end

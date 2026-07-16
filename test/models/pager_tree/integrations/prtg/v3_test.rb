@@ -60,7 +60,7 @@ module PagerTree::Integrations
         end
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
   end
 end

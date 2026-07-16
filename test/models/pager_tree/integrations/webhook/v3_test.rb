@@ -75,14 +75,14 @@ module PagerTree::Integrations
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
         dedup_keys: @create_request.dig(:dedup_keys),
-        incident: !!@create_request.dig(:Meta).dig(:incident),
-        incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
-        incident_message: @create_request.dig(:Meta).dig(:incident_message),
+        incident: !!@create_request.dig(:Meta, :incident),
+        incident_severity: @create_request.dig(:Meta, :incident_severity).upcase,
+        incident_message: @create_request.dig(:Meta, :incident_message),
         tags: @create_request.dig(:Tags).uniq,
         meta: @create_request.dig(:Meta).except(:incident, :incident_severity, :incident_message)
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
 
       # TEST THE ADDITIONAL DATUM OPTION
       @integration.option_capture_additional_data = true
@@ -96,9 +96,9 @@ module PagerTree::Integrations
         urgency: @create_request.dig(:Urgency).downcase,
         thirdparty_id: @create_request.dig(:Id),
         dedup_keys: @create_request.dig(:dedup_keys),
-        incident: !!@create_request.dig(:Meta).dig(:incident),
-        incident_severity: @create_request.dig(:Meta).dig(:incident_severity).upcase,
-        incident_message: @create_request.dig(:Meta).dig(:incident_message),
+        incident: !!@create_request.dig(:Meta, :incident),
+        incident_severity: @create_request.dig(:Meta, :incident_severity).upcase,
+        incident_message: @create_request.dig(:Meta, :incident_message),
         tags: @create_request.dig(:Tags).uniq,
         meta: @create_request.dig(:Meta).except(:incident, :incident_severity, :incident_message),
         additional_data: [
@@ -106,7 +106,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "blocking_incoming" do

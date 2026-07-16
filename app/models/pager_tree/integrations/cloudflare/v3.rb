@@ -10,7 +10,7 @@ module PagerTree::Integrations
     end
 
     def adapter_should_block_incoming?(request)
-      self.option_webhook_secret.present? && (request.headers["cf-webhook-auth"] != self.option_webhook_secret)
+      option_webhook_secret.present? && (request.headers["cf-webhook-auth"] != option_webhook_secret)
     end
 
     def adapter_supports_incoming?

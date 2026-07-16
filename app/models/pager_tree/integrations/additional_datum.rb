@@ -33,8 +33,8 @@ module PagerTree::Integrations
     def to_h
       {
         format: self.format,
-        label: self.label,
-        value: self.value
+        label: label,
+        value: value
       }
     end
   end

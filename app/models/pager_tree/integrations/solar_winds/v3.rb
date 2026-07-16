@@ -51,7 +51,7 @@ module PagerTree::Integrations
 
       ack_url = adapter_outgoing_event.alert&.source_log&.message&.dig("params", "AcknowledgeUrl")
       ack_uri = URI.parse(ack_url)
-      server_uri = URI.parse(self.option_server_url)
+      server_uri = URI.parse(option_server_url)
       object_id = Rack::Utils.parse_query(ack_uri.query).dig("ObjID")
       url = "#{server_uri.origin}/SolarWinds/InformationService/v3/Json/Invoke/Orion.AlertActive/Acknowledge"
       body = {
@@ -61,10 +61,10 @@ module PagerTree::Integrations
 
       auth = {}
 
-      if self.option_server_username.present? && self.option_server_password.present?
+      if option_server_username.present? && option_server_password.present?
         auth = {
-          username: self.option_server_username,
-          password: self.option_server_password
+          username: option_server_username,
+          password: option_server_password
         }
       end
 

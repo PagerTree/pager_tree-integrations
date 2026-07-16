@@ -100,7 +100,7 @@ module PagerTree::Integrations
         ]
       )
 
-      assert_equal true_alert.to_json, @integration.adapter_process_create.to_json
+      assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
     end
 
     test "can_process_outgoing_hmac" do
@@ -136,7 +136,7 @@ module PagerTree::Integrations
 
       assert_equal "https://#{@integration.option_logic_monitor_account_name}.logicmonitor.com/santaba/rest/alert/alerts/#{outgoing_event.alert.thirdparty_id}/ack", outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_equal expected_payload.as_json, outgoing_webhook_delivery.body.as_json
       assert outgoing_webhook_delivery.options.dig("headers", "Authorization").starts_with?("LMv1 #{@integration.option_access_id}:")
     end
 
@@ -180,7 +180,7 @@ module PagerTree::Integrations
 
       assert_equal "https://#{@integration.option_logic_monitor_account_name}.logicmonitor.com/santaba/rest/setting/collector/collectors/1234567890/ackdown?v=2", outgoing_webhook_delivery.url
       assert_equal :queued.to_s, outgoing_webhook_delivery.status
-      assert_equal expected_payload.to_json, outgoing_webhook_delivery.body.to_json
+      assert_equal expected_payload.as_json, outgoing_webhook_delivery.body.as_json
       assert outgoing_webhook_delivery.options.dig("headers", "Authorization").starts_with?("Bearer #{@integration.option_bearer_token}")
     end
   end
