@@ -1,7 +1,6 @@
 PATH
   remote: .
   specs:
-    pager_tree-integrations (1.1.6)
       jmespath (~> 1.0)
       rails (>= 7.1)
 
