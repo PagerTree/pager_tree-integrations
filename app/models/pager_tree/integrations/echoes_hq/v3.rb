@@ -73,8 +73,6 @@ module PagerTree::Integrations
     end
 
     def get_echoes_hq_incident
-      nil
-      response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents/#{echoes_hq_incident_id}"
       response = HTTParty.get(url, headers: echoes_hq_headers, timeout: 3)
       (response.code == 200) ? response.parsed_response : nil
@@ -89,8 +87,6 @@ module PagerTree::Integrations
     end
 
     def create_echoes_hq_incident
-      nil
-      response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents"
       body = {
         id: echoes_hq_incident_id,
@@ -110,13 +106,11 @@ module PagerTree::Integrations
         message: "CREATE EchoesHQ Incident for PagerTree alert ##{@pager_tree_alert.tiny_id}",
         url: url,
         body: body,
-        reponse: response
+        response: response
       })
     end
 
     def update_echoes_hq_incident
-      nil
-      response = nil
       url = "https://api.echoeshq.com/v1/signals/incidents/#{echoes_hq_incident_id}"
       body = {
         title: @pager_tree_alert.title,
