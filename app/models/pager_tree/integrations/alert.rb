@@ -52,7 +52,7 @@ module PagerTree::Integrations
 
     def push_additional_data(additional_datum)
       if additional_datum.valid?
-        additional_data.push(additional_datum.to_json)
+        additional_data.push(additional_datum.to_h)
         true
       else
         false
