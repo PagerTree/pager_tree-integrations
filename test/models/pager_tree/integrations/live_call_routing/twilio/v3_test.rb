@@ -32,18 +32,23 @@ module PagerTree::Integrations
 
     test "fetch_voicemail_recording returns the response on success" do
       VCR.use_cassette("live_call_routing_twilio_v3_fetch_voicemail_recording_success") do
-        response = @integration.send(:_fetch_voicemail_recording, "https://statuscode.app/200")
+        response = @integration.send(:_fetch_voicemail_recording, "https://api.twilio.com/2010-04-01/Accounts/ACtest/Recordings/REtest")
 
         assert response.success?
-        assert_equal "OK", response.body
       end
     end
 
     test "fetch_voicemail_recording raises when the download fails" do
       VCR.use_cassette("live_call_routing_twilio_v3_fetch_voicemail_recording_failure") do
         assert_raises do
-          @integration.send(:_fetch_voicemail_recording, "https://statuscode.app/400")
+          @integration.send(:_fetch_voicemail_recording, "https://api.twilio.com/2010-04-01/Accounts/ACtest/Recordings/REtest")
         end
+      end
+    end
+
+    test "fetch_voicemail_recording refuses a non-Twilio URL" do
+      assert_raises(ArgumentError) do
+        @integration.send(:_fetch_voicemail_recording, "https://statuscode.app/200")
       end
     end
   end

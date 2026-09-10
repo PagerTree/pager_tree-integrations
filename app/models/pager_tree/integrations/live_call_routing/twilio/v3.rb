@@ -18,6 +18,8 @@ module PagerTree::Integrations
 
     API_REGIONS = ["ashburn.us1", "dublin.ie1", "sydney.au1"]
 
+    TWILIO_RECORDING_URL_REGEXP = /\Ahttps:\/\/([a-z0-9-]+\.)*twilio\.com(:\d+)?\//i
+
     has_one_attached :option_connect_now_media
     has_one_attached :option_music_media
     has_one_attached :option_no_answer_media
@@ -495,7 +497,9 @@ module PagerTree::Integrations
     private
 
     def _fetch_voicemail_recording(recording_url)
-      response = HTTParty.get(recording_url, basic_auth: {username: option_api_key, password: option_api_secret}, timeout: 10)
+      raise ArgumentError, "Refusing to fetch a non-Twilio recording URL" unless recording_url.to_s.match?(TWILIO_RECORDING_URL_REGEXP)
+
+      response = HTTParty.get(recording_url, basic_auth: {username: option_api_key, password: option_api_secret}, timeout: 10, no_follow: true)
       raise "HTTP #{response.code}" unless response.success?
 
       response

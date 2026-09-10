@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://statuscode.app/400
+    uri: https://api.twilio.com/2010-04-01/Accounts/ACtest/Recordings/REtest
     body:
       encoding: US-ASCII
       string: ""
@@ -17,17 +17,13 @@ http_interactions:
       - Ruby
   response:
     status:
-      code: 400
-      message: Bad Request
+      code: 404
+      message: Not Found
     headers:
       Content-Type:
-      - text/plain;charset=UTF-8
-      Content-Length:
-      - '11'
-      Server:
-      - cloudflare
+      - application/json
     body:
       encoding: UTF-8
-      string: "Bad Request"
+      string: '{"code": 20404, "message": "The requested resource was not found"}'
   recorded_at: Thu, 10 Sep 2026 03:12:08 GMT
 recorded_with: VCR 6.0.0

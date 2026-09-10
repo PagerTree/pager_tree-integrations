@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://statuscode.app/200
+    uri: https://api.twilio.com/2010-04-01/Accounts/ACtest/Recordings/REtest
     body:
       encoding: US-ASCII
       string: ""
@@ -21,13 +21,11 @@ http_interactions:
       message: OK
     headers:
       Content-Type:
-      - text/plain;charset=UTF-8
+      - audio/x-wav
       Content-Length:
-      - '2'
-      Server:
-      - cloudflare
+      - '4'
     body:
-      encoding: UTF-8
-      string: "OK"
+      encoding: ASCII-8BIT
+      string: "RIFF"
   recorded_at: Thu, 10 Sep 2026 03:12:08 GMT
 recorded_with: VCR 6.0.0
