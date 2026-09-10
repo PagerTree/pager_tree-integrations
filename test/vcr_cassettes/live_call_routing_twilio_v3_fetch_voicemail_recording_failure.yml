@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://statuscode.app/400
+    body:
+      encoding: US-ASCII
+      string: ""
+    headers:
+      Authorization:
+      - Basic Yjpj
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Content-Type:
+      - text/plain;charset=UTF-8
+      Content-Length:
+      - '11'
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: "Bad Request"
+  recorded_at: Thu, 10 Sep 2026 03:12:08 GMT
+recorded_with: VCR 6.0.0
