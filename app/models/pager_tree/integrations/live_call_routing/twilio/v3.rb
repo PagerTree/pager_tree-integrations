@@ -18,6 +18,8 @@ module PagerTree::Integrations
 
     API_REGIONS = ["ashburn.us1", "dublin.ie1", "sydney.au1"]
 
+    TWILIO_RECORDING_URL_REGEXP = /\Ahttps:\/\/([a-z0-9-]+\.)*twilio\.com(:\d+)?\//i
+
     has_one_attached :option_connect_now_media
     has_one_attached :option_music_media
     has_one_attached :option_no_answer_media
@@ -383,10 +385,12 @@ module PagerTree::Integrations
         _twiml.play(url: option_no_answer_thank_you_media_url)
         _twiml.hangup
 
-        adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: recording_url).to_h)
-        adapter_alert.save!
-
         adapter_alert.logs.create!(message: "Caller left a voicemail.")
+
+        blob_url = _download_voicemail_recording(recording_url)
+
+        adapter_alert.additional_data.push(AdditionalDatum.new(format: "link", label: "Voicemail", value: blob_url).to_h)
+        adapter_alert.save!
 
         if option_record_emails.any?
           emails = option_record_emails.map do |x|
@@ -405,7 +409,7 @@ module PagerTree::Integrations
 
           adapter_alert.logs.create!(message: "Sending voicemail recording to #{emails.size} emails.")
           emails.each do |email|
-            LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: recording_url).call_recording.deliver_later
+            LiveCallRouting::Twilio::V3Mailer.with(email: email, alert: adapter_alert, from: adapter_incoming_request_params.dig("From"), recording_url: blob_url).call_recording.deliver_later
           end
         end
 
@@ -491,6 +495,36 @@ module PagerTree::Integrations
     end
 
     private
+
+    def _fetch_voicemail_recording(recording_url)
+      raise ArgumentError, "Refusing to fetch a non-Twilio recording URL" unless recording_url.to_s.match?(TWILIO_RECORDING_URL_REGEXP)
+
+      response = HTTParty.get(recording_url, basic_auth: {username: option_api_key, password: option_api_secret}, timeout: 10, no_follow: true)
+      raise "HTTP #{response.code}" unless response.success?
+
+      response
+    end
+
+    def _download_voicemail_recording(recording_url)
+      response = _fetch_voicemail_recording(recording_url)
+
+      content_type = response.headers["content-type"].presence || "audio/x-wav"
+      extension = content_type.include?("mpeg") ? "mp3" : "wav"
+
+      blob = ActiveStorage::Blob.create_and_upload!(
+        io: StringIO.new(response.body),
+        filename: "voicemail-#{adapter_alert.thirdparty_id}.#{extension}",
+        content_type: content_type
+      )
+
+      adapter_alert.attachments.attach(blob)
+      adapter_alert.logs.create!(message: "Voicemail recording downloaded and attached.")
+
+      Rails.application.routes.url_helpers.rails_blob_url(blob)
+    rescue => e
+      adapter_alert.logs.create!(message: "Failed to download voicemail recording. Falling back to the raw recording URL. #{e.message}")
+      recording_url
+    end
 
     def _thirdparty_id
       adapter_incoming_request_params.dig("CallSid")
