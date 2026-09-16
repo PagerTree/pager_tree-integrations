@@ -1,35 +1,27 @@
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/email/v3.option_allow_spam") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.email.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/email/v3.option_allow_spam") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_allow_spam } %>
-  </dd>
-</div>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/email/v3.option_dedup_threads") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/email/v3.option_dedup_threads") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_dedup_threads } %>
-  </dd>
-</div>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/email/v3.option_sanitize_level") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/email/v3.option_sanitize_level") } do %>
     <%= integration.option_sanitize_level.humanize %>
-  </dd>
-</div>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/email/v3.option_custom_definition") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/email/v3.option_custom_definition_enabled") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_custom_definition_enabled == true } %>
-  </dd>
-</div>
+  <% end %>
+
+  <% if integration.option_custom_definition_enabled == true %>
+    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/email/v3.option_custom_definition"), fixed_height: false } do %>
+      <% if integration.option_custom_definition.present? %>
+        <pre class="max-h-40 w-full overflow-y-auto rounded bg-gray-50 p-2 text-xs text-gray-800"><%= integration.option_custom_definition %></pre>
+      <% else %>
+        <span class="text-gray-400">-</span>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

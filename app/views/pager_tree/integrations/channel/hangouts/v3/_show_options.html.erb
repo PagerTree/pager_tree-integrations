@@ -1,50 +1,23 @@
-<div class="sm:col-span-2">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/integration.option_incoming_webhook_url") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= integration.option_incoming_webhook_url %>
-      </p>
-    </div>
-  </dd>
-</div>
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.channel.hangouts.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/integration.option_incoming_webhook_url") } do %>
+    <span class="truncate"><%= mask(integration.option_incoming_webhook_url).presence || "-" %></span>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/channel/hangouts/v3.option_thread_same_alert") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/channel/hangouts/v3.option_thread_same_alert") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_thread_same_alert } %>
-  </dd>
-</div>
-
-<% 
-  opts = [
-    :alert_open,
-    :alert_assigned,
-    :alert_acknowledged,
-    :alert_resolved,
-    :alert_dropped,
-  ]
-%>
-<% opts.each do |opt| %>
-  <div class="sm:col-span-1">
-    <dt class="text-sm font-medium text-gray-500">
-      <%= t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt.to_s}") %>
-    </dt>
-    <dd class="mt-1 text-sm text-gray-900">
-      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>
-    </dd>
-  </div>
+  <% end %>
 <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("pager_tree.integrations.common.option_outgoing_rules") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.channel.hangouts.v3.show_options.groups.event_triggers") } do %>
+  <% [:alert_open, :alert_assigned, :alert_acknowledged, :alert_resolved, :alert_dropped].each do |opt| %>
+    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt}") } do %>
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt}") } %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.channel.hangouts.v3.show_options.groups.advanced") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
-  </dd>
-</div>
+  <% end %>
+<% end %>

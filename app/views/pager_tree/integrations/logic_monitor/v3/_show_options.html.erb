@@ -1,60 +1,21 @@
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_alert_acknowledged") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.logic_monitor.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_logic_monitor_account_name") } do %>
+    <span class="truncate"><%= integration.option_logic_monitor_account_name.presence || "-" %></span>
+  <% end %>
+
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_access_id") } do %>
+    <span class="truncate"><%= mask(integration.option_access_id).presence || "-" %></span>
+  <% end %>
+
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_access_key") } do %>
+    <span class="truncate"><%= mask(integration.option_access_key).presence || "-" %></span>
+  <% end %>
+
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_bearer_token") } do %>
+    <span class="truncate"><%= mask(integration.option_bearer_token).presence || "-" %></span>
+  <% end %>
+
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_alert_acknowledged") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_alert_acknowledged } %>
-  </dd>
-</div>
-
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_logic_monitor_account_name") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= integration.option_logic_monitor_account_name %>
-      </p>
-    </div>
-  </dd>
-</div>
-
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_access_id") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_access_id %>
-      </p>
-    </div>
-  </dd>
-</div>
-
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_access_key") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_access_key %>
-      </p>
-    </div>
-  </dd>
-</div>
-
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/logic_monitor/v3.option_bearer_token") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_bearer_token %>
-      </p>
-    </div>
-  </dd>
-</div>
+  <% end %>
+<% end %>
