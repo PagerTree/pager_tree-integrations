@@ -73,6 +73,10 @@ en:
             option_form_phone_required_hint_html: "Should the phone field be required to submit?"
             option_form_description_required_hint_html: "Should the description field be required to submit?"
             option_form_urgency_required_hint_html: "Should the urgency field be required to submit?"
+          show_options:
+            groups:
+              content: "Form Content"
+              required_fields: "Required Fields"
       hetrix_tools:
         v3:
           form_options:
@@ -147,6 +151,11 @@ en:
             option_password_hint_html: "Basic auth password (optional)"
             option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
+          show_options:
+            groups:
+              configuration: "Webhook Configuration"
+              event_triggers: "Event Triggers"
+              advanced: "Advanced"
       sentry:
         v3:
           form_options:

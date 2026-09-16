@@ -49,6 +49,10 @@ module PagerTree::Integrations
       true
     end
 
+    def adapter_supports_grouped_details?
+      true
+    end
+
     def adapter_response_inactive_subscription
       adapter_controller&.render(status: adapter_response_inactive_subscription_code, json: {code: Rack::Utils.status_code(adapter_response_inactive_subscription_code), errors: ["Customer must subscribe service plan to use this integration"]})
     end

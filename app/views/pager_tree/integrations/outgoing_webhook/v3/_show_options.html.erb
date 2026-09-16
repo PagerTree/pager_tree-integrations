@@ -1,99 +1,56 @@
-<div class="sm:col-span-2">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_webhook_url") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= integration.option_webhook_url %>
-      </p>
-    </div>
-  </dd>
-</div>
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.outgoing_webhook.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_webhook_url") } do %>
+    <span class="truncate"><%= integration.option_webhook_url.presence || "-" %></span>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_username") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_username %>
-      </p>
-    </div>
-  </dd>
-</div>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_username") } do %>
+    <span class="truncate"><%= mask(integration.option_username).presence || "-" %></span>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_password") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_password %>
-      </p>
-    </div>
-  </dd>
-</div>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_password") } do %>
+    <span class="truncate"><%= mask(integration.option_password).presence || "-" %></span>
+  <% end %>
 
-<% if integration.option_proxy_url.present? %>
-  <div class="sm:col-span-1">
-    <dt class="text-sm font-medium text-gray-500">
-      <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_proxy_url") %>
-    </dt>
-    <dd class="mt-1 text-sm text-gray-900">
-      <div class="flex items-center gap-2">
-        <p class="text-sm truncate">
-          <%= integration.option_proxy_url %>
-        </p>
-      </div>
-    </dd>
-  </div>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_proxy_url") } do %>
+    <span class="truncate"><%= integration.option_proxy_url.presence || "-" %></span>
+  <% end %>
 <% end %>
 
-<% 
-  opts = [
-    :alert_created,
-    :alert_open,
-    :alert_acknowledged,
-    :alert_rejected,
-    :alert_timeout,
-    :alert_resolved,
-    :alert_dropped,
-    :alert_handoff,
-    :comment_created,
-    :comment_updated,
-    :comment_destroyed,
-    :event_reminder_going_on_call,
-    :event_reminder_going_off_call,
-  ]
-%>
-<% opts.each do |opt| %>
-  <div class="sm:col-span-1">
-    <dt class="text-sm font-medium text-gray-500">
-      <%= t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt.to_s}") %>
-    </dt>
-    <dd class="mt-1 text-sm text-gray-900">
-      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt.to_s}") } %>
-    </dd>
-  </div>
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.outgoing_webhook.v3.show_options.groups.event_triggers") } do %>
+  <%
+    event_opts = [
+      :alert_created,
+      :alert_open,
+      :alert_acknowledged,
+      :alert_rejected,
+      :alert_timeout,
+      :alert_resolved,
+      :alert_dropped,
+      :alert_handoff,
+      :comment_created,
+      :comment_updated,
+      :comment_destroyed,
+      :event_reminder_going_on_call,
+      :event_reminder_going_off_call
+    ]
+  %>
+  <% event_opts.each do |opt| %>
+    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt}"), label_width: "w-64" } do %>
+      <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt}") } %>
+    <% end %>
+  <% end %>
 <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_template") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.outgoing_webhook.v3.show_options.groups.advanced") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_template") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_template.present? } %>
-  </dd>
-</div>
+  <% end %>
 
-<div class="sm:col-span-1">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("pager_tree.integrations.common.option_outgoing_rules") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_send_linked") } do %>
+    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_send_linked } %>
+  <% end %>
+
+  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
-  </dd>
-</div>
+  <% end %>
+<% end %>

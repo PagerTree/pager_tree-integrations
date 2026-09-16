@@ -84,6 +84,10 @@ module PagerTree::Integrations
       false
     end
 
+    def adapter_supports_grouped_details?
+      true
+    end
+
     def adapter_outgoing_interest?(event_name)
       try("option_#{event_name}") || false
     end
