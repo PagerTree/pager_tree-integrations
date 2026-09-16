@@ -6,18 +6,14 @@
   <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_access_token") } do %>
     <span class="truncate"><%= mask(integration.option_access_token).presence || "-" %></span>
   <% end %>
-
-  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_app_secret") } do %>
-    <span class="truncate"><%= mask(integration.option_app_secret).presence || "-" %></span>
-  <% end %>
-
-  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/meta/workplace/v3.option_outgoing_enabled") } do %>
-    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_enabled } %>
-  <% end %>
 <% end %>
 
 <%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.meta.workplace.v3.show_options.groups.advanced") } do %>
-  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules") } do %>
-    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules"), fixed_height: false } do %>
+    <% if integration.option_outgoing_rules.present? %>
+      <pre class="max-h-40 w-full overflow-y-auto rounded bg-gray-50 p-2 text-xs text-gray-800"><%= integration.option_outgoing_rules %></pre>
+    <% else %>
+      <span class="text-gray-400">-</span>
+    <% end %>
   <% end %>
 <% end %>

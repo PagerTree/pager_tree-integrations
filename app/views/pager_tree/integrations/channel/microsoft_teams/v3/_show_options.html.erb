@@ -17,7 +17,11 @@
 <% end %>
 
 <%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.channel.microsoft_teams.v3.show_options.groups.advanced") } do %>
-  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules") } do %>
-    <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_outgoing_rules.present? } %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("pager_tree.integrations.common.option_outgoing_rules"), fixed_height: false } do %>
+    <% if integration.option_outgoing_rules.present? %>
+      <pre class="max-h-40 w-full overflow-y-auto rounded bg-gray-50 p-2 text-xs text-gray-800"><%= integration.option_outgoing_rules %></pre>
+    <% else %>
+      <span class="text-gray-400">-</span>
+    <% end %>
   <% end %>
 <% end %>
