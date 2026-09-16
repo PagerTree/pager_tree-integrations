@@ -145,6 +145,10 @@ module PagerTree::Integrations
       false
     end
 
+    def adapter_supports_grouped_details?
+      true
+    end
+
     def adapter_outgoing_interest?(event_name)
       ["alert_acknowledged", "alert_dropped"].include?(event_name)
     end

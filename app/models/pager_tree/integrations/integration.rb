@@ -102,6 +102,15 @@ module PagerTree::Integrations
       true
     end
 
+    # Opt in to the grouped/collapsible details card layout on the integration show page
+    # (see pager_tree-server's integrations/_integration.html.erb and
+    # integrations/components/_details_card_grouped.html.erb). Off by default so adapters
+    # keep the original flat field list until their _show_options partial has been migrated
+    # to use shared/components/detail_group and detail_row.
+    def adapter_supports_grouped_details?
+      false
+    end
+
     # START basic show functions
     def adapter_show_alerts?
       adapter_supports_incoming?

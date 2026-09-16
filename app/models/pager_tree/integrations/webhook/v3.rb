@@ -27,6 +27,10 @@ module PagerTree::Integrations
       false
     end
 
+    def adapter_supports_grouped_details?
+      true
+    end
+
     def adapter_incoming_can_defer?
       true
     end
