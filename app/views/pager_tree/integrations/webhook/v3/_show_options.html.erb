@@ -1,15 +1,13 @@
 <%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.webhook.v3.show_options.groups.configuration") } do %>
   <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_token") } do %>
-    <span class="truncate"><%= mask integration.option_token %></span>
+    <span class="truncate"><%= mask(integration.option_token).presence || "-" %></span>
   <% end %>
 
   <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_capture_additional_data") } do %>
     <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.option_capture_additional_data } %>
   <% end %>
 
-  <% if integration.option_wrapper_key.present? %>
-    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_wrapper_key") } do %>
-      <span class="truncate"><%= integration.option_wrapper_key %></span>
-    <% end %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/webhook/v3.option_wrapper_key") } do %>
+    <span class="truncate"><%= integration.option_wrapper_key.presence || "-" %></span>
   <% end %>
 <% end %>
