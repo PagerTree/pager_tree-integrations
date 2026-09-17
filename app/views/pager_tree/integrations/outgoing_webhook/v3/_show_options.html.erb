@@ -35,7 +35,7 @@
     ]
   %>
   <% event_opts.each do |opt| %>
-    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt}"), label_width: "w-64" } do %>
+    <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/integration.option_#{opt}"), label_width: "sm:w-64" } do %>
       <%= render partial: "shared/components/badge_enabled", locals: { enabled: integration.send("option_#{opt}") } %>
     <% end %>
   <% end %>
