@@ -1,12 +1,5 @@
-<div class="sm:col-span-2">
-  <dt class="text-sm font-medium text-gray-500">
-    <%= t("activerecord.attributes.pager_tree/integrations/cloudflare/v3.option_webhook_secret") %>
-  </dt>
-  <dd class="mt-1 text-sm text-gray-900">
-    <div class="flex items-center gap-2">
-      <p class="text-sm truncate">
-        <%= mask integration.option_webhook_secret %>
-      </p>
-    </div>
-  </dd>
-</div>
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.cloudflare.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/cloudflare/v3.option_webhook_secret") } do %>
+    <span class="truncate"><%= mask(integration.option_webhook_secret).presence || "-" %></span>
+  <% end %>
+<% end %>

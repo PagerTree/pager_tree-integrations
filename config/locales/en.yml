@@ -29,29 +29,63 @@ en:
           v3:
             form_options:
               option_thread_same_alert_hint_html: "Send all messages for the same alert to the same thread"
+            show_options:
+              groups:
+                configuration: "Configuration"
+                event_triggers: "Event Triggers"
+                advanced: "Advanced"
         microsoft_teams:
           v3:
             form_options:
               option_time_zone_hint_html: "The time zone to use when formatting dates and times"
+            show_options:
+              groups:
+                configuration: "Configuration"
+                event_triggers: "Event Triggers"
+                advanced: "Advanced"
           v4:
             form_options:
               option_time_zone_hint_html: "The time zone to use when formatting dates and times"
+            show_options:
+              groups:
+                configuration: "Configuration"
+                event_triggers: "Event Triggers"
+                advanced: "Advanced"
+        slack:
+          v3:
+            show_options:
+              groups:
+                configuration: "Configuration"
+                event_triggers: "Event Triggers"
+                advanced: "Advanced"
       cloudflare:
         v3:
           form_options:
             option_webhook_secret_hint_html: "Cloudflare Webhook Secret"
+          show_options:
+            groups:
+              configuration: "Configuration"
       custom_webhook:
         v3:
           form_options:
             option_custom_definition_hint_html: "YAML definition for the custom webhook. <a href='https://pagertree.com/docs/integration-guides/custom-webhook' target='_blank'>See docs 🔗.</a>"
+          show_options:
+            groups:
+              configuration: "Configuration"
       datadog:
         v3:
           form_options:
             option_support_retriggered_event_hint_html: "Create a new alert when the 'Re-Triggered' event is sent by Datadog"
+          show_options:
+            groups:
+              configuration: "Configuration"
       echoes_hq:
         v3:
           form_options:
             option_api_key_hint_html: "EchoesHQ <a href='https://docs.echoeshq.com/api-authentication#ZB9nc' target='_blank'>API Key</a>"
+          show_options:
+            groups:
+              configuration: "Configuration"
       email:
         v3:
           form_options:
@@ -60,6 +94,9 @@ en:
             option_sanitize_level_hint_html: "Email HTML Sanitization level. relaxed_2 can remove style tags from Microsoft Outlook. See <a href='https://github.com/rgrove/sanitize#configuration' target='_blank'>santize gem documentation</a> for details."
             option_custom_definition_enabled_hint_html: "Enable custom email parsing rules defined in the YAML definition"
             option_custom_definition_hint_html: "YAML definition for custom email parsing rules. <a href='https://pagertree.com/docs/integration-guides/email#custom-parsing-rules' target='_blank'>See docs 🔗.</a>"
+          show_options:
+            groups:
+              configuration: "Configuration"
       form:
         v3:
           form_options:
@@ -73,18 +110,31 @@ en:
             option_form_phone_required_hint_html: "Should the phone field be required to submit?"
             option_form_description_required_hint_html: "Should the description field be required to submit?"
             option_form_urgency_required_hint_html: "Should the urgency field be required to submit?"
+          show_options:
+            groups:
+              content: "Form Content"
+              required_fields: "Required Fields"
       hetrix_tools:
         v3:
           form_options:
             option_authentication_token_hint_html: "Authentication Token to be used to authenticate requests from Hetrix Tools servers (optional, <a href=\"https://docs.hetrixtools.com/webhook-authentication-token/\" target=\"_blank\">see docs</a>)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       honeybadger:
         v3:
           form_options:
             option_token_hint_html: "The Honeybadger-Token header can be used to authenticate requests from Honeybadger servers (optional)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       jira_server:
         v3:
           form_options:
             option_issue_updated_hint_html: "Create alert on the jira:issue_updated event? (only one alert per unique issue)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       live_call_routing:
         twilio:
           v3:
@@ -107,6 +157,12 @@ en:
               option_banned_phones_list_hint_html: "List of phone numbers that are banned from calling the integration"
               option_max_wait_time_hint_html: "The maximum amount of time (in seconds) that the caller will wait before transferring the call to the voicemail. If set to nil, it will wait indefinitely."
               option_skip_resolve_on_hangup_hint_html: "By default, if a caller hangs up before being connected to an acknowledger, the alert will be automatically resolved. Enabling this option will prevent the alert from being automatically resolved when a caller hangs up."
+            show_options:
+              groups:
+                twilio_credentials: "Twilio Credentials"
+                call_flow_and_media: "Call Flow & Media"
+                voicemail: "Voicemail"
+                call_behavior: "Call Behavior"
           v3_mailer:
             call_recording:
               subject: "🎧 Alert #%{tiny_id} - New voicemail from %{from}"
@@ -119,11 +175,17 @@ en:
             option_bearer_token_hint_html: "Logic Monitor <b>Bearer Token</b>"
             option_logic_monitor_account_name_hint_html: "Your Logic Monitor account name. (ex: https://<b>account_name</b>.logicmonitor.com)"
             option_alert_acknowledged_hint_html: "Acknowledge the alert in Logic Monitor when the alert is acknowledged in PagerTree. (PagerTree => Logic Monitor)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       mattermost:
         outgoing_webhook:
           v3:
             form_options:
               option_token_hint_html: "The token can be used to authenticate requests from Mattermost servers (optional)"
+            show_options:
+              groups:
+                configuration: "Configuration"
       meta:
         workplace:
           v3:
@@ -133,6 +195,10 @@ en:
               option_app_secret_hint_html: "Workplace Integration App Secret"
               option_incoming_enabled_hint_html: "Enable incoming requests (Workplace to PagerTree)"
               option_outgoing_enabled_hint_html: "Enable outgoing requests (PagerTree to Workplace)"
+            show_options:
+              groups:
+                configuration: "Configuration"
+                advanced: "Advanced"
       outgoing_webhook:
         v3:
           form_options:
@@ -141,19 +207,33 @@ en:
             option_password_hint_html: "Basic auth password (optional)"
             option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
             option_template_hint_html: "A handlebars template describing the body that should be posted. See <a href='https://pagertree.com/docs/integration-guides/outgoing-webhook#custom-format' target='_blank'>docs</a> for details."
+          show_options:
+            groups:
+              configuration: "Webhook Configuration"
+              event_triggers: "Event Triggers"
+              advanced: "Advanced"
       sentry:
         v3:
           form_options:
             option_client_secret_hint_html: "Optional: The client secret can be used to authenticate requests from Sentry servers (only needed when 'internal integration' is being used)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       server_guard24:
         v3:
           form_options:
             option_resolve_warn_hint_html: "Resolve the alert when <code>'check_result' === 'WARNING'</code>"
+          show_options:
+            groups:
+              configuration: "Configuration"
       slack:
         webhook:
           v3:
             form_options:
               option_token_hint_html: "The token can be used to authenticate requests from Slack servers (optional)"
+            show_options:
+              groups:
+                configuration: "Configuration"
       solar_winds:
         v3:
           form_options:
@@ -162,21 +242,33 @@ en:
             option_server_username_hint_html: "SolarWinds Server Username (needs to be account that has Alert access)"
             option_server_password_hint_html: "SolarWinds Server Password"
             option_proxy_url_hint_html: "Proxy URL to pass through (optional). (Format: http://username:password@proxy.example.com:3128)"
+          show_options:
+            groups:
+              configuration: "Configuration"
       status_gator:
         v3:
           form_options:
             option_create_on_warn_hint_html: "Create an alert when the status is WARN"
             option_create_on_maintenance_hint_html: "Create an alert when the status is MAINTENANCE"
+          show_options:
+            groups:
+              configuration: "Configuration"
       webhook:
         v3:
           form_options:
             option_token_hint_html: "The PagerTree-Token header can be used to authenticate requests (optional)"
             option_capture_additional_data_hint_html: "Capture additional data from the webhook (optional)"
             option_wrapper_key_hint_html: "If the incoming webhook payload is wrapped in an outer key, specify that key here (optional). For example, if the payload is <code>{ \"data\": { ...actual payload... } }</code>, set this to <code>data</code>. JMESPath syntax is supported for nested keys (ex: <code>data.attributes</code>). If the JMESPath expression is invalid or the specified path is not found in the payload, the original payload will be processed."
+          show_options:
+            groups:
+              configuration: "Webhook Configuration"
       zabbix:
         v3:
           form_options:
             option_map_urgency_hint_html: "Map Zabbix event severity to PagerTree urgency"
+          show_options:
+            groups:
+              configuration: "Configuration"
       # SCAFFOLD_INTEGRATION
         
   
@@ -284,6 +376,8 @@ en:
         option_alert_acknowledged: "Acknowledge in Logic Monitor"
       "pager_tree/integrations/sentry/v3":
         option_client_secret: "Sentry Client Secret"
+        option_authorization_token: "Authorization Token"
+        option_authorization_token_expires_at: "Authorization Token Expires At"
       "pager_tree/integrations/slack/webhook/v3":
         option_token: "Slack Token"
       "pager_tree/integrations/server_guard24/v3":

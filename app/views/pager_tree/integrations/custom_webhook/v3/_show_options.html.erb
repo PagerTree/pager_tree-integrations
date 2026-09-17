@@ -1,0 +1,9 @@
+<%= render layout: "shared/components/detail_group", locals: { title: t("pager_tree.integrations.custom_webhook.v3.show_options.groups.configuration") } do %>
+  <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/custom_webhook/v3.option_custom_definition"), fixed_height: false } do %>
+    <% if integration.option_custom_definition.present? %>
+      <pre class="max-h-40 w-full overflow-y-auto rounded bg-gray-50 p-2 text-xs text-gray-800"><%= integration.option_custom_definition %></pre>
+    <% else %>
+      <span class="text-gray-400">-</span>
+    <% end %>
+  <% end %>
+<% end %>
