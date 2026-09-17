@@ -12,7 +12,7 @@
   <% end %>
 
   <%= render layout: "shared/components/detail_row", locals: { label: t("activerecord.attributes.pager_tree/integrations/outgoing_webhook/v3.option_proxy_url") } do %>
-    <span class="truncate"><%= integration.option_proxy_url.presence || "-" %></span>
+    <span class="truncate"><%= mask(integration.option_proxy_url).presence || "-" %></span>
   <% end %>
 <% end %>
 
