@@ -1,4 +1,5 @@
 require "test_helper"
+require "ostruct"
 
 module PagerTree::Integrations
   class Webhook::V3Test < ActiveSupport::TestCase
@@ -28,6 +29,9 @@ module PagerTree::Integrations
         dedup_keys: ["group_my_whole_account"]
       }.with_indifferent_access
 
+      @update_request = @create_request.deep_dup
+      @update_request[:event_type] = "update"
+
       @acknowledge_request = @create_request.deep_dup
       @acknowledge_request[:event_type] = "acknowledge"
 
@@ -50,6 +54,9 @@ module PagerTree::Integrations
     test "adapter_actions" do
       @integration.adapter_incoming_request_params = @create_request
       assert_equal :create, @integration.adapter_action
+
+      @integration.adapter_incoming_request_params = @update_request
+      assert_equal :update, @integration.adapter_action
 
       @integration.adapter_incoming_request_params = @acknowledge_request
       assert_equal :acknowledge, @integration.adapter_action
@@ -107,6 +114,56 @@ module PagerTree::Integrations
       )
 
       assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
+    end
+
+    test "adapter_process_update" do
+      @integration.adapter_incoming_request_params = @update_request
+
+      true_alert = Alert.new(
+        title: @update_request.dig(:Title),
+        description: @update_request.dig(:Description),
+        urgency: @update_request.dig(:Urgency).downcase,
+        dedup_keys: @update_request.dig(:dedup_keys),
+        incident_severity: @update_request.dig(:Meta, :incident_severity).upcase,
+        incident_message: @update_request.dig(:Meta, :incident_message),
+        tags: @update_request.dig(:Tags).uniq,
+        meta: @update_request.dig(:Meta).except(:incident_severity, :incident_message)
+      )
+
+      assert_equal true_alert.as_json, @integration.adapter_process_update.as_json
+    end
+
+    test "adapter_process_update omits fields left out of the payload" do
+      @integration.adapter_incoming_request_params = {
+        event_type: "update",
+        Id: "example-id-123"
+      }.with_indifferent_access
+
+      integration_alert = @integration.adapter_process_update
+
+      assert_nil integration_alert.title
+      assert_nil integration_alert.description
+      assert_nil integration_alert.urgency
+      assert_nil integration_alert.incident_severity
+      assert_nil integration_alert.incident_message
+      assert_equal [], integration_alert.tags
+      assert_equal [], integration_alert.dedup_keys
+      assert_not integration_alert.meta.key?("incident")
+    end
+
+    test "adapter_process_update never carries thirdparty_id" do
+      @integration.adapter_incoming_request_params = @update_request
+
+      assert_nil @integration.adapter_process_update.thirdparty_id
+    end
+
+    test "adapter_process_update carries an explicitly provided incident flag in meta" do
+      @update_request[:Meta][:incident] = false
+      @integration.adapter_incoming_request_params = @update_request
+
+      integration_alert = @integration.adapter_process_update
+
+      assert_equal false, integration_alert.meta["incident"]
     end
 
     test "blocking_incoming" do

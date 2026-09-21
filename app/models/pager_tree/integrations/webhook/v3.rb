@@ -39,6 +39,8 @@ module PagerTree::Integrations
       case _adapter_incoming_request_params.dig("event_type").to_s.downcase.strip
       when "create"
         :create
+      when "update"
+        :update
       when "acknowledge"
         :acknowledge
       when "resolve"
@@ -64,7 +66,38 @@ module PagerTree::Integrations
       )
     end
 
+    # like adapter_process_create, but fields left out of the payload are nil/empty
+    # so the caller can tell "not provided" apart from "explicitly cleared" - and no
+    # thirdparty_id, since update must never change which alert this is
+    def adapter_process_update
+      Alert.new(
+        title: _title,
+        description: _description,
+        urgency: _urgency,
+        dedup_keys: _dedup_keys,
+        incident_severity: _incident_severity,
+        incident_message: _incident_message,
+        tags: _tags,
+        meta: _update_meta,
+        additional_data: _additional_datums
+      )
+    end
+
     private
+
+    # PagerTree::Integrations::Alert#incident always defaults to false, so
+    # "incident" is carried in meta instead - the only way to tell "not provided"
+    # (leave alert.incident untouched) apart from "explicitly false"
+    def _incident_update
+      meta = _adapter_incoming_request_params.dig("meta")
+      return nil unless meta.is_a?(Hash) && meta.key?("incident")
+      !!meta["incident"]
+    end
+
+    def _update_meta
+      incident = _incident_update
+      incident.nil? ? _meta : _meta.merge("incident" => incident)
+    end
 
     def _title
       _adapter_incoming_request_params.dig("title")

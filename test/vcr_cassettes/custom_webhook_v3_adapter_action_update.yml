@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<INTEGRATION_CUSTOM_WEBHOOK_V3_SERVICE_URL>"
+    body:
+      encoding: UTF-8
+      string: '{"log":{"remote_ip":"127.0.0.1","url":"https://integration.url/int_123","method":"post","headers":{"User-Agent":"UptimeRobot/1.0","Content-Type":"application/json"},"data":{"monitorID":"12345","alertTypeFriendlyName":"Degraded","monitorFriendlyName":"My
+        Website","alertDetails":"Connection timeout","monitorURL":"https://example.com","urgency":"high","alertDateTime":1733126400},"params":null,"body":{"monitorID":"12345","alertTypeFriendlyName":"Degraded","monitorFriendlyName":"My
+        Website","alertDetails":"Connection timeout","monitorURL":"https://example.com","urgency":"high","alertDateTime":1733126400}},"config":{"rules":[{"match":{"log.data.alertTypeFriendlyName":{"$regex":"^degraded$","$options":"i"}},"actions":[{"type":"update","urgency":"{{log.data.urgency}}","thirdparty_id":"{{log.data.monitorID}}"}]}]}}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Powered-By:
+      - Express
+      Content-Type:
+      - application/json; charset=utf-8
+      Etag:
+      - W/"223-aAaPHh/aQ2lRQrKECMXb4swg5io"
+      Date:
+      - Fri, 05 Dec 2025 17:07:11 GMT
+      Connection:
+      - keep-alive
+      Keep-Alive:
+      - timeout=5
+      Server:
+      - Fly/d1ad1f94 (2025-12-05)
+      Via:
+      - 1.1 fly.io, 1.1 fly.io
+      Fly-Request-Id:
+      - 01KBQQPRA6BK1NWCWGEEYH0PZK-lax
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":[{"type":"update","urgency":"high","thirdparty_id":"12345"}],"status":"query
+        matched","processedLogData":null}'
+  recorded_at: Fri, 05 Dec 2025 17:07:10 GMT
+recorded_with: VCR 6.0.0

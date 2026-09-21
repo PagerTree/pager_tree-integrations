@@ -1,4 +1,5 @@
 require "test_helper"
+require "ostruct"
 
 module PagerTree::Integrations
   class CustomWebhook::V3Test < ActiveSupport::TestCase
@@ -37,6 +38,13 @@ module PagerTree::Integrations
                     value: "{{log.data.alertDateTime}}"
           
           - match:
+              log.data.alertTypeFriendlyName: { $regex: "^degraded$", $options: "i" }
+            actions:
+              - type: update
+                urgency: "{{log.data.urgency}}"
+                thirdparty_id: "{{log.data.monitorID}}"
+
+          - match:
               log.data.alertTypeFriendlyName: { $regex: "^pending$", $options: "i" }
             actions:
               - type: acknowledge
@@ -62,6 +70,9 @@ module PagerTree::Integrations
         "urgency" => "high",
         "alertDateTime" => 1733126400
       }.with_indifferent_access
+
+      @update_request = @create_request.deep_dup
+      @update_request["alertTypeFriendlyName"] = "Degraded"
 
       @acknowledge_request = @create_request.deep_dup
       @acknowledge_request["alertTypeFriendlyName"] = "Pending"
@@ -109,6 +120,13 @@ module PagerTree::Integrations
         @integration.adapter_incoming_request_params = @acknowledge_request
         @integration.adapter_incoming_deferred_request.body = @acknowledge_request
         assert_equal :acknowledge, @integration.adapter_action
+      end
+    end
+    test "adapter_action_update" do
+      VCR.use_cassette("custom_webhook_v3_adapter_action_update") do
+        @integration.adapter_incoming_request_params = @update_request
+        @integration.adapter_incoming_deferred_request.body = @update_request
+        assert_equal :update, @integration.adapter_action
       end
     end
     test "adapter_action_resolve" do
@@ -161,6 +179,23 @@ module PagerTree::Integrations
         )
 
         assert_equal true_alert.as_json, @integration.adapter_process_create.as_json
+      end
+    end
+
+    test "adapter_process_update only carries fields the service actually returned" do
+      VCR.use_cassette("custom_webhook_v3_adapter_process_update") do
+        @integration.adapter_incoming_request_params = @update_request
+
+        true_alert = Alert.new(
+          urgency: "high",
+          meta: {
+            "incident" => false
+          }
+        )
+
+        result = @integration.adapter_process_update
+        assert_equal true_alert.as_json, result.as_json
+        assert_nil result.thirdparty_id
       end
     end
   end
