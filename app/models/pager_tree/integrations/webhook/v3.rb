@@ -66,9 +66,9 @@ module PagerTree::Integrations
       )
     end
 
-    # like adapter_process_create, but fields left out of the payload are nil/empty
-    # so the caller can tell "not provided" apart from "explicitly cleared" - and no
-    # thirdparty_id, since update must never change which alert this is
+    # Like adapter_process_create, but omits thirdparty_id and does not apply adapter-level
+    # fallbacks (so missing scalar fields remain nil). Note: array fields still default to
+    # [] in PagerTree::Integrations::Alert.
     def adapter_process_update
       Alert.new(
         title: _title,
@@ -91,7 +91,7 @@ module PagerTree::Integrations
     def _incident_update
       meta = _adapter_incoming_request_params.dig("meta")
       return nil unless meta.is_a?(Hash) && meta.key?("incident")
-      !!meta["incident"]
+      ActiveModel::Type::Boolean.new.cast(meta["incident"])
     end
 
     def _update_meta
