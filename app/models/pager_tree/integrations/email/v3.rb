@@ -88,6 +88,8 @@ module PagerTree::Integrations
         case custom_response_result.dig("type")&.downcase
         when "create"
           :create
+        when "update"
+          :update
         when "acknowledge"
           :acknowledge
         when "resolve"
@@ -129,7 +131,73 @@ module PagerTree::Integrations
       end
     end
 
+    # only reachable via the custom template (adapter_action only returns :update
+    # there) - fields the rule doesn't return come back nil/empty so an update
+    # payload can't clobber alert data it didn't mean to touch, and there's no
+    # thirdparty_id, since update must never change which alert this is
+    def adapter_process_update
+      Alert.new(
+        title: _update_title,
+        description: _update_description,
+        urgency: _update_urgency,
+        dedup_keys: _update_dedup_keys,
+        incident_severity: _incident_severity,
+        incident_message: _incident_message,
+        tags: _tags,
+        meta: _update_meta,
+        additional_data: _update_additional_datums
+      )
+    end
+
     private
+
+    def _update_title
+      custom_response_result.dig("title")&.to_s&.presence
+    end
+
+    def _update_description
+      custom_response_result.dig("description")&.to_s&.presence
+    end
+
+    # unlike _urgency, doesn't fall back to the integration's default urgency
+    def _update_urgency
+      custom_response_result.dig("urgency")&.to_s&.presence
+    end
+
+    # unlike _dedup_keys, doesn't fall back to thread references - those were
+    # already applied when the alert was created
+    def _update_dedup_keys
+      Array(custom_response_result.dig("dedup_keys")).compact_blank.map(&:to_s).uniq.map { |x| "#{prefix_id}_#{x}" }
+    end
+
+    # PagerTree::Integrations::Alert#incident always defaults to false, so
+    # "incident" is carried in meta instead - the only way to tell "not provided"
+    # (leave alert.incident untouched) apart from "explicitly false"
+    # (_incident is already nil when "incident" is absent - ActiveModel::Type::Boolean casts nil to nil)
+    def _update_meta
+      incident = _incident
+      incident.nil? ? _meta : _meta.merge("incident" => incident)
+    end
+
+    # unlike _additional_datums, doesn't fall back to the From/To/CCs default -
+    # those were already applied when the alert was created
+    def _update_additional_datums
+      items = custom_response_result.dig("additional_data") || []
+      items = [items] unless items.is_a?(Array)
+
+      items.each_with_object([]) do |ad, result|
+        next unless ad.is_a?(Hash)
+
+        format = ad["format"].to_s
+        next unless PagerTree::Integrations::AdditionalDatum::FORMATS.include?(format)
+
+        result << AdditionalDatum.new(
+          format: format,
+          label: ad["label"].to_s.presence || "Untitled",
+          value: ad["value"]
+        )
+      end
+    end
 
     def _custom_response
       return @_custom_response ||= {} unless custom_definition?

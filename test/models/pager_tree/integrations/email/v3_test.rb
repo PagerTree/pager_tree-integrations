@@ -42,6 +42,7 @@ module PagerTree::Integrations
         message_id "down-98765@server.com"
       end
 
+      @update_mail = @down_mail.dup.tap { |m| m.subject = "Server is DEGRADED" }
       @ack_mail = @down_mail.dup.tap { |m| m.subject = "Server is PENDING maintenance" }
       @resolve_mail = @down_mail.dup.tap { |m| m.subject = "Server is UP again" }
       @other_mail = @down_mail.dup.tap { |m| m.subject = "Paused" }
@@ -104,6 +105,15 @@ module PagerTree::Integrations
       VCR.use_cassette("email_v3_custom_adapter_action_create") do
         @integration.adapter_incoming_request_params = {"mail" => @down_mail}
         assert_equal :create, @integration.adapter_action
+      end
+    end
+
+    test "adapter_action_update with custom definition" do
+      setup_custom_definition
+
+      VCR.use_cassette("email_v3_custom_adapter_action_update") do
+        @integration.adapter_incoming_request_params = {"mail" => @update_mail}
+        assert_equal :update, @integration.adapter_action
       end
     end
 
@@ -182,6 +192,23 @@ module PagerTree::Integrations
       end
     end
 
+    test "adapter_process_update only carries fields the rule actually returned" do
+      setup_custom_definition
+
+      VCR.use_cassette("email_v3_custom_adapter_process_update") do
+        @integration.adapter_incoming_request_params = {"mail" => @update_mail}
+
+        expected_alert = Alert.new(
+          urgency: "high",
+          meta: {"incident" => false}
+        )
+
+        result = @integration.adapter_process_update
+        assert_equal expected_alert.as_json, result.as_json
+        assert_nil result.thirdparty_id
+      end
+    end
+
     private
 
     def setup_custom_definition
@@ -208,6 +235,13 @@ module PagerTree::Integrations
                   - format: email
                     label: From
                     value: "{{log.from}}"
+
+          - match:
+              log.subject: { $regex: "degraded", $options: "i" }
+            actions:
+              - type: update
+                urgency: "high"
+                thirdparty_id: "email-test-123"
 
           - match:
               log.subject: { $regex: "pending", $options: "i" }

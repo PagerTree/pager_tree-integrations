@@ -37,6 +37,8 @@ module PagerTree::Integrations
       case custom_response_result.dig("type")&.downcase
       when "create"
         :create
+      when "update"
+        :update
       when "acknowledge"
         :acknowledge
       when "resolve"
@@ -62,11 +64,45 @@ module PagerTree::Integrations
       )
     end
 
+    # like adapter_process_create, but title/description/incident fall back to
+    # nil instead of a placeholder, so unset fields don't overwrite the existing alert -
+    # and no thirdparty_id, since update must never change which alert this is
+    def adapter_process_update
+      Alert.new(
+        title: _update_title,
+        description: _update_description,
+        urgency: _urgency,
+        dedup_keys: _dedup_keys,
+        incident_severity: _incident_severity,
+        incident_message: _incident_message,
+        tags: _tags,
+        meta: _update_meta,
+        additional_data: _additional_datums
+      )
+    end
+
     def custom_response_processed_log_data
       _custom_response_processed_log_data || {}
     end
 
     private
+
+    def _update_title
+      custom_response_result.dig("title")&.to_s&.presence
+    end
+
+    def _update_description
+      custom_response_result.dig("description")&.to_s&.presence
+    end
+
+    # PagerTree::Integrations::Alert#incident always defaults to false, so
+    # "incident" is carried in meta instead - the only way to tell "not provided"
+    # (leave alert.incident untouched) apart from "explicitly false"
+    # (_incident is already nil when "incident" is absent - ActiveModel::Type::Boolean casts nil to nil)
+    def _update_meta
+      incident = _incident
+      incident.nil? ? _meta : _meta.merge("incident" => incident)
+    end
 
     def _custom_response
       return {} unless adapter_incoming_deferred_request.present?

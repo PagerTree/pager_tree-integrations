@@ -59,6 +59,9 @@ module PagerTree::Integrations
     def adapter_process_create
     end
 
+    def adapter_process_update
+    end
+
     def adapter_process_other
     end
 
