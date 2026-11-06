@@ -13,6 +13,8 @@ module PagerTree::Integrations
       {key: :alert_resolved, type: :boolean, default: false},
       {key: :alert_dropped, type: :boolean, default: false},
       {key: :alert_handoff, type: :boolean, default: false},
+      {key: :alert_snoozed, type: :boolean, default: false},
+      {key: :alert_unsnoozed, type: :boolean, default: false},
       {key: :event_reminder_going_on_call, type: :boolean, default: false},
       {key: :event_reminder_going_off_call, type: :boolean, default: false},
       {key: :comment_created, type: :boolean, default: false},
@@ -34,6 +36,8 @@ module PagerTree::Integrations
     validates :option_alert_resolved, inclusion: {in: [true, false]}
     validates :option_alert_dropped, inclusion: {in: [true, false]}
     validates :option_alert_handoff, inclusion: {in: [true, false]}
+    validates :option_alert_snoozed, inclusion: {in: [true, false]}
+    validates :option_alert_unsnoozed, inclusion: {in: [true, false]}
     validates :option_event_reminder_going_on_call, inclusion: {in: [true, false]}
     validates :option_event_reminder_going_off_call, inclusion: {in: [true, false]}
     validates :option_comment_created, inclusion: {in: [true, false]}
@@ -50,6 +54,8 @@ module PagerTree::Integrations
       self.option_alert_resolved ||= false
       self.option_alert_dropped ||= false
       self.option_alert_handoff ||= false
+      self.option_alert_snoozed ||= false
+      self.option_alert_unsnoozed ||= false
       self.option_event_reminder_going_on_call ||= false
       self.option_event_reminder_going_off_call ||= false
       self.option_comment_created ||= false
