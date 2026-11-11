@@ -56,7 +56,29 @@ module PagerTree::Integrations
       assert_equal expected_payload.as_json, outgoing_webhook_delivery.body.as_json
     end
 
-    test "basic authorization works" do
+    test "snooze events are off by default and opt-in" do
+      integration = OutgoingWebhook::V3.new
+      assert_equal false, integration.option_alert_snoozed
+      assert_equal false, integration.option_alert_unsnoozed
+      assert_not integration.adapter_outgoing_interest?("alert_snoozed")
+
+      @integration.option_alert_snoozed = true
+      @integration.option_alert_unsnoozed = true
+      assert @integration.adapter_outgoing_interest?("alert_snoozed")
+      assert @integration.adapter_outgoing_interest?("alert_unsnoozed")
+    end
+
+    test "can_process_outgoing snooze events" do
+      {"alert_snoozed" => "alert.snoozed", "alert_unsnoozed" => "alert.unsnoozed"}.each do |event_name, type|
+        alert = {foo: "bar", status: "snoozed"}
+        @integration.adapter_outgoing_event = OutgoingEvent.new(event_name: event_name, alert: alert)
+        outgoing_webhook_delivery = @integration.adapter_process_outgoing
+
+        assert_equal({data: alert, type: type}.as_json, outgoing_webhook_delivery.body.as_json)
+      end
+    end
+
+    test "basic authorization works"
       @integration.option_username = "test"
       @integration.option_password = "pass"
 
