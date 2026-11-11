@@ -285,24 +285,18 @@ module PagerTree::Integrations
     # Long email threads carry a Message-ID in References for every message in the thread.
     # The root (shared by every reply) and the most recent ones are enough to match a thread.
     MAX_THREAD_REFERENCES = 10
-    # Postgres can't index a row over ~2.7KB, and alerts index their dedup_keys.
-    # Each array element also costs a 4 byte length header.
-    MAX_DEDUP_KEYS_BYTES = 2000
 
     def _dedup_keys
       return @_dedup_keys if @_dedup_keys
 
-      # in priority order, so the size limit drops the least useful keys
+      # in priority order - PagerTree keeps keys in order up to a size limit, so the least useful are dropped first
       keys = []
       keys.concat(Array(_thirdparty_id)) if option_dedup_threads
       keys.concat(Array(custom_response_result.dig("dedup_keys"))) if custom_definition?
       keys.concat(_thread_references) if option_dedup_threads
 
       # only dedup the references per integration. Customer like sending one email to multiple integration inboxes
-      keys = keys.compact_blank.map(&:to_s).uniq.map { |x| "#{prefix_id}_#{x}" }
-
-      bytes = 0
-      @_dedup_keys = keys.take_while { |x| (bytes += x.bytesize + 4) <= MAX_DEDUP_KEYS_BYTES }
+      @_dedup_keys = keys.compact_blank.map(&:to_s).uniq.map { |x| "#{prefix_id}_#{x}" }
     end
 
     # root first, then newest to oldest
