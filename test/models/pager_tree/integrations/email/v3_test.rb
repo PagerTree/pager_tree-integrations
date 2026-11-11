@@ -164,6 +164,29 @@ module PagerTree::Integrations
       assert_equal "email", alert.additional_data.first.format
     end
 
+    test "dedup_keys include the message id and thread references" do
+      @basic_mail.references = ["<root@example.com>", "<reply-1@example.com>"]
+
+      assert_equal [
+        "int_xxxyyy_basic-12345@example.com",
+        "int_xxxyyy_root@example.com",
+        "int_xxxyyy_reply-1@example.com"
+      ], @integration.adapter_process_create.dedup_keys
+    end
+
+    test "dedup_keys keep the thread root and newest references for long threads" do
+      references = (1..128).map { |i| "<reply-#{i}-#{SecureRandom.hex(16)}@mail.example.com>" }
+      @basic_mail.references = references
+
+      dedup_keys = @integration.adapter_process_create.dedup_keys
+      message_ids = references.map { |x| x.delete("<>") }
+
+      assert_equal "int_xxxyyy_basic-12345@example.com", dedup_keys.first
+      assert_equal "int_xxxyyy_#{message_ids.first}", dedup_keys.second
+      assert_equal "int_xxxyyy_#{message_ids.last}", dedup_keys.third
+      assert_equal 1 + Email::V3::MAX_THREAD_REFERENCES, dedup_keys.size
+    end
+
     test "adapter_process_create with custom definition" do
       setup_custom_definition
       @integration.option_dedup_threads = false # makes expected dedup_keys deterministic
