@@ -8,7 +8,7 @@ module PagerTree::Integrations
     OPTIONS = [
       {key: :allow_spam, type: :boolean, default: false},
       {key: :dedup_threads, type: :boolean, default: true},
-      {key: :sanitize_level, type: :string, default: "relaxed"},
+      {key: :sanitize_level, type: :string, default: "relaxed_2"},
       {key: :custom_definition, type: :string, default: nil},
       {key: :custom_definition_enabled, type: :boolean, default: false}
     ]
@@ -30,7 +30,10 @@ module PagerTree::Integrations
     after_initialize do
       self.option_allow_spam = false if option_allow_spam.nil?
       self.option_dedup_threads = true if option_dedup_threads.nil?
-      self.option_sanitize_level = "relaxed" if option_sanitize_level.nil?
+      # New integrations default to relaxed_2 (relaxed without <style>, so embedded CSS doesn't end up in the
+      # description). Existing ones without a level keep relaxed, the default when they were made, so nothing
+      # changes under them.
+      self.option_sanitize_level = (new_record? ? "relaxed_2" : "relaxed") if option_sanitize_level.nil?
       self.option_custom_definition_enabled = false if option_custom_definition_enabled.nil?
     end
 

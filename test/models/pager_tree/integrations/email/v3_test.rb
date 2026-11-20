@@ -174,6 +174,31 @@ module PagerTree::Integrations
       ], @integration.adapter_process_create.dedup_keys
     end
 
+    test "new integrations default to relaxed_2" do
+      assert_equal "relaxed_2", Email::V3.new.option_sanitize_level
+    end
+
+    test "existing integrations without a level keep relaxed" do
+      # the fixture is stored without any options, like one made before the level could be chosen
+      id = pager_tree_integrations_integrations(:email_v3).id
+      assert_nil Email::V3.where(id: id).pick(:options).to_h["sanitize_level"]
+      assert_equal "relaxed", Email::V3.find(id).option_sanitize_level
+    end
+
+    test "a chosen level is never replaced" do
+      assert_equal "basic", Email::V3.new(option_sanitize_level: "basic").option_sanitize_level
+    end
+
+    test "relaxed_2 drops style blocks that relaxed keeps" do
+      html = "<style>.x { color: red }</style><p>Server is down</p>"
+      @integration.option_sanitize_level = "relaxed"
+      assert_includes Sanitize.fragment(html, @integration.send(:_sanitize_config)), "color: red"
+      @integration.option_sanitize_level = "relaxed_2"
+      sanitized = Sanitize.fragment(html, @integration.send(:_sanitize_config))
+      assert_includes sanitized, "Server is down"
+      refute_includes sanitized, "color: red"
+    end
+
     test "dedup_keys keep the thread root and newest references for long threads" do
       references = (1..128).map { |i| "<reply-#{i}-#{SecureRandom.hex(16)}@mail.example.com>" }
       @basic_mail.references = references
