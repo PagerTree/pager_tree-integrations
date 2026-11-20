@@ -78,7 +78,7 @@ module PagerTree::Integrations
       end
     end
 
-    test "basic authorization works"
+    test "basic authorization works" do
       @integration.option_username = "test"
       @integration.option_password = "pass"
 

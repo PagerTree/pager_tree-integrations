@@ -282,22 +282,29 @@ module PagerTree::Integrations
       @_thirdparty_id ||= _mail.message_id || SecureRandom.uuid
     end
 
+    # Long email threads carry a Message-ID in References for every message in the thread.
+    # The root (shared by every reply) and the most recent ones are enough to match a thread.
+    MAX_THREAD_REFERENCES = 10
+
     def _dedup_keys
       return @_dedup_keys if @_dedup_keys
 
-      @_dedup_keys ||= []
-
-      if option_dedup_threads
-        @_dedup_keys.concat(Array(_thirdparty_id))
-        @_dedup_keys.concat(Array(_mail.references))
-      end
-
-      if custom_definition?
-        @_dedup_keys.concat(Array(custom_response_result.dig("dedup_keys")))
-      end
+      # in priority order - PagerTree keeps keys in order up to a size limit, so the least useful are dropped first
+      keys = []
+      keys.concat(Array(_thirdparty_id)) if option_dedup_threads
+      keys.concat(Array(custom_response_result.dig("dedup_keys"))) if custom_definition?
+      keys.concat(_thread_references) if option_dedup_threads
 
       # only dedup the references per integration. Customer like sending one email to multiple integration inboxes
-      @_dedup_keys = @_dedup_keys.compact_blank.uniq.map { |x| "#{prefix_id}_#{x}" }
+      @_dedup_keys = keys.compact_blank.map(&:to_s).uniq.map { |x| "#{prefix_id}_#{x}" }
+    end
+
+    # root first, then newest to oldest
+    def _thread_references
+      references = Array(_mail.references)
+      return references if references.size <= MAX_THREAD_REFERENCES
+
+      [references.first] + references.last(MAX_THREAD_REFERENCES - 1).reverse
     end
 
     def _title
